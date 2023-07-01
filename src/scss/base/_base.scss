@@ -1,0 +1,104 @@
+@use "../abstracts" as *;
+// -----------------------------------------------------------------------------
+// This file contains very basic styles.
+// -----------------------------------------------------------------------------
+
+/**
+ * Set up a decent box model on the root element
+ */
+html {
+	box-sizing: border-box;
+	font-size: 16px;
+}
+
+/**
+ * Make all elements from the DOM inherit from the parent box-sizing
+ * Since `*` has a specificity of 0, it does not override the `html` value
+ * making all elements inheriting from the root box-sizing value
+ * See: https://css-tricks.com/inheriting-box-sizing-probably-slightly-better-best-practice/
+ */
+*,
+*::before,
+*::after {
+	box-sizing: inherit;
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	font-family: "Source Sans Pro", sans-serif;
+	color: $text-color;
+	overflow-x: hidden;
+}
+
+/**
+ * Basic styles for links
+ */
+a {
+	color: $brand-color;
+	text-decoration: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	color: $primary-color;
+	line-height: 1;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+button {
+	text-transform: capitalize;
+}
+
+p {
+	line-height: 1.6;
+}
+
+input,
+textarea {
+	border: 1px solid $dark-grey;
+	border-radius: 0.3rem;
+	color: inherit;
+	font-family: inherit;
+	font-size: inherit;
+	padding: 0.7rem 1rem;
+	outline: unset;
+}
+
+button {
+	background: hsl(185, 53%, 15%);
+	border: 0.1em solid hsl(185, 53%, 34%);
+	border-radius: 100vw;
+	color: #fff;
+	cursor: pointer;
+	font: inherit;
+	padding: 0.75rem 2rem;
+	transition: background-color 250ms;
+
+	position: relative;
+	isolation: isolate;
+	overflow: hidden;
+}
+
+button:hover,
+button:focus-visible {
+	background: hsl(185, 53%, 34%);
+}
+
+button:disabled {
+	background: hsl(185, 53%, 5%);
+	cursor: not-allowed;
+}
+
+ul {
+	list-style-type: none;
+}

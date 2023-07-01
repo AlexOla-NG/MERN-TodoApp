@@ -1,0 +1,45 @@
+@use "../abstracts/" as *;
+
+.create-recipe {
+	display: flex;
+	flex-direction: column;
+	gap: 2rem;
+	padding: 2rem 1rem;
+	width: 100%;
+
+	@include media-md {
+		& > * {
+			margin: 0 auto;
+		}
+	}
+
+	form {
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+		max-width: 25rem;
+		text-transform: capitalize;
+
+		label,
+		.ingredients-wrapper > div {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			gap: 2rem;
+			font-weight: 600;
+		}
+
+		.ingredients-wrapper {
+			display: flex;
+			flex-direction: column;
+			gap: 0.5rem;
+
+			.ingredient {
+				svg {
+					width: 2rem;
+					height: auto;
+				}
+			}
+		}
+	}
+}

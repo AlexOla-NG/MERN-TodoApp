@@ -1,0 +1,59 @@
+// -----------------------------------------------------------------------------
+// This file contains all styles related to the button component.
+// -----------------------------------------------------------------------------
+
+.btn > span {
+	position: absolute;
+	z-index: -1;
+	width: 33.333%;
+	height: 100%;
+
+	background: transparent;
+	opacity: 0.5;
+}
+
+.btn > :first-child {
+	left: 0;
+	top: 0;
+}
+
+.btn > :last-child {
+	right: 0;
+	top: 0;
+}
+
+.btn::before {
+	content: "";
+	position: absolute;
+	z-index: -1;
+	background: hsl(200 60% 20%);
+	/* background: hotpink; */
+	width: 10%;
+	aspect-ratio: 1;
+	border-radius: 50%;
+	inset: 0;
+	margin: auto;
+	opacity: 0;
+
+	transition: transform 1000ms 200ms, opacity 200ms;
+}
+
+.btn:active::before {
+	transform: scale(25);
+	opacity: 1;
+
+	transition: transform 1000ms, opacity 500ms;
+}
+
+.btn:has(:first-child:active)::before {
+	margin-left: 0;
+}
+
+.btn:has(:last-child:active)::before {
+	margin-right: 0;
+}
+
+.btn:has(:first-child:active)::before,
+.btn:has(:last-child:active)::before {
+	transition: transform 500ms, opacity 250ms;
+}

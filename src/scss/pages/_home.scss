@@ -1,0 +1,12 @@
+// -----------------------------------------------------------------------------
+// This file contains styles that are specific to the home page.
+// -----------------------------------------------------------------------------
+
+.home {
+	background: #f7f7f7;
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+	gap: 1.5rem;
+	padding: 1.5rem 1rem;
+	width: 100%;
+}
