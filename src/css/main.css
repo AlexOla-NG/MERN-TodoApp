@@ -1,0 +1,424 @@
+@import url("https://fonts.googleapis.com/css2?family=Josefin+Sans&display=swap");
+/**
+ * Set up a decent box model on the root element
+ */
+html {
+  box-sizing: border-box;
+  font-size: 16px;
+}
+
+/**
+ * Make all elements from the DOM inherit from the parent box-sizing
+ * Since `*` has a specificity of 0, it does not override the `html` value
+ * making all elements inheriting from the root box-sizing value
+ * See: https://css-tricks.com/inheriting-box-sizing-probably-slightly-better-best-practice/
+ */
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Josefin Sans", sans-serif;
+  color: hsl(0, 0%, 13%);
+  overflow-x: hidden;
+}
+
+/**
+ * Basic styles for links
+ */
+a {
+  color: hsl(339, 100%, 45%);
+  text-decoration: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: hsl(220, 98%, 61%);
+  line-height: 1;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+button {
+  text-transform: capitalize;
+}
+
+p {
+  line-height: 1.6;
+}
+
+input,
+textarea {
+  border: 1px solid hsl(0, 0%, 27%);
+  border-radius: 0.3rem;
+  color: inherit;
+  font-family: inherit;
+  font-size: inherit;
+  padding: 0.7rem 1rem;
+  outline: unset;
+}
+
+button {
+  background: hsl(185, 53%, 15%);
+  border: 0.1em solid hsl(185, 53%, 34%);
+  border-radius: 100vw;
+  color: #fff;
+  cursor: pointer;
+  font: inherit;
+  padding: 0.75rem 2rem;
+  transition: background-color 250ms;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+button:hover,
+button:focus-visible {
+  background: hsl(185, 53%, 34%);
+}
+
+button:disabled {
+  background: hsl(185, 53%, 5%);
+  cursor: not-allowed;
+}
+
+ul {
+  list-style-type: none;
+}
+
+/**
+ * Clear inner floats
+ */
+.clearfix::after {
+  clear: both;
+  content: "";
+  display: table;
+}
+
+/**
+ * Main content containers
+ * 1. Make the container full-width with a maximum width
+ * 2. Center it in the viewport
+ * 3. Leave some space on the edges, especially valuable on small screens
+ */
+.container {
+  max-width: 1180px; /* 1 */
+  margin-left: auto; /* 2 */
+  margin-right: auto; /* 2 */
+  padding-left: 20px; /* 3 */
+  padding-right: 20px; /* 3 */
+  width: 100%; /* 1 */
+}
+
+/**
+ * Hide text while making it readable for screen readers
+ * 1. Needed in WebKit-based browsers because of an implementation bug;
+ *    See: https://code.google.com/p/chromium/issues/detail?id=457146
+ */
+.hide-text {
+  overflow: hidden;
+  padding: 0; /* 1 */
+  text-indent: 101%;
+  white-space: nowrap;
+}
+
+/**
+ * Hide element while making it readable for screen readers
+ * Shamelessly borrowed from HTML5Boilerplate:
+ * https://github.com/h5bp/html5-boilerplate/blob/master/src/css/main.css#L119-L133
+ */
+.visually-hidden {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
+/**
+ * Basic typography style for copy text
+ */
+.btn > span {
+  position: absolute;
+  z-index: -1;
+  width: 33.333%;
+  height: 100%;
+  background: transparent;
+  opacity: 0.5;
+}
+
+.btn > :first-child {
+  left: 0;
+  top: 0;
+}
+
+.btn > :last-child {
+  right: 0;
+  top: 0;
+}
+
+.btn::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  background: hsl(200, 60%, 20%);
+  /* background: hotpink; */
+  width: 10%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  inset: 0;
+  margin: auto;
+  opacity: 0;
+  transition: transform 1000ms 200ms, opacity 200ms;
+}
+
+.btn:active::before {
+  transform: scale(25);
+  opacity: 1;
+  transition: transform 1000ms, opacity 500ms;
+}
+
+.btn:has(:first-child:active)::before {
+  margin-left: 0;
+}
+
+.btn:has(:last-child:active)::before {
+  margin-right: 0;
+}
+
+.btn:has(:first-child:active)::before,
+.btn:has(:last-child:active)::before {
+  transition: transform 500ms, opacity 250ms;
+}
+
+.form-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 3rem 1rem;
+}
+.form-wrapper .form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.form-wrapper p {
+  text-align: center;
+}
+.form-wrapper p a {
+  cursor: pointer;
+}
+
+@media screen and (min-width: 768px) {
+  .form-wrapper {
+    margin: 0 auto;
+    width: 50%;
+  }
+}
+@media screen and (min-width: 1024px) {
+  .form-wrapper {
+    width: 25%;
+  }
+}
+@media screen and (min-width: 2560px) {
+  .form-wrapper {
+    width: 15%;
+  }
+}
+.create-recipe {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 2rem 1rem;
+  width: 100%;
+}
+@media screen and (min-width: 768px) {
+  .create-recipe > * {
+    margin: 0 auto;
+  }
+}
+.create-recipe form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 25rem;
+  text-transform: capitalize;
+}
+.create-recipe form label,
+.create-recipe form .ingredients-wrapper > div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  font-weight: 600;
+}
+.create-recipe form .ingredients-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.create-recipe form .ingredients-wrapper .ingredient svg {
+  width: 2rem;
+  height: auto;
+}
+
+.recipe-card {
+  background: #fff;
+  border: 1px transparent;
+  border-radius: 0.3rem;
+  box-shadow: 3px 11px 18px -2px rgba(0, 0, 0, 0.53);
+  -webkit-box-shadow: 3px 11px 18px -2px rgba(0, 0, 0, 0.53);
+  -moz-box-shadow: 3px 11px 18px -2px rgba(0, 0, 0, 0.53);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  min-width: 15.625rem;
+  width: 100%;
+}
+.recipe-card .image-wrapper {
+  width: 100%;
+  height: 140px;
+}
+.recipe-card .image-wrapper img {
+  border-radius: 0.3rem 0.3rem 0 0;
+  max-width: 100%;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.recipe-card .content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  padding: 1rem;
+  text-transform: capitalize;
+}
+.recipe-card .content .header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.recipe-card .content p span,
+.recipe-card .content ul span {
+  font-weight: 600;
+}
+.recipe-card .content ul {
+  list-style-type: decimal;
+  list-style-position: inside;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.password-input {
+  border: 1px solid hsl(0, 0%, 27%);
+  border-radius: 0.3rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.7rem 1rem;
+}
+.password-input input {
+  border: unset;
+  padding: unset;
+  border-radius: unset;
+}
+
+.nav {
+  height: 50px;
+  width: 100%;
+  position: relative;
+}
+.nav .nav-header {
+  display: inline;
+}
+.nav .nav-header .nav-title {
+  display: inline-block;
+  font-size: 22px;
+  color: hsl(0, 0%, 100%);
+  padding: 10px 10px 10px 10px;
+}
+.nav .nav-btn {
+  display: none;
+}
+.nav .nav-links {
+  display: inline;
+  float: right;
+  font-size: 18px;
+  text-transform: capitalize;
+  z-index: 1;
+}
+.nav .nav-links a {
+  display: inline-block;
+  padding: 13px 10px 13px 10px;
+  text-decoration: none;
+}
+.nav #nav-check {
+  display: none;
+}
+
+@media (max-width: 600px) {
+  .nav > .nav-btn {
+    display: inline-block;
+    position: absolute;
+    right: 0px;
+    top: 0px;
+  }
+  .nav > .nav-btn > label {
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    padding: 13px;
+  }
+  .nav > .nav-btn > label > span {
+    display: block;
+    width: 25px;
+    height: 10px;
+    border-top: 2px solid #eee;
+  }
+  .nav > .nav-links {
+    position: absolute;
+    display: block;
+    width: 100%;
+    background-color: #333;
+    height: 0px;
+    transition: all 0.3s ease-in;
+    overflow-y: hidden;
+    top: 50px;
+    left: 0px;
+  }
+  .nav > .nav-links > a {
+    display: block;
+    width: 100%;
+  }
+  .nav > #nav-check:not(:checked) ~ .nav-links {
+    height: 0px;
+  }
+  .nav > #nav-check:checked ~ .nav-links {
+    height: calc(100vh - 50px);
+    overflow-y: auto;
+  }
+}
+.home {
+  background: #f7f7f7;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  padding: 1.5rem 1rem;
+  width: 100%;
+}/*# sourceMappingURL=main.css.map */

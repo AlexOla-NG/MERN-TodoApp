@@ -1,11 +1,9 @@
 @use "../abstracts" as *;
 
-// TODO: refactor this file
-
 .nav {
 	height: 50px;
 	width: 100%;
-	background-color: $bg-color;
+	// background-color: $bg-color;
 	position: relative;
 
 	.nav-header {
@@ -34,11 +32,11 @@
 			display: inline-block;
 			padding: 13px 10px 13px 10px;
 			text-decoration: none;
-			color: $secondary-color;
+			// color: $secondary-color;
 		}
 
 		a:hover {
-			background-color: $bg-transparent-color;
+			// background-color: $bg-transparent-color;
 		}
 	}
 
@@ -62,7 +60,7 @@
 	}
 	.nav > .nav-btn > label:hover,
 	.nav #nav-check:checked ~ .nav-btn > label {
-		background-color: $bg-transparent-color;
+		// background-color: $bg-transparent-color;
 	}
 	.nav > .nav-btn > label > span {
 		display: block;

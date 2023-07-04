@@ -1,35 +1,42 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useEffect, useState } from "react";
+import { ToastContainer } from "react-toastify";
+
+import AnimatedRoutes from "./routes/AnimatedRoutes";
+import {
+	Token,
+	getLoginToken,
+	removeLoginToken,
+	setLoginToken as updateLoginToken,
+	removeUserID,
+} from "./storage";
 
 function App() {
-  const [count, setCount] = useState(0)
+	// STUB: set token as loginToken state if token exists in local storage, else set to false
+	const [loginToken, setLoginToken] = useState<Token>(
+		getLoginToken() || false
+	);
 
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+	// NOTE: useeffect is triggered when loginToken state is updated across all components
+	useEffect(() => {
+		// if loginToken is not false, update loginToken in localStorage; else remove loginToken & userID from localStorage
+		if (loginToken) updateLoginToken(loginToken);
+		else {
+			removeLoginToken();
+			removeUserID();
+		}
+	}, [loginToken]);
+
+	// STUB: create function that updates loginToken state; pass to auth, navbar
+	const handleTokenUpdate = (token: Token) => {
+		setLoginToken(token);
+	};
+
+	return (
+		<>
+			<AnimatedRoutes handleTokenUpdate={handleTokenUpdate} />
+			<ToastContainer />
+		</>
+	);
 }
 
-export default App
+export default App;

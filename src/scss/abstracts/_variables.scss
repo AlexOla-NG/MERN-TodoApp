@@ -32,11 +32,13 @@ $mid-grey: hsl(0, 0%, 60%) !default;
 /// @type Color
 $dark-grey: hsl(0, 0%, 27%) !default;
 
-$primary-color: hsl(0, 0%, 7%);
-$secondary-color: hsl(0, 0%, 98%);
-$accent-color: hsl(52, 95%, 50%);
-$bg-color: hsl(0, 0%, 30%);
-$bg-transparent-color: hsla(0, 0%, 0%, 0.3);
+$primary-color: hsl(220, 98%, 61%);
+$very-dark-blue: hsl(235, 21%, 11%);
+$check-bg: linear-gradient hsl(192, 100%, 67%) to hsl(280, 87%, 65%);
+$light-grayish-blue: hsl(234, 39%, 85%);
+$light-grayish-blue-hover: hsl(236, 33%, 92%);
+$dark-grayish-blue: hsl(234, 11%, 52%);
+$very-dark-grayish-blue: hsl(233, 14%, 35%);
 $white: hsl(0, 0%, 100%);
 
 /// Container's maximum width
