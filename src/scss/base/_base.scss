@@ -75,9 +75,9 @@ textarea {
 }
 
 button {
-	background: hsl(185, 53%, 15%);
-	border: 0.1em solid hsl(185, 53%, 34%);
-	border-radius: 100vw;
+	background: $btn-color;
+	border: 0.1em solid $btn-color-hover;
+	border-radius: 0.5rem;
 	color: #fff;
 	cursor: pointer;
 	font: inherit;
@@ -91,7 +91,7 @@ button {
 
 button:hover,
 button:focus-visible {
-	background: hsl(185, 53%, 34%);
+	background: $btn-color-hover;
 }
 
 button:disabled {

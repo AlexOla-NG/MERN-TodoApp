@@ -71,9 +71,9 @@ textarea {
 }
 
 button {
-  background: hsl(185, 53%, 15%);
-  border: 0.1em solid hsl(185, 53%, 34%);
-  border-radius: 100vw;
+  background: hsl(220, 78%, 61%);
+  border: 0.1em solid hsl(220, 68%, 71%);
+  border-radius: 0.5rem;
   color: #fff;
   cursor: pointer;
   font: inherit;
@@ -86,7 +86,7 @@ button {
 
 button:hover,
 button:focus-visible {
-  background: hsl(185, 53%, 34%);
+  background: hsl(220, 68%, 71%);
 }
 
 button:disabled {
@@ -176,8 +176,7 @@ ul {
   content: "";
   position: absolute;
   z-index: -1;
-  background: hsl(200, 60%, 20%);
-  /* background: hotpink; */
+  background: hsl(220, 78%, 61%);
   width: 10%;
   aspect-ratio: 1;
   border-radius: 50%;

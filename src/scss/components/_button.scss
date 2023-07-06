@@ -1,6 +1,7 @@
 // -----------------------------------------------------------------------------
 // This file contains all styles related to the button component.
 // -----------------------------------------------------------------------------
+@use "../abstracts" as *;
 
 .btn > span {
 	position: absolute;
@@ -26,8 +27,7 @@
 	content: "";
 	position: absolute;
 	z-index: -1;
-	background: hsl(200 60% 20%);
-	/* background: hotpink; */
+	background: $btn-color;
 	width: 10%;
 	aspect-ratio: 1;
 	border-radius: 50%;
