@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { ToastContainer } from "react-toastify";
 
 import AnimatedRoutes from "./routes/AnimatedRoutes";
+import Navbar from "./components/navigation/Navbar";
 import {
 	Token,
 	getLoginToken,
@@ -33,6 +34,7 @@ function App() {
 
 	return (
 		<>
+			<Navbar />
 			<AnimatedRoutes handleTokenUpdate={handleTokenUpdate} />
 			<ToastContainer />
 		</>

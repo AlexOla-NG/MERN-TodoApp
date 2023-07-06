@@ -1,93 +1,120 @@
 @use "../abstracts" as *;
 
-.nav {
-	height: 50px;
-	width: 100%;
-	// background-color: $bg-color;
-	position: relative;
+.navbar {
+	background-color: $primary-color;
+	color: $white;
+	padding: 10px;
 
-	.nav-header {
-		display: inline;
+	.navbar-container {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
 
-		.nav-title {
-			display: inline-block;
-			font-size: 22px;
-			color: $white;
-			padding: 10px 10px 10px 10px;
-		}
-	}
-
-	.nav-btn {
-		display: none;
-	}
-
-	.nav-links {
-		display: inline;
-		float: right;
-		font-size: 18px;
-		text-transform: capitalize;
-		z-index: 1;
-
-		a {
-			display: inline-block;
-			padding: 13px 10px 13px 10px;
+		.logo {
+			font-weight: bold;
 			text-decoration: none;
-			// color: $secondary-color;
+			color: $white;
 		}
 
-		a:hover {
-			// background-color: $bg-transparent-color;
+		.menu {
+			display: flex;
+			list-style: none;
+			margin: 0;
+			padding: 0;
+
+			.menu-item {
+				margin-left: 20px;
+
+				a {
+					text-decoration: none;
+					color: $white;
+					transition: color 0.3s ease-in-out;
+
+					&:hover,
+					&.active {
+						color: $highlight-color;
+					}
+				}
+			}
+		}
+
+		.menu-icon {
+			display: none;
+			cursor: pointer;
+			flex-direction: column;
+			justify-content: space-between;
+			width: 30px;
+			height: 21px;
+
+			span {
+				background-color: $white;
+				width: 100%;
+				height: 3px;
+				transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+
+				&:first-child {
+					transform-origin: top left;
+				}
+
+				&:last-child {
+					transform-origin: bottom left;
+				}
+			}
 		}
 	}
 
-	#nav-check {
-		display: none;
-	}
-}
+	// Mobile menu styles
+	@media (max-width: 767px) {
+		.navbar-container {
+			.menu {
+				display: none;
+				flex-direction: column;
+				padding: 10px;
+				background-color: $dark-grayish-blue;
+				position: absolute;
+				top: 40px;
+				left: 0;
+				right: 0;
 
-@media (max-width: 600px) {
-	.nav > .nav-btn {
-		display: inline-block;
-		position: absolute;
-		right: 0px;
-		top: 0px;
+				&.open {
+					display: flex;
+				}
+
+				.menu-item {
+					margin-left: 0;
+					margin-bottom: 10px;
+
+					a {
+						color: $white;
+						text-align: center;
+					}
+				}
+			}
+
+			.menu-icon {
+				display: flex;
+			}
+		}
 	}
-	.nav > .nav-btn > label {
-		display: inline-block;
-		width: 50px;
-		height: 50px;
-		padding: 13px;
-	}
-	.nav > .nav-btn > label:hover,
-	.nav #nav-check:checked ~ .nav-btn > label {
-		// background-color: $bg-transparent-color;
-	}
-	.nav > .nav-btn > label > span {
-		display: block;
-		width: 25px;
-		height: 10px;
-		border-top: 2px solid #eee;
-	}
-	.nav > .nav-links {
-		position: absolute;
-		display: block;
-		width: 100%;
-		background-color: #333;
-		height: 0px;
-		transition: all 0.3s ease-in;
-		overflow-y: hidden;
-		top: 50px;
-		left: 0px;
-	}
-	.nav > .nav-links > a {
-		display: block;
-		width: 100%;
-	}
-	.nav > #nav-check:not(:checked) ~ .nav-links {
-		height: 0px;
-	}
-	.nav > #nav-check:checked ~ .nav-links {
-		height: calc(100vh - 50px);
-		overflow-y: auto;
+
+	// Desktop menu styles
+	@media (min-width: 768px) {
+		.navbar-container {
+			.menu {
+				display: flex;
+
+				.menu-item {
+					margin-left: 20px;
+
+					a {
+						color: $white;
+					}
+				}
+			}
+
+			.menu-icon {
+				display: none;
+			}
+		}
 	}
 }
