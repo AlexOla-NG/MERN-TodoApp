@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { ToastContainer } from "react-toastify";
 
+import Layout from "./components/layout/Layout";
 import AnimatedRoutes from "./routes/AnimatedRoutes";
 import Navbar from "./components/navigation/Navbar";
 import {
@@ -33,11 +34,11 @@ function App() {
 	};
 
 	return (
-		<>
+		<Layout>
 			<Navbar />
 			<AnimatedRoutes handleTokenUpdate={handleTokenUpdate} />
 			<ToastContainer />
-		</>
+		</Layout>
 	);
 }
 

@@ -1,9 +1,9 @@
 @use "../abstracts" as *;
 
 .navbar {
-	background-color: $primary-color;
+	// background-color: $primary-color;
 	color: $white;
-	padding: 10px;
+	padding: 1rem 0.75rem;
 
 	.navbar-container {
 		display: flex;
@@ -69,8 +69,8 @@
 			.menu {
 				display: none;
 				flex-direction: column;
-				padding: 10px;
-				background-color: $dark-grayish-blue;
+				padding: 1rem 0.75rem;
+				background-color: hsla(235, 21%, 11%, 0.9);
 				position: absolute;
 				top: 40px;
 				left: 0;
