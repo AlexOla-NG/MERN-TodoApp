@@ -38,7 +38,7 @@ $btn-color-hover: hsl(220, 68%, 71%);
 $secondary-color: hsl(0, 0%, 47%);
 $highlight-color: hsl(0, 75%, 50%);
 $very-dark-blue: hsl(235, 21%, 11%);
-$check-bg: linear-gradient hsl(192, 100%, 67%) to hsl(280, 87%, 65%);
+$check-bg: linear-gradient(to bottom, hsl(192, 100%, 67%), hsl(280, 87%, 65%));
 $light-grayish-blue: hsl(234, 39%, 85%);
 $light-grayish-blue-hover: hsl(236, 33%, 92%);
 $dark-grayish-blue: hsl(234, 11%, 52%);

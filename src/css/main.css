@@ -368,7 +368,7 @@ ul {
   transition: color 0.3s ease-in-out;
 }
 .navbar .navbar-container .menu .menu-item a:hover, .navbar .navbar-container .menu .menu-item a.active {
-  color: hsl(0, 75%, 50%);
+  color: hsl(235, 21%, 11%);
 }
 .navbar .navbar-container .menu-icon {
   display: none;
@@ -403,10 +403,11 @@ ul {
   }
   .navbar .navbar-container .menu.open {
     display: flex;
+    gap: 1rem;
+    z-index: 99;
   }
   .navbar .navbar-container .menu .menu-item {
-    margin-left: 0;
-    margin-bottom: 10px;
+    margin-left: unset;
   }
   .navbar .navbar-container .menu .menu-item a {
     color: hsl(0, 0%, 100%);
@@ -431,6 +432,18 @@ ul {
   }
 }
 
+.layout-container {
+  background-image: url("src/assets/bg-mobile-dark.jpg"), linear-gradient(45deg, hsl(235, 21%, 11%) 0%, hsl(235, 21%, 11%) 13%, hsl(235, 21%, 11%) 25%, hsl(235, 21%, 11%) 37%, hsl(235, 21%, 11%) 50%, hsl(235, 21%, 11%) 63%, hsl(235, 21%, 11%) 75%, hsl(235, 21%, 11%) 87%, hsl(235, 21%, 11%) 100%);
+  background-size: 100% 30%, auto;
+  background-repeat: no-repeat;
+  height: 100vh;
+}
+
+@media screen and (min-width: 768px) {
+  .layout-container {
+    background-image: url("src/assets/bg-desktop-dark.jpg"), linear-gradient(45deg, hsl(235, 21%, 11%) 0%, hsl(235, 21%, 11%) 13%, hsl(235, 21%, 11%) 25%, hsl(235, 21%, 11%) 37%, hsl(235, 21%, 11%) 50%, hsl(235, 21%, 11%) 63%, hsl(235, 21%, 11%) 75%, hsl(235, 21%, 11%) 87%, hsl(235, 21%, 11%) 100%);
+  }
+}
 .home {
   background: #f7f7f7;
   display: grid;

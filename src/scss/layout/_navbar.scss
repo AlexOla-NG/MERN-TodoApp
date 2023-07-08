@@ -32,7 +32,7 @@
 
 					&:hover,
 					&.active {
-						color: $highlight-color;
+						color: $very-dark-blue;
 					}
 				}
 			}
@@ -78,12 +78,12 @@
 
 				&.open {
 					display: flex;
+					gap: 1rem;
+					z-index: 99;
 				}
 
 				.menu-item {
-					margin-left: 0;
-					margin-bottom: 10px;
-
+					margin-left: unset;
 					a {
 						color: $white;
 						text-align: center;
