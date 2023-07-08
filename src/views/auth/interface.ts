@@ -1,12 +1,16 @@
 import { z } from "zod";
 
+// STUB: create type for login formData
+const loginFormData = z.object({
+	email: z.string().email(),
+	password: z.string(),
+});
+
+export type ILoginFormData = z.infer<typeof loginFormData>;
+
 // STUB: create type for Auth components (login & register)
-const schema = z
+const loginSchema = z
 	.object({
-		defaultFormData: z.object({
-			email: z.string().email().optional(),
-			password: z.string().optional(),
-		}),
 		toggleView: z.function(),
 		handleTokenUpdate: z
 			.function()
@@ -15,19 +19,34 @@ const schema = z
 	})
 	.partial();
 
-export type IAuth = z.infer<typeof schema>;
+export type ILogin = z.infer<typeof loginSchema>;
 
-// STUB: creat type for function to update token state, & hold token state itself
-const TokenSchema = schema
+// STUB: create type for formData
+const registerFormData = z.object({
+	firstName: z.string(),
+	lastName: z.string(),
+	email: z.string().email(),
+	password: z.string(),
+});
+
+export type IRegisterFormData = z.infer<typeof registerFormData>;
+
+// STUB: create type for Auth components (login & register)
+const registerSchema = z
+	.object({
+		toggleView: z.function(),
+		handleTokenUpdate: z
+			.function()
+			.args(z.union([z.string(), z.boolean()])),
+		token: z.union([z.string(), z.boolean()]),
+	})
+	.partial();
+
+export type IRegister = z.infer<typeof registerSchema>;
+
+// STUB: create type for function to update token state, & hold token state itself
+const TokenSchema = loginSchema
 	.pick({ handleTokenUpdate: true, token: true })
 	.partial();
 
 export type TokenSchema = z.infer<typeof TokenSchema>;
-
-// STUB: create type for formData
-const formData = z.object({
-	email: z.string().email().optional(),
-	password: z.string().optional(),
-});
-
-export type IFormData = z.infer<typeof formData>;
