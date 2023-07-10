@@ -6,7 +6,7 @@ const buttonSchema = z.object({
 	disabled: z.boolean().optional(),
 	handleClick: z.function().args().optional(),
 });
-type IButton = z.infer<typeof buttonSchema>;
+export type IButton = z.infer<typeof buttonSchema>;
 
 // TODO: stopped here
 // finish styling btn

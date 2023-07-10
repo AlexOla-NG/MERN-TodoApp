@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { IRegister, IRegisterFormData } from "../interface";
 import PasswordInput from "./PasswordInput";
+import Button from "../../../components/button/Button";
+import TextButton from "../../../components/button/TextButton";
 
 const Register = ({ toggleView }: IRegister) => {
 	const defaultFormData: IRegisterFormData = {
@@ -22,8 +24,10 @@ const Register = ({ toggleView }: IRegister) => {
 				<fieldset>
 					<legend>register</legend>
 					<label htmlFor="firstName">
-						firstName
+						first name
 						<input
+							name="firstName"
+							id="firstName"
 							type="firstName"
 							placeholder="firstName"
 							onChange={handleChange}
@@ -31,8 +35,10 @@ const Register = ({ toggleView }: IRegister) => {
 						/>
 					</label>
 					<label htmlFor="lastName">
-						lastName
+						last name
 						<input
+							name="lastName"
+							id="lastName"
 							type="lastName"
 							placeholder="lastName"
 							onChange={handleChange}
@@ -42,7 +48,10 @@ const Register = ({ toggleView }: IRegister) => {
 					<label htmlFor="email">
 						email
 						<input
+							name="email"
+							id="email"
 							type="email"
+							autoComplete="off"
 							placeholder="email"
 							onChange={handleChange}
 							value={formData?.email}
@@ -55,6 +64,13 @@ const Register = ({ toggleView }: IRegister) => {
 						handleChange={handleChange}
 					/>
 				</fieldset>
+				<div className="form-footer">
+					<Button type="submit" title="register" />
+					<TextButton
+						title="Already have an account? Login"
+						handleClick={toggleView}
+					/>
+				</div>
 			</form>
 		</div>
 	);

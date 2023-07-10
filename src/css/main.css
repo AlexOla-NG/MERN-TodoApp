@@ -82,6 +82,7 @@ button {
   position: relative;
   isolation: isolate;
   overflow: hidden;
+  width: 100%;
 }
 
 button:hover,
@@ -183,13 +184,13 @@ ul {
   inset: 0;
   margin: auto;
   opacity: 0;
-  transition: transform 1000ms 200ms, opacity 200ms;
+  transition: transform 1300ms 200ms, opacity 200ms;
 }
 
 .btn:active::before {
   transform: scale(25);
   opacity: 1;
-  transition: transform 1000ms, opacity 500ms;
+  transition: transform 1300ms, opacity 500ms;
 }
 
 .btn:has(:first-child:active)::before {
@@ -202,14 +203,22 @@ ul {
 
 .btn:has(:first-child:active)::before,
 .btn:has(:last-child:active)::before {
-  transition: transform 500ms, opacity 250ms;
+  transition: transform 800ms, opacity 250ms;
 }
 
 .form-wrapper {
+  background: hsl(233, 24%, 16%);
+  border-radius: 0.3rem;
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
-  padding: 3rem 1rem;
+  margin: 3rem 10%;
+  padding: 2.5rem 1.5rem 1.5rem;
+}
+.form-wrapper .form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 }
 .form-wrapper .form fieldset {
   border: none;
@@ -217,10 +226,30 @@ ul {
   flex-direction: column;
   gap: 1rem;
 }
+.form-wrapper .form fieldset legend,
+.form-wrapper .form fieldset label,
+.form-wrapper .form fieldset input {
+  text-transform: capitalize;
+}
+.form-wrapper .form fieldset legend {
+  color: hsl(0, 0%, 100%);
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
 .form-wrapper .form fieldset label {
-  display: flex;
+  color: hsl(0, 0%, 100%);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
   align-items: center;
-  justify-content: space-between;
+}
+.form-wrapper .form fieldset label input {
+  color: hsl(233, 24%, 16%);
+}
+.form-wrapper .form .form-footer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
 }
 .form-wrapper p {
   text-align: center;
@@ -231,13 +260,13 @@ ul {
 
 @media screen and (min-width: 768px) {
   .form-wrapper {
-    margin: 0 auto;
+    margin: 4rem auto;
     width: 50%;
   }
 }
 @media screen and (min-width: 1024px) {
   .form-wrapper {
-    width: 25%;
+    width: 30%;
   }
 }
 @media screen and (min-width: 2560px) {
@@ -280,6 +309,29 @@ ul {
 .create-recipe form .ingredients-wrapper .ingredient svg {
   width: 2rem;
   height: auto;
+}
+
+.password-input {
+  border: 1px transparent;
+  border-radius: 0.3rem;
+  overflow: hidden;
+  width: 100%;
+}
+.password-input div {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  position: relative;
+}
+.password-input div input {
+  border-radius: 0.3rem;
+  color: hsl(233, 24%, 16%);
+  padding: 0.7rem 1rem;
+}
+.password-input div svg {
+  bottom: 0.8rem;
+  color: #000;
+  position: absolute;
+  right: 1rem;
 }
 
 .recipe-card {
@@ -330,19 +382,19 @@ ul {
   gap: 0.5rem;
 }
 
-.password-input {
-  border: 1px solid hsl(0, 0%, 27%);
-  border-radius: 0.3rem;
-  width: 100%;
-}
-.password-input div {
-  display: flex;
-  align-items: center;
-}
-.password-input div input {
+.text-btn {
+  background: unset;
   border: unset;
-  border-radius: unset;
-  padding: 0.7rem 0 0.7rem 1rem;
+  padding: unset;
+  text-align: unset;
+  transition: color 250ms;
+  text-transform: none;
+}
+
+.text-btn:hover,
+.text-btn:focus-visible {
+  background: unset;
+  color: hsl(220, 98%, 61%);
 }
 
 .navbar {
