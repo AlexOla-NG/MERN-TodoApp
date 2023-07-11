@@ -390,7 +390,7 @@ ul {
   padding: unset;
   text-align: unset;
   transition: color 250ms;
-  text-transform: none;
+  text-transform: capitalize;
 }
 
 .text-btn:hover,

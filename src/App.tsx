@@ -36,7 +36,7 @@ function App() {
 
 	return (
 		<Layout>
-			<Navbar />
+			<Navbar handleTokenUpdate={handleTokenUpdate} token={loginToken} />
 			<AnimatedRoutes handleTokenUpdate={handleTokenUpdate} />
 			<ToastContainer />
 		</Layout>

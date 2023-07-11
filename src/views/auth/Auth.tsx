@@ -8,7 +8,7 @@ import Login from "./components/Login";
 // setup register & login components
 
 const Auth = ({ handleTokenUpdate }: TokenSchema) => {
-	const [pageView, setPageView] = useState("register");
+	const [pageView, setPageView] = useState("login");
 
 	const toggleView = () => {
 		setPageView(pageView === "login" ? "register" : "login");
