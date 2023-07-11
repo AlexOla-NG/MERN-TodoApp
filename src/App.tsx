@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import Layout from "./components/layout/Layout";
 import AnimatedRoutes from "./routes/AnimatedRoutes";

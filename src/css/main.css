@@ -71,18 +71,9 @@ textarea {
 }
 
 button {
-  background: hsl(220, 78%, 61%);
-  border: 0.1em solid hsl(220, 68%, 71%);
-  border-radius: 0.5rem;
   color: #fff;
   cursor: pointer;
   font: inherit;
-  padding: 0.75rem 2rem;
-  transition: background-color 250ms;
-  position: relative;
-  isolation: isolate;
-  overflow: hidden;
-  width: 100%;
 }
 
 button:hover,
@@ -154,6 +145,17 @@ ul {
 /**
  * Basic typography style for copy text
  */
+.btn {
+  background: hsl(220, 78%, 61%);
+  border: 0.1em solid hsl(220, 68%, 71%);
+  border-radius: 0.5rem;
+  padding: 0.75rem 2rem;
+  transition: background-color 250ms;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
 .btn > span {
   position: absolute;
   z-index: -1;
@@ -227,8 +229,7 @@ ul {
   gap: 1rem;
 }
 .form-wrapper .form fieldset legend,
-.form-wrapper .form fieldset label,
-.form-wrapper .form fieldset input {
+.form-wrapper .form fieldset label {
   text-transform: capitalize;
 }
 .form-wrapper .form fieldset legend {
@@ -385,6 +386,7 @@ ul {
 .text-btn {
   background: unset;
   border: unset;
+  font-size: 0.85rem;
   padding: unset;
   text-align: unset;
   transition: color 250ms;

@@ -9,22 +9,21 @@ const loginFormData = z.object({
 export type ILoginFormData = z.infer<typeof loginFormData>;
 
 // STUB: create type for Auth components (login & register)
-const loginSchema = z
-	.object({
-		toggleView: z.function(),
-		handleTokenUpdate: z
-			.function()
-			.args(z.union([z.string(), z.boolean()])),
-		token: z.union([z.string(), z.boolean()]),
-	})
-	.partial();
+const loginSchema = z.object({
+	toggleView: z.function(),
+	handleTokenUpdate: z
+		.function()
+		.args(z.union([z.string(), z.boolean()]))
+		.optional(),
+	token: z.union([z.string(), z.boolean()]).optional(),
+});
 
 export type ILogin = z.infer<typeof loginSchema>;
 
 // STUB: create type for formData
 const registerFormData = z.object({
-	firstName: z.string(),
-	lastName: z.string(),
+	firstname: z.string(),
+	lastname: z.string(),
 	email: z.string().email(),
 	password: z.string(),
 });
@@ -32,15 +31,14 @@ const registerFormData = z.object({
 export type IRegisterFormData = z.infer<typeof registerFormData>;
 
 // STUB: create type for Auth components (login & register)
-const registerSchema = z
-	.object({
-		toggleView: z.function(),
-		handleTokenUpdate: z
-			.function()
-			.args(z.union([z.string(), z.boolean()])),
-		token: z.union([z.string(), z.boolean()]),
-	})
-	.partial();
+const registerSchema = z.object({
+	toggleView: z.function(),
+	handleTokenUpdate: z
+		.function()
+		.args(z.union([z.string(), z.boolean()]))
+		.optional(),
+	token: z.union([z.string(), z.boolean()]).optional(),
+});
 
 export type IRegister = z.infer<typeof registerSchema>;
 

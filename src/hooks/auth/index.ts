@@ -8,7 +8,7 @@ import { errorAlert, successAlert } from "../../utils";
 // setup register and login hooks
 
 const register = async (formData: unknown) => {
-	const res = await axiosInstance.post("/auth/register", formData, {
+	const res = await axiosInstance.post("/users", formData, {
 		headers: {
 			"Content-Type": "application/json",
 		},
@@ -18,7 +18,7 @@ const register = async (formData: unknown) => {
 };
 
 const login = async (formData: unknown) => {
-	const res = await axiosInstance.post("/auth/login", formData, {
+	const res = await axiosInstance.post("/users/login", formData, {
 		headers: {
 			"Content-Type": "application/json",
 		},
@@ -29,7 +29,6 @@ const login = async (formData: unknown) => {
 
 export const useRegister = () => {
 	const queryClient = useQueryClient();
-	const navigate = useNavigate();
 	const { isSuccess, mutate, isLoading } = useMutation({
 		mutationFn: (formData: unknown) => register(formData),
 		onSuccess: () => {

@@ -1,3 +1,4 @@
+/* eslint-disable no-mixed-spaces-and-tabs */
 // import jwtDecode from "jwt-decode";
 import { toast } from "react-toastify";
 // import { getLoginToken } from "../storage";
@@ -6,7 +7,7 @@ import { toast } from "react-toastify";
 const SERVER_ERROR = "There was an error contacting the server.";
 
 export const toastOptions = {
-	position: toast.POSITION.TOP_RIGHT,
+	position: toast.POSITION.TOP_CENTER,
 	// autoClose: 8000,
 	draggable: true,
 	//   theme: "dark",
@@ -34,35 +35,3 @@ export const errorAlert = (error: any) => {
 export const infoAlert = (msg: string) => {
 	toast.info(msg || "Info Notification !", toastOptions);
 };
-
-// STUB: convert seconds to hours
-export function convertSecondsToHours(seconds: number) {
-	var minutes = Math.floor(seconds / 60);
-	var remainingSeconds = seconds % 60;
-
-	return convertMinutesToHours(minutes) + " " + remainingSeconds + "s";
-}
-
-function convertMinutesToHours(minutes: number) {
-	var hours = Math.floor(minutes / 60);
-	var remainingMinutes = minutes % 60;
-
-	var formattedTime = hours + "h " + remainingMinutes + "m";
-	return formattedTime;
-}
-
-// STUB: convert seconds to mins
-export function convertSecondToMinutes(seconds: number) {
-	var minutes = Math.floor(seconds / 60);
-	var remainingSeconds = seconds % 60;
-
-	var formattedTime = minutes + "m " + remainingSeconds + "s";
-	return formattedTime;
-}
-
-// STUB: check if element is array
-export function isInArray(element: string, array: string[]) {
-	if (array.length > 0) {
-		return array.includes(element);
-	}
-}

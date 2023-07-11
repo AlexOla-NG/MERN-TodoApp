@@ -5,6 +5,18 @@
 
 // TODO: fix bugs with animation
 
+.btn {
+	background: $btn-color;
+	border: 0.1em solid $btn-color-hover;
+	border-radius: 0.5rem;
+	padding: 0.75rem 2rem;
+	transition: background-color 250ms;
+
+	position: relative;
+	isolation: isolate;
+	overflow: hidden;
+}
+
 .btn > span {
 	position: absolute;
 	z-index: -1;
