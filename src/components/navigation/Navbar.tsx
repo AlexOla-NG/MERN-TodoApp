@@ -1,12 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 
 import TextButton from "../button/TextButton";
 import { successAlert } from "../../utils";
 import { Token } from "../../storage";
-
-// TODO: add the clickaway library here
-// we've already installed it
 
 type Navbar = {
 	handleTokenUpdate(token: Token): void;
@@ -16,9 +13,32 @@ type Navbar = {
 const Navbar = ({ handleTokenUpdate, token }: Navbar) => {
 	const navigate = useNavigate();
 	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+	const mobileMenuRef = useRef<HTMLUListElement>(null);
+	const menuIconRef = useRef<HTMLDivElement>(null);
+
+	useEffect(() => {
+		const handleOutsideClick = (event: MouseEvent): void => {
+			if (
+				mobileMenuRef.current &&
+				!mobileMenuRef.current.contains(event.target as Node) &&
+				!menuIconRef.current?.contains(event.target as Node)
+			) {
+				setIsMobileMenuOpen(false);
+			}
+		};
+		document.addEventListener("click", handleOutsideClick);
+
+		return () => {
+			document.removeEventListener("click", handleOutsideClick);
+		};
+	}, []);
 
 	const toggleMobileMenu = (): void => {
 		setIsMobileMenuOpen(!isMobileMenuOpen);
+	};
+
+	const closeMobileMenu = (): void => {
+		setIsMobileMenuOpen(false);
 	};
 
 	// STUB: set loginToken state to false on logout
@@ -36,13 +56,19 @@ const Navbar = ({ handleTokenUpdate, token }: Navbar) => {
 		output = (
 			<>
 				<li className="menu-item">
-					<NavLink to="/">Home</NavLink>
+					<NavLink to="/" onClick={closeMobileMenu}>
+						Home
+					</NavLink>
 				</li>
 				<li className="menu-item">
-					<NavLink to="/new-todo">New Todo</NavLink>
+					<NavLink to="/new-todo" onClick={closeMobileMenu}>
+						New Todo
+					</NavLink>
 				</li>
 				<li className="menu-item">
-					<NavLink to="/user-todos">My Todos</NavLink>
+					<NavLink to="/user-todos" onClick={closeMobileMenu}>
+						My Todos
+					</NavLink>
 				</li>
 				<li className="menu-item">
 					<TextButton handleClick={handleLogout} title="Logout" />
@@ -53,10 +79,14 @@ const Navbar = ({ handleTokenUpdate, token }: Navbar) => {
 		output = (
 			<>
 				<li className="menu-item">
-					<NavLink to="/">Home</NavLink>
+					<NavLink to="/" onClick={closeMobileMenu}>
+						Home
+					</NavLink>
 				</li>
 				<li className="menu-item">
-					<NavLink to="/auth">Login/Register</NavLink>
+					<NavLink to="/auth" onClick={closeMobileMenu}>
+						Login/Register
+					</NavLink>
 				</li>
 			</>
 		);
@@ -70,6 +100,7 @@ const Navbar = ({ handleTokenUpdate, token }: Navbar) => {
 				</NavLink>
 
 				<div
+					ref={menuIconRef}
 					className={`menu-icon ${isMobileMenuOpen ? "open" : ""}`}
 					onClick={toggleMobileMenu}
 				>
@@ -78,7 +109,10 @@ const Navbar = ({ handleTokenUpdate, token }: Navbar) => {
 					<span></span>
 				</div>
 
-				<ul className={`menu ${isMobileMenuOpen ? "open" : ""}`}>
+				<ul
+					ref={mobileMenuRef}
+					className={`menu ${isMobileMenuOpen ? "open" : ""}`}
+				>
 					{output}
 				</ul>
 			</div>
