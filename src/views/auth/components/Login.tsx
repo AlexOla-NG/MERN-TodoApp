@@ -1,18 +1,33 @@
-import React, { useState } from "react";
-import { ILogin, ILoginFormData } from "../interface";
+import React, { useEffect, useState } from "react";
+
 import PasswordInput from "./PasswordInput";
 import Button from "../../../components/button/Button";
 import TextButton from "../../../components/button/TextButton";
-import { useLogin } from "../../../hooks/auth";
 
-const Login = ({ toggleView }: ILogin) => {
+import { ILogin, ILoginFormData } from "../interface";
+import { useLogin } from "../../../hooks/auth";
+import { setStoredUser } from "../../../storage";
+
+const Login = ({ toggleView, handleTokenUpdate }: ILogin) => {
 	const defaultFormData: ILoginFormData = {
 		email: "",
 		password: "",
 	};
 
 	const [formData, setFormData] = useState(defaultFormData);
-	const { mutate, isLoading } = useLogin();
+	const { mutate, isLoading, data, isSuccess } = useLogin();
+
+	// STUB: update token in local storage on success
+	useEffect(
+		() => {
+			if (isSuccess) {
+				handleTokenUpdate(data?.token);
+				setStoredUser(data?.userID);
+			}
+		},
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+		[isSuccess, data]
+	);
 
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = event.target;

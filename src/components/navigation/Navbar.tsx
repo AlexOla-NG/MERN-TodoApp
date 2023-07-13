@@ -2,16 +2,18 @@ import React, { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 
 import TextButton from "../button/TextButton";
-import { TokenSchema } from "../../views/auth/interface";
 import { successAlert } from "../../utils";
-
-// TODO: stopped here
-// login token is not being set in local storage, please fix
+import { Token } from "../../storage";
 
 // TODO: add the clickaway library here
 // we've already installed it
 
-const Navbar = ({ handleTokenUpdate, token }: TokenSchema) => {
+type Navbar = {
+	handleTokenUpdate(token: Token): void;
+	token: Token;
+};
+
+const Navbar = ({ handleTokenUpdate, token }: Navbar) => {
 	const navigate = useNavigate();
 	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -43,7 +45,7 @@ const Navbar = ({ handleTokenUpdate, token }: TokenSchema) => {
 					<NavLink to="/user-todos">My Todos</NavLink>
 				</li>
 				<li className="menu-item">
-					<TextButton handleClick={handleLogout} title="logout" />
+					<TextButton handleClick={handleLogout} title="Logout" />
 				</li>
 			</>
 		);

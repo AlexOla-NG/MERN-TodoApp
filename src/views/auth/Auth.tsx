@@ -1,13 +1,17 @@
 import React, { useState } from "react";
 import AnimatedWrapper from "../../routes/AnimatedWrapper";
-import { TokenSchema } from "./interface";
 import Register from "./components/Register";
 import Login from "./components/Login";
+import { Token } from "../../storage";
 
 // TODO: stopped here
 // setup register & login components
 
-const Auth = ({ handleTokenUpdate }: TokenSchema) => {
+type Auth = {
+	handleTokenUpdate(token: Token): void;
+};
+
+const Auth = ({ handleTokenUpdate }: Auth) => {
 	const [pageView, setPageView] = useState("login");
 
 	const toggleView = () => {
@@ -17,7 +21,12 @@ const Auth = ({ handleTokenUpdate }: TokenSchema) => {
 	return (
 		<AnimatedWrapper>
 			{pageView === "register" && <Register toggleView={toggleView} />}
-			{pageView === "login" && <Login toggleView={toggleView} />}
+			{pageView === "login" && (
+				<Login
+					toggleView={toggleView}
+					handleTokenUpdate={handleTokenUpdate}
+				/>
+			)}
 		</AnimatedWrapper>
 	);
 };

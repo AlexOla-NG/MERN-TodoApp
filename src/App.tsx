@@ -21,7 +21,7 @@ function App() {
 
 	// NOTE: useeffect is triggered when loginToken state is updated across all components
 	useEffect(() => {
-		// if loginToken is not false, update loginToken in localStorage; else remove loginToken & userID from localStorage
+		// if loginToken is true/exists, update loginToken in localStorage; else remove loginToken & userID from localStorage
 		if (loginToken) updateLoginToken(loginToken);
 		else {
 			removeLoginToken();
