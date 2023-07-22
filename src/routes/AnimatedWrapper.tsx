@@ -5,14 +5,16 @@ import { motion } from "framer-motion";
 
 type AnimatedWrapperProps = {
 	children: ReactNode;
+	className?: string;
 };
 
-const AnimatedWrapper = ({ children }: AnimatedWrapperProps) => {
+const AnimatedWrapper = ({ children, className }: AnimatedWrapperProps) => {
 	return (
 		<motion.div
 			initial={{ x: 300, opacity: 0 }}
 			animate={{ x: 0, opacity: 1 }}
 			exit={{ x: -300, opacity: 0 }}
+			className={className}
 		>
 			{children}
 		</motion.div>

@@ -16,6 +16,7 @@ const Navbar = ({ handleTokenUpdate, token }: Navbar) => {
 	const mobileMenuRef = useRef<HTMLUListElement>(null);
 	const menuIconRef = useRef<HTMLDivElement>(null);
 
+	// STUB: handle clickaway functionality for mobile menu
 	useEffect(() => {
 		const handleOutsideClick = (event: MouseEvent): void => {
 			if (
@@ -33,6 +34,7 @@ const Navbar = ({ handleTokenUpdate, token }: Navbar) => {
 		};
 	}, []);
 
+	// STUB: mobile menu toggle functionality
 	const toggleMobileMenu = (): void => {
 		setIsMobileMenuOpen(!isMobileMenuOpen);
 	};
