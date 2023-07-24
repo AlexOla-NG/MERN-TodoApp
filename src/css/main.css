@@ -145,69 +145,6 @@ ul {
 /**
  * Basic typography style for copy text
  */
-.btn {
-  background: hsl(220, 78%, 61%);
-  border: 0.1em solid hsl(220, 68%, 71%);
-  border-radius: 0.5rem;
-  padding: 0.75rem 2rem;
-  transition: background-color 250ms;
-  position: relative;
-  isolation: isolate;
-  overflow: hidden;
-}
-
-.btn > span {
-  position: absolute;
-  z-index: -1;
-  width: 33.333%;
-  height: 100%;
-  background: transparent;
-  opacity: 0.5;
-}
-
-.btn > :first-child {
-  left: 0;
-  top: 0;
-}
-
-.btn > :last-child {
-  right: 0;
-  top: 0;
-}
-
-.btn::before {
-  content: "";
-  position: absolute;
-  z-index: -1;
-  background: hsl(220, 78%, 61%);
-  width: 10%;
-  aspect-ratio: 1;
-  border-radius: 50%;
-  inset: 0;
-  margin: auto;
-  opacity: 0;
-  transition: transform 1300ms 200ms, opacity 200ms;
-}
-
-.btn:active::before {
-  transform: scale(25);
-  opacity: 1;
-  transition: transform 1300ms, opacity 500ms;
-}
-
-.btn:has(:first-child:active)::before {
-  margin-left: 0;
-}
-
-.btn:has(:last-child:active)::before {
-  margin-right: 0;
-}
-
-.btn:has(:first-child:active)::before,
-.btn:has(:last-child:active)::before {
-  transition: transform 800ms, opacity 250ms;
-}
-
 .form-wrapper {
   background: hsl(233, 24%, 16%);
   border-radius: 0.3rem;
@@ -275,6 +212,69 @@ ul {
     width: 15%;
   }
 }
+.btn {
+  background: hsl(220, 78%, 61%);
+  border: 0.1em solid hsl(220, 68%, 71%);
+  border-radius: 0.5rem;
+  padding: 0.75rem 2rem;
+  transition: background-color 250ms;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.btn > span {
+  position: absolute;
+  z-index: -1;
+  width: 33.333%;
+  height: 100%;
+  background: transparent;
+  opacity: 0.5;
+}
+
+.btn > :first-child {
+  left: 0;
+  top: 0;
+}
+
+.btn > :last-child {
+  right: 0;
+  top: 0;
+}
+
+.btn::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  background: hsl(220, 78%, 61%);
+  width: 10%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  inset: 0;
+  margin: auto;
+  opacity: 0;
+  transition: transform 1300ms 200ms, opacity 200ms;
+}
+
+.btn:active::before {
+  transform: scale(25);
+  opacity: 1;
+  transition: transform 1300ms, opacity 500ms;
+}
+
+.btn:has(:first-child:active)::before {
+  margin-left: 0;
+}
+
+.btn:has(:last-child:active)::before {
+  margin-right: 0;
+}
+
+.btn:has(:first-child:active)::before,
+.btn:has(:last-child:active)::before {
+  transition: transform 800ms, opacity 250ms;
+}
+
 .create-todo {
   display: flex;
   flex-direction: column;
@@ -286,6 +286,9 @@ ul {
   .create-todo > * {
     margin: 0 auto;
   }
+}
+.create-todo h2 {
+  color: hsl(0, 0%, 100%);
 }
 .create-todo form {
   display: flex;
@@ -376,6 +379,38 @@ ul {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+}
+
+/* StyledSelect.css */
+.styled-select-container {
+  position: relative;
+  display: inline-block;
+}
+.styled-select-container .styled-select {
+  appearance: none;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #fff;
+  width: 200px;
+  cursor: pointer;
+  /* Style the options dropdown */
+  /* Style the selected option */
+}
+.styled-select-container .styled-select .chevron-down::after {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+.styled-select-container .styled-select option {
+  padding: 8px;
+}
+.styled-select-container .styled-select option:checked {
+  background-color: #007bff;
+  color: #fff;
 }
 
 .text-btn {

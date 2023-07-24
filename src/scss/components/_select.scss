@@ -1,0 +1,36 @@
+/* StyledSelect.css */
+
+.styled-select-container {
+	position: relative;
+	display: inline-block;
+
+	.styled-select {
+		appearance: none;
+		padding: 10px;
+		font-size: 16px;
+		border: 1px solid #ccc;
+		border-radius: 4px;
+		background-color: #fff;
+		width: 200px;
+		cursor: pointer;
+
+		.chevron-down::after {
+			position: absolute;
+			top: 50%;
+			right: 10px;
+			transform: translateY(-50%);
+			pointer-events: none;
+		}
+
+		/* Style the options dropdown */
+		& option {
+			padding: 8px;
+		}
+
+		/* Style the selected option */
+		& option:checked {
+			background-color: #007bff;
+			color: #fff;
+		}
+	}
+}
