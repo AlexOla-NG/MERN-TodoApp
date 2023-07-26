@@ -1,9 +1,6 @@
 import React, { useState, ChangeEvent } from "react";
 import { ReactComponent as ChevronDown } from "../../assets/svg/chevron-down.svg";
 
-// TODO: stopped here
-// fix ReactComponent error
-
 interface Option {
 	value: string;
 	label: string;
@@ -35,8 +32,8 @@ const Select: React.FC<SelectProps> = ({ options }) => {
 						{option.label}
 					</option>
 				))}
-				<ChevronDown className="chevron-down" />
 			</select>
+			<ChevronDown />
 		</div>
 	);
 };

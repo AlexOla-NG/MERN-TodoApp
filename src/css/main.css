@@ -216,6 +216,7 @@ ul {
   background: hsl(220, 78%, 61%);
   border: 0.1em solid hsl(220, 68%, 71%);
   border-radius: 0.5rem;
+  outline: 1rem hsl(220, 78%, 61%);
   padding: 0.75rem 2rem;
   transition: background-color 250ms;
   position: relative;
@@ -381,29 +382,23 @@ ul {
   gap: 0.5rem;
 }
 
-/* StyledSelect.css */
 .styled-select-container {
   position: relative;
   display: inline-block;
 }
 .styled-select-container .styled-select {
   appearance: none;
-  padding: 10px;
-  font-size: 16px;
+  background-color: #fff;
   border: 1px solid #ccc;
   border-radius: 4px;
-  background-color: #fff;
-  width: 200px;
   cursor: pointer;
+  font-size: 16px;
+  outline-color: hsl(220, 68%, 71%);
+  outline-width: 1rem;
+  padding: 0.7rem 1rem;
+  width: 200px;
   /* Style the options dropdown */
   /* Style the selected option */
-}
-.styled-select-container .styled-select .chevron-down::after {
-  position: absolute;
-  top: 50%;
-  right: 10px;
-  transform: translateY(-50%);
-  pointer-events: none;
 }
 .styled-select-container .styled-select option {
   padding: 8px;
@@ -411,6 +406,12 @@ ul {
 .styled-select-container .styled-select option:checked {
   background-color: #007bff;
   color: #fff;
+}
+.styled-select-container svg {
+  position: absolute;
+  right: 0;
+  top: 0.5rem;
+  zoom: 55%;
 }
 
 .text-btn {
