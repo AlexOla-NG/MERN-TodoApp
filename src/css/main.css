@@ -1,3 +1,4 @@
+@charset "UTF-8";
 @import url("https://fonts.googleapis.com/css2?family=Josefin+Sans&display=swap");
 /**
  * Set up a decent box model on the root element
@@ -383,35 +384,51 @@ ul {
 }
 
 .styled-select-container {
+  background: hsl(233, 24%, 16%);
+  border: 1px solid hsl(0, 0%, 27%);
+  border-radius: 0.3rem;
+  display: flex;
+  line-height: 3;
+  overflow: hidden;
+  padding: 0.7rem 0.5rem;
   position: relative;
-  display: inline-block;
+  width: 12rem;
 }
-.styled-select-container .styled-select {
+.styled-select-container select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
   appearance: none;
-  background-color: #fff;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 16px;
-  outline-color: hsl(220, 68%, 71%);
-  outline-width: 1rem;
-  padding: 0.7rem 1rem;
-  width: 200px;
-  /* Style the options dropdown */
-  /* Style the selected option */
-}
-.styled-select-container .styled-select option {
-  padding: 8px;
-}
-.styled-select-container .styled-select option:checked {
-  background-color: #007bff;
+  background: hsl(233, 24%, 16%);
+  background-image: none;
+  border: none;
+  box-shadow: none;
   color: #fff;
+  cursor: pointer;
+  font-size: inherit;
+  font-family: inherit;
+  flex: 1;
+  outline: 0;
+  padding: 0 0.5em;
+  text-transform: capitalize;
+  width: 100%;
 }
-.styled-select-container svg {
+.styled-select-container select::-ms-expand {
+  display: none;
+}
+.styled-select-container::after {
+  content: "▼";
   position: absolute;
+  top: 0;
   right: 0;
-  top: 0.5rem;
-  zoom: 55%;
+  padding: 0 1em;
+  background: #2b2e2e;
+  cursor: pointer;
+  pointer-events: none;
+  transition: 0.25s all ease-in-out;
+}
+.styled-select-container:hover::after {
+  color: hsl(220, 78%, 61%);
 }
 
 .text-btn {

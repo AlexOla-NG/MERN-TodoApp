@@ -1,11 +1,12 @@
-import React, { FormEvent, useState } from "react";
+import React, { FormEvent, useEffect, useState } from "react";
 import AnimatedWrapper from "../../routes/AnimatedWrapper";
 import Button from "../../components/button/Button";
-import { getStoredUser } from "../../storage";
 import Select from "../../components/select/Select";
+import { getStoredUser } from "../../storage";
+import { useGetStatusOptions } from "../../hooks/new-todo";
 
 // TODO: stopped here
-// change status input to select
+// test form submission
 
 const NewTodo = () => {
 	const [formData, setFormData] = useState({
@@ -14,6 +15,16 @@ const NewTodo = () => {
 		status: "",
 		user: getStoredUser(),
 	});
+	const [statusOptions, setStatusOptions] = useState(['']);
+	const {data, isSuccess} = useGetStatusOptions();
+
+	// STUB: get & set status options
+	useEffect(() => {
+		if (isSuccess) {
+			setStatusOptions(data);
+		}
+	}, [data, isSuccess]);
+	
 
 	const handleChange = (
 		event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
@@ -26,13 +37,6 @@ const NewTodo = () => {
 		event.preventDefault();
 		// mutate(formData);
 	};
-
-	const dummyOptions = [
-		{ value: "option1", label: "Option 1" },
-		{ value: "option2", label: "Option 2" },
-		{ value: "option3", label: "Option 3" },
-		{ value: "option4", label: "Option 4" },
-	];
 
 	return (
 		<AnimatedWrapper className="create-todo">
@@ -61,7 +65,7 @@ const NewTodo = () => {
 				</label>
 				<label htmlFor="status">
 					status
-					<Select options={dummyOptions} />
+					<Select options={statusOptions} />
 				</label>
 				<Button title="submit" type="submit" />
 			</form>

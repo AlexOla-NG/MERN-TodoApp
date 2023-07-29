@@ -1,11 +1,11 @@
 import { useNavigate } from "react-router-dom";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { axiosInstance } from "../../axios-Instance";
 import { queryKeys } from "../../react-query/constants";
 import { errorAlert, successAlert } from "../../utils";
 
-const register = async (formData: unknown) => {
-	const res = await axiosInstance.post("/users", formData, {
+const getStatusOptions = async () => {
+	const res = await axiosInstance.get("/todos/status", {
 		headers: {
 			"Content-Type": "application/json",
 		},
@@ -24,20 +24,16 @@ const login = async (formData: unknown) => {
 	return res?.data?.data;
 };
 
-export const useRegister = () => {
-	const queryClient = useQueryClient();
-	const { isSuccess, mutate, isLoading } = useMutation({
-		mutationFn: (formData: unknown) => register(formData),
-		onSuccess: () => {
-			queryClient.invalidateQueries([queryKeys.authentication]);
-			successAlert(`User registration successful!`);
-		},
+export const useGetStatusOptions = () => {
+	const { isSuccess, data, isLoading } = useQuery({
+		queryKey: [queryKeys.statusOptions],
+		queryFn: () => getStatusOptions(),
 		onError: (error) => {
 			errorAlert(error);
 		},
 	});
 
-	return { isSuccess, mutate, isLoading };
+	return { isSuccess, data, isLoading };
 };
 
 export const useLogin = () => {

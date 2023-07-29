@@ -1,13 +1,7 @@
 import React, { useState, ChangeEvent } from "react";
-import { ReactComponent as ChevronDown } from "../../assets/svg/chevron-down.svg";
-
-interface Option {
-	value: string;
-	label: string;
-}
 
 interface SelectProps {
-	options: Option[];
+	options: string[];
 }
 
 const Select: React.FC<SelectProps> = ({ options }) => {
@@ -20,20 +14,18 @@ const Select: React.FC<SelectProps> = ({ options }) => {
 	return (
 		<div className="styled-select-container">
 			<select
-				className="styled-select"
 				onChange={handleSelectChange}
 				value={selectedOption}
 			>
 				<option value="" disabled hidden>
 					Select an option
 				</option>
-				{options.map((option) => (
-					<option key={option.value} value={option.value}>
-						{option.label}
+				{options.map((option, index) => (
+					<option key={index} value={option}>
+						{option}
 					</option>
 				))}
 			</select>
-			<ChevronDown />
 		</div>
 	);
 };

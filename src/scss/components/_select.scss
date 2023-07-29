@@ -2,37 +2,53 @@
 
 
 .styled-select-container {
+	background: $container-bg;
+	border: 1px solid $dark-grey;
+	border-radius: .3rem;
+	display: flex;
+	line-height: 3;
+	overflow: hidden;
+	padding: 0.7rem 0.5rem;
 	position: relative;
-	display: inline-block;
+	width: 12rem;
 
-	.styled-select {
+	select {
+		-webkit-appearance: none;
+		-moz-appearance: none;
+		-ms-appearance: none;
 		appearance: none;
-		background-color: #fff;
-		border: 1px solid #ccc;
-		border-radius: 4px;
+		background: $container-bg;
+		background-image: none;
+		border: none;
+		box-shadow: none;
+		color: #fff;
 		cursor: pointer;
-		font-size: 16px;
-		outline-color: $btn-color-hover;
-		outline-width: 1rem;
-		padding: 0.7rem 1rem;
-		width: 200px;
+		font-size: inherit;
+		font-family: inherit;
+		flex: 1;
+		outline: 0;
+		padding: 0 .5em;
+		text-transform: capitalize;
+		width: 100%;
 
-		/* Style the options dropdown */
-		& option {
-			padding: 8px;
+		&::-ms-expand {
+			display: none;
 		}
-
-		/* Style the selected option */
-		& option:checked {
-			background-color: #007bff;
-			color: #fff;
-		}
-
 	}
-	svg {
+
+	&::after {
+		content: '\25BC';
 		position: absolute;
+		top: 0;
 		right: 0;
-    top: 0.5rem;
-    zoom: 55%;
+		padding: 0 1em;
+		background: #2b2e2e;
+		cursor: pointer;
+		pointer-events: none;
+		transition: .25s all ease-in-out;
+	}
+
+	&:hover::after {
+		color: $btn-color;
 	}
 }
