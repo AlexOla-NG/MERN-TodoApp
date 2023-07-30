@@ -3,6 +3,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { axiosInstance } from "../../axios-Instance";
 import { queryKeys } from "../../react-query/constants";
 import { errorAlert, successAlert } from "../../utils";
+import { getStoredUser } from "../../storage";
 
 const getStatusOptions = async () => {
 	const res = await axiosInstance.get("/todos/status", {
@@ -14,12 +15,16 @@ const getStatusOptions = async () => {
 	return res?.data?.data;
 };
 
-const login = async (formData: unknown) => {
-	const res = await axiosInstance.post("/users/login", formData, {
-		headers: {
-			"Content-Type": "application/json",
-		},
-	});
+const addTodo = async (formData: unknown) => {
+	const res = await axiosInstance.post(
+		`/users/${getStoredUser()}/todos`,
+		formData,
+		{
+			headers: {
+				"Content-Type": "application/json",
+			},
+		}
+	);
 
 	return res?.data?.data;
 };
@@ -36,17 +41,17 @@ export const useGetStatusOptions = () => {
 	return { isSuccess, data, isLoading };
 };
 
-export const useLogin = () => {
+export const useAddTodo = () => {
 	const queryClient = useQueryClient();
-	const navigate = useNavigate();
+	// const navigate = useNavigate();
 	const { data, isSuccess, mutate, isLoading } = useMutation({
-		mutationFn: (formData: unknown) => login(formData),
+		mutationFn: (formData: unknown) => addTodo(formData),
 		onSuccess: () => {
 			queryClient.invalidateQueries([queryKeys.authentication]);
-			successAlert(`Login successful!`);
-			setTimeout(() => {
-				navigate("/");
-			}, 2000);
+			successAlert(`Todo added!`);
+			// setTimeout(() => {
+			// 	navigate("/");
+			// }, 2000);
 		},
 		onError: (error) => {
 			errorAlert(error);

@@ -8,7 +8,7 @@
 	display: flex;
 	line-height: 3;
 	overflow: hidden;
-	padding: 0.7rem 0.5rem;
+	padding: 0.7rem 0.3rem;
 	position: relative;
 	width: 12rem;
 
@@ -27,8 +27,7 @@
 		font-family: inherit;
 		flex: 1;
 		outline: 0;
-		padding: 0 .5em;
-		text-transform: capitalize;
+		padding-left: 0.5rem;
 		width: 100%;
 
 		&::-ms-expand {

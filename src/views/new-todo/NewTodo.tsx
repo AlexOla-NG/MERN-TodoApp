@@ -2,21 +2,27 @@ import React, { FormEvent, useEffect, useState } from "react";
 import AnimatedWrapper from "../../routes/AnimatedWrapper";
 import Button from "../../components/button/Button";
 import Select from "../../components/select/Select";
-import { getStoredUser } from "../../storage";
-import { useGetStatusOptions } from "../../hooks/new-todo";
+import { UserID, getStoredUser } from "../../storage";
+import { useAddTodo, useGetStatusOptions } from "../../hooks/new-todo";
 
-// TODO: stopped here
-// test form submission
+type FormState = {
+	title: string;
+	description: string;
+	status: string;
+	user: UserID | undefined;
+}
 
 const NewTodo = () => {
-	const [formData, setFormData] = useState({
+	const defaultFormState = {
 		title: "",
 		description: "",
 		status: "",
 		user: getStoredUser(),
-	});
+	};
+	const [formData, setFormData] = useState<FormState>(defaultFormState);
 	const [statusOptions, setStatusOptions] = useState(['']);
 	const {data, isSuccess} = useGetStatusOptions();
+	const {mutate, isSuccess: isMutationSuccess} = useAddTodo();
 
 	// STUB: get & set status options
 	useEffect(() => {
@@ -24,6 +30,14 @@ const NewTodo = () => {
 			setStatusOptions(data);
 		}
 	}, [data, isSuccess]);
+	
+	// STUB: reset form state on success
+	useEffect(() => {
+		if (isMutationSuccess) {
+			setFormData(defaultFormState);
+		}
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [isMutationSuccess]);
 	
 
 	const handleChange = (
@@ -33,9 +47,14 @@ const NewTodo = () => {
 		setFormData({ ...formData, [name]: value });
 	};
 
+	// STUB: get status from select component
+	const updateFormData = (status: string) => {
+		setFormData({ ...formData, status });
+	}
+
 	const handleSubmit = (event: FormEvent) => {
 		event.preventDefault();
-		// mutate(formData);
+		mutate(formData);
 	};
 
 	return (
@@ -49,6 +68,7 @@ const NewTodo = () => {
 						id="title"
 						name="title"
 						onChange={handleChange}
+						value={formData.title}
 						required
 					/>
 				</label>
@@ -58,6 +78,7 @@ const NewTodo = () => {
 						name="description"
 						id="description"
 						onChange={handleChange}
+						value={formData.description}
 						required
 						rows={5}
 						cols={50}
@@ -65,7 +86,10 @@ const NewTodo = () => {
 				</label>
 				<label htmlFor="status">
 					status
-					<Select options={statusOptions} />
+					<Select
+						options={statusOptions}
+						updateFormData={updateFormData}
+					/>
 				</label>
 				<Button title="submit" type="submit" />
 			</form>
