@@ -14,7 +14,9 @@ const AnimatedWrapper = ({ children, className }: AnimatedWrapperProps) => {
 			initial={{ x: 300, opacity: 0 }}
 			animate={{ x: 0, opacity: 1 }}
 			exit={{ x: -300, opacity: 0 }}
-			className={className}
+			className={
+				className ? `animated-wrapper ${className}` : "animated-wrapper"
+			}
 		>
 			{children}
 		</motion.div>
