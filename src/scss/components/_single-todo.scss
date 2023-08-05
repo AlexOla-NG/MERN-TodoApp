@@ -12,14 +12,13 @@
     gap: 1rem;
 
     .circular-checkbox {
+      background: transparent;
+      border: 2px solid $very-dark-grayish-blue;
+      border-radius: 50%;
+      cursor: pointer;
       position: relative;
       width: 24px;
-      /* Adjust the size as needed */
       height: 24px;
-      /* Adjust the size as needed */
-      border-radius: 50%;
-      background-color: $white;
-      cursor: pointer;
 
       input {
         opacity: 0;
@@ -32,9 +31,7 @@
       }
 
       .checkmark {
-        border: 2px solid transparent;
-        /* Set a transparent border initially */
-        border-radius: 50%;
+        border-radius: inherit;
         position: absolute;
         top: 0;
         left: 0;
@@ -57,17 +54,18 @@
       // apply gradient border radius
       .checkmark:before {
         content: "";
-          position: absolute;
-          inset: 0;
-          border-radius: 50px;
-          padding: 10px;
-          background: linear-gradient(45deg, red, blue);
-          -webkit-mask:
-            linear-gradient(#fff 0 0) content-box,
-            linear-gradient(#fff 0 0);
-          -webkit-mask-composite: xor;
-          -webkit-mask-composite: exclude;
-          opacity: 0;
+        position: absolute;
+        inset: 0;
+        border-radius: 50%;
+        padding: 10px;
+        background: linear-gradient(45deg, red, blue);
+        -webkit-mask:
+          linear-gradient(#fff 0 0) content-box,
+          linear-gradient(#fff 0 0);
+        -webkit-mask-composite: xor;
+        -webkit-mask-composite: exclude;
+        opacity: 0;
+        transition: background 1500ms ease-in-out;
       }
 
       // apply gradient border radius on hover
@@ -88,12 +86,14 @@
     }
 
     p {
+      color: $light-grayish-blue;
       line-height: unset;
     }
   }
 
   .edit-todo {
     svg {
+      color: $very-dark-grayish-blue;
       width: 25px;
       height: 25px;
     }

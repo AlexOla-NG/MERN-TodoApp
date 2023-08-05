@@ -1,0 +1,10 @@
+@use "../abstracts" as *;
+
+.todo-list {
+  background-color: $light-dark-blue;
+
+  li {
+    border-bottom: 1px solid $very-dark-grayish-blue;
+    padding: 1rem;
+  }
+}

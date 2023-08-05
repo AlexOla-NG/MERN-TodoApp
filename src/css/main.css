@@ -440,14 +440,13 @@ ul {
   gap: 1rem;
 }
 .single-todo .todo-wrapper .circular-checkbox {
+  background: transparent;
+  border: 2px solid hsl(233, 14%, 35%);
+  border-radius: 50%;
+  cursor: pointer;
   position: relative;
   width: 24px;
-  /* Adjust the size as needed */
   height: 24px;
-  /* Adjust the size as needed */
-  border-radius: 50%;
-  background-color: hsl(0, 0%, 100%);
-  cursor: pointer;
   /* Style the checkmark */
   /* Show the checkmark when the checkbox is checked */
 }
@@ -461,9 +460,7 @@ ul {
   cursor: pointer;
 }
 .single-todo .todo-wrapper .circular-checkbox .checkmark {
-  border: 2px solid transparent;
-  /* Set a transparent border initially */
-  border-radius: 50%;
+  border-radius: inherit;
   position: absolute;
   top: 0;
   left: 0;
@@ -484,13 +481,14 @@ ul {
   content: "";
   position: absolute;
   inset: 0;
-  border-radius: 50px;
+  border-radius: 50%;
   padding: 10px;
   background: linear-gradient(45deg, red, blue);
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   -webkit-mask-composite: exclude;
   opacity: 0;
+  transition: background 1500ms ease-in-out;
 }
 .single-todo .todo-wrapper .circular-checkbox:hover input:not(:checked) ~ .checkmark::before {
   opacity: 1;
@@ -503,9 +501,11 @@ ul {
   display: block;
 }
 .single-todo .todo-wrapper p {
+  color: hsl(234, 39%, 85%);
   line-height: unset;
 }
 .single-todo .edit-todo svg {
+  color: hsl(233, 14%, 35%);
   width: 25px;
   height: 25px;
 }
@@ -524,6 +524,14 @@ ul {
 .text-btn:focus-visible {
   background: unset;
   color: hsl(220, 98%, 61%);
+}
+
+.todo-list {
+  background-color: hsl(235, 21%, 21%);
+}
+.todo-list li {
+  border-bottom: 1px solid hsl(233, 14%, 35%);
+  padding: 1rem;
 }
 
 .navbar {
