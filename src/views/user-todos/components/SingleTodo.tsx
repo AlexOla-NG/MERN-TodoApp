@@ -4,6 +4,7 @@ import { ReactComponent as CloseIcon } from "../../../assets/svg/close-circle.sv
 // TODO: stopped here
 // finish setting up singleTodo
 // style checkbox, p, and edit-todo
+// fix border radius of checkbox on hover
 
 const SingleTodo = () => {
 	return (

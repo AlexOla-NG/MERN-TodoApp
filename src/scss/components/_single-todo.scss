@@ -1,3 +1,5 @@
+@use "../abstracts" as *;
+
 .single-todo {
   // padding: 1rem;
   display: flex;
@@ -11,13 +13,12 @@
 
     .circular-checkbox {
       position: relative;
-      display: inline-block;
       width: 24px;
       /* Adjust the size as needed */
       height: 24px;
       /* Adjust the size as needed */
       border-radius: 50%;
-      background-color: #fff;
+      background-color: $white;
       cursor: pointer;
 
       input {
@@ -31,21 +32,58 @@
       }
 
       .checkmark {
-        position: absolute;
-        top: 2px;
-        left: 2px;
-        width: 20px;
-        /* Adjust the size as needed */
-        height: 20px;
-        /* Adjust the size as needed */
+        border: 2px solid transparent;
+        /* Set a transparent border initially */
         border-radius: 50%;
-        border: 2px solid #000;
-        /* Customize the checkbox border color */
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
       }
 
+      /* Style the checkmark */
+      .checkmark:after {
+        color: $white;
+        content: "\2713";
+        /* Unicode checkmark character */
+        display: none;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      // apply gradient border radius
+      .checkmark:before {
+        content: "";
+          position: absolute;
+          inset: 0;
+          border-radius: 50px;
+          padding: 10px;
+          background: linear-gradient(45deg, red, blue);
+          -webkit-mask:
+            linear-gradient(#fff 0 0) content-box,
+            linear-gradient(#fff 0 0);
+          -webkit-mask-composite: xor;
+          -webkit-mask-composite: exclude;
+          opacity: 0;
+      }
+
+      // apply gradient border radius on hover
+      &:hover input:not(:checked)~.checkmark::before {
+        opacity: 1;
+      }
+
+      // apply gradient to checkbox bg
       input:checked~.checkmark {
-        background: linear-gradient(135deg, #FF8C42, #FF3F6C);
+        background: $check-bg;
         /* Customize the gradient colors */
+      }
+
+      /* Show the checkmark when the checkbox is checked */
+      input:checked+.checkmark:after {
+        display: block;
       }
     }
 
