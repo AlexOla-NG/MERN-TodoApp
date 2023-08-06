@@ -1,14 +1,15 @@
 import React, { useState } from "react";
 import { ReactComponent as CloseIcon } from "../../../assets/svg/close-circle.svg";
+import { updateTodoType } from "../../../hooks/user-todos";
 
 // TODO: stopped here
 // finish setting up singleTodo
-// fix ischecked status bug
-// style checkbox: fix border radius of checkbox on hover
+// b: style checkbox: fix border radius of checkbox on hover
+// c: add loading state for updating and deleting todos.
 
 enum TodoStatus {
-	active = "Active",
-	completed = "Completed",
+	active = "active",
+	completed = "completed",
 }
 
 export type SingleTodoProps = {
@@ -16,16 +17,34 @@ export type SingleTodoProps = {
 	title: string;
 	description: string;
 	status: TodoStatus;
+	deleteTodo: (id: string) => void;
+	updateTodo: (todoData: updateTodoType) => void;
 };
 
-const SingleTodo = ({ title, _id, description, status }: SingleTodoProps) => {
+const SingleTodo = ({
+	title,
+	_id,
+	description,
+	status,
+	deleteTodo,
+	updateTodo
+}: SingleTodoProps) => {
 	const [isChecked, setIsChecked] = useState(
 		status === TodoStatus.completed ? true : false
 	);
-	console.log(isChecked);
 
 	const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setIsChecked(e.target.checked ? true : false);
+		updateTodo({
+			_id,
+			status: e.target.checked
+				? TodoStatus.completed
+				: TodoStatus.active,
+		});
+	};
+
+	const handleDelete = () => {
+		deleteTodo(_id);
 	};
 
 	return (
@@ -43,7 +62,7 @@ const SingleTodo = ({ title, _id, description, status }: SingleTodoProps) => {
 			</div>
 
 			<div className="edit-todo">
-				<CloseIcon />
+				<CloseIcon onClick={handleDelete} />
 			</div>
 		</div>
 	);

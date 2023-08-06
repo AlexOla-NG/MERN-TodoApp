@@ -15,9 +15,25 @@ const getUserTodos = async () => {
 	return res?.data?.data;
 };
 
-const addTodo = async (formData: unknown) => {
-	const res = await axiosInstance.post(
-		`/users/${getStoredUser()}/todos`,
+const deleteTodo = async (todoID: string) => {
+	const res = await axiosInstance.delete(`/todos/${todoID}`, {
+		headers: {
+			"Content-Type": "application/json",
+		},
+	});
+
+	return res?.data?.data;
+};
+
+export type updateTodoType = {
+	_id?: string;
+	title?: string;
+	description?: string;
+	status?: string;
+};
+const updateTodo = async (formData: updateTodoType) => {
+	const res = await axiosInstance.put(
+		`/todos/${formData._id}`,
 		formData,
 		{
 			headers: {
@@ -41,17 +57,29 @@ export const useGetUserTodos = () => {
 	return { isSuccess, data, isLoading };
 };
 
-export const useAddTodo = () => {
+export const useUpdateodo = () => {
 	const queryClient = useQueryClient();
-	// const navigate = useNavigate();
 	const { data, isSuccess, mutate, isLoading } = useMutation({
-		mutationFn: (formData: unknown) => addTodo(formData),
+		mutationFn: (formData: updateTodoType) => updateTodo(formData),
 		onSuccess: () => {
-			queryClient.invalidateQueries([queryKeys.authentication]);
-			successAlert(`Todo added!`);
-			// setTimeout(() => {
-			// 	navigate("/");
-			// }, 2000);
+			queryClient.invalidateQueries([queryKeys.userTodos]);
+			successAlert(`Todo updated!`);
+		},
+		onError: (error) => {
+			errorAlert(error);
+		},
+	});
+
+	return { data, isLoading, isSuccess, mutate };
+};
+
+export const useDeleteTodo = () => {
+	const queryClient = useQueryClient();
+	const { data, isSuccess, mutate, isLoading } = useMutation({
+		mutationFn: (todoID: string) => deleteTodo(todoID),
+		onSuccess: () => {
+			queryClient.invalidateQueries([queryKeys.userTodos]);
+			successAlert(`Todo deleted!`);
 		},
 		onError: (error) => {
 			errorAlert(error);
