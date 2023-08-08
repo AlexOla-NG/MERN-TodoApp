@@ -37,6 +37,7 @@ const UserTodos = () => {
 					todos={userTodos}
 					deleteTodo={deleteTodo}
 					updateTodo={updateTodo}
+					isLoading={isLoading}
 				/>
 			</section>
 		</AnimatedWrapper>
