@@ -1,0 +1,23 @@
+@use "../abstracts" as *;
+
+.user-todos {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+
+  .todo-list-wrapper {
+    align-self: center;
+    max-width: 30rem;
+    width: 100%;
+
+    .todo-list-control {
+      .todo-counter-wrapper {
+        background-color: $light-dark-blue;
+        display: flex;
+        justify-content: space-between;
+        padding: 1rem;
+      }
+    }
+  }
+
+}

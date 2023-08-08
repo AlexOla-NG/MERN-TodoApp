@@ -534,6 +534,23 @@ ul {
   padding: 1rem;
 }
 
+.user-todos {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+.user-todos .todo-list-wrapper {
+  align-self: center;
+  max-width: 30rem;
+  width: 100%;
+}
+.user-todos .todo-list-wrapper .todo-list-control .todo-counter-wrapper {
+  background-color: hsl(235, 21%, 21%);
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
+}
+
 .navbar {
   color: hsl(0, 0%, 100%);
   padding: 1rem 0.75rem;
