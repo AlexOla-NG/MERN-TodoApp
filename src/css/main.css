@@ -504,10 +504,8 @@ ul {
   color: hsl(234, 39%, 85%);
   line-height: unset;
 }
-.single-todo .edit-todo svg {
+.single-todo .edit-todo button {
   color: hsl(233, 14%, 35%);
-  width: 25px;
-  height: 25px;
 }
 
 .text-btn {

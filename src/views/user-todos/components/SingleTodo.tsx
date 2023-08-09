@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import { ReactComponent as CloseIcon } from "../../../assets/svg/close-circle.svg";
 import { updateTodoType } from "../../../hooks/user-todos";
+import TextButton from "../../../components/button/TextButton";
 
 // TODO: stopped here
 // finish setting up singleTodo
 // b: style checkbox: fix border radius of checkbox on hover
-// c: add loading state for updating and deleting todos.
+// c: refactor SingleTodoProps
 
 enum TodoStatus {
 	active = "active",
@@ -19,6 +19,8 @@ export type SingleTodoProps = {
 	status: TodoStatus;
 	deleteTodo: (id: string) => void;
 	updateTodo: (todoData: updateTodoType) => void;
+	deleteLoading: boolean;
+	updateLoading: boolean;
 };
 
 const SingleTodo = ({
@@ -27,7 +29,9 @@ const SingleTodo = ({
 	description,
 	status,
 	deleteTodo,
-	updateTodo
+	updateTodo,
+	deleteLoading,
+	updateLoading,
 }: SingleTodoProps) => {
 	const [isChecked, setIsChecked] = useState(
 		status === TodoStatus.completed ? true : false
@@ -37,9 +41,7 @@ const SingleTodo = ({
 		setIsChecked(e.target.checked ? true : false);
 		updateTodo({
 			_id,
-			status: e.target.checked
-				? TodoStatus.completed
-				: TodoStatus.active,
+			status: e.target.checked ? TodoStatus.completed : TodoStatus.active,
 		});
 	};
 
@@ -55,6 +57,7 @@ const SingleTodo = ({
 						type="checkbox"
 						checked={isChecked}
 						onChange={handleCheckboxChange}
+						disabled={updateLoading || deleteLoading}
 					/>
 					<span className="checkmark"></span>
 				</label>
@@ -62,7 +65,11 @@ const SingleTodo = ({
 			</div>
 
 			<div className="edit-todo">
-				<CloseIcon onClick={handleDelete} />
+				<TextButton
+					title="X"
+					handleClick={handleDelete}
+					disabled={updateLoading || deleteLoading}
+				/>
 			</div>
 		</div>
 	);

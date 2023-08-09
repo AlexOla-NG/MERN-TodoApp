@@ -10,6 +10,8 @@ type TodoListProps = {
 	isLoading: boolean;
 	deleteTodo: (id: string) => void;
 	updateTodo: (todoData: updateTodoType) => void;
+	deleteLoading: boolean;
+	updateLoading: boolean;
 };
 
 const TodoList = ({
@@ -17,13 +19,15 @@ const TodoList = ({
 	deleteTodo,
 	updateTodo,
 	isLoading,
+	deleteLoading,
+	updateLoading,
 }: TodoListProps) => {
 	return (
 		<ul className="todo-list">
 			{isLoading &&
 				Array.from({ length: 5 }).map((_, index) => (
 					<li key={index}>
-						<Skeleton baseColor="#202020" highlightColor="#444"/>
+						<Skeleton baseColor="#202020" highlightColor="#444" />
 					</li>
 				))}
 			{todos.map((todo) => {
@@ -37,6 +41,8 @@ const TodoList = ({
 							description={description}
 							deleteTodo={deleteTodo}
 							updateTodo={updateTodo}
+							deleteLoading={deleteLoading}
+							updateLoading={updateLoading}
 						/>
 					</li>
 				);

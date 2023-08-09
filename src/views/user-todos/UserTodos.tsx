@@ -18,8 +18,8 @@ import {
 const UserTodos = () => {
 	const [userTodos, setUserTodos] = useState([]);
 	const { data, isSuccess, isLoading } = useGetUserTodos();
-	const { mutate: deleteDBTodo } = useDeleteTodo();
-	const { mutate: updateDBTodo } = useUpdateodo();
+	const { mutate: deleteDBTodo, isLoading: deleteLoading } = useDeleteTodo();
+	const { mutate: updateDBTodo, isLoading: updateLoading } = useUpdateodo();
 
 	// STUB: fetch user todos
 	useEffect(() => {
@@ -45,6 +45,8 @@ const UserTodos = () => {
 					deleteTodo={deleteTodo}
 					updateTodo={updateTodo}
 					isLoading={isLoading}
+					deleteLoading={deleteLoading}
+					updateLoading={updateLoading}
 				/>
 
 				<div className="todo-list-control">
