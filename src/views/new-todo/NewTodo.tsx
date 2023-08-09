@@ -79,7 +79,6 @@ const NewTodo = () => {
 						id="description"
 						onChange={handleChange}
 						value={formData.description}
-						required
 						rows={5}
 						cols={50}
 					/>
@@ -89,6 +88,7 @@ const NewTodo = () => {
 					<Select
 						options={statusOptions}
 						updateFormData={updateFormData}
+						isMutationSuccess={isMutationSuccess}
 					/>
 				</label>
 				<Button title="submit" type="submit" />
