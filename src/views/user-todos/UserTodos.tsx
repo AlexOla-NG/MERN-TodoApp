@@ -14,6 +14,7 @@ import {
 // TODO: stopped here
 // a: setup layout for showing all, active & completed todos controls
 // b: complete styling for todo-list-control
+// c: add selected class to mobile, desktop control btns
 
 const UserTodos = () => {
 	const [userTodos, setUserTodos] = useState([]);

@@ -502,6 +502,7 @@ ul {
 }
 .single-todo .todo-wrapper p {
   color: hsl(234, 39%, 85%);
+  font-size: 0.9rem;
   line-height: unset;
 }
 .single-todo .edit-todo button {
@@ -526,6 +527,7 @@ ul {
 
 .todo-list {
   background-color: hsl(235, 21%, 21%);
+  border-radius: 0.5rem 0.5rem 0 0;
 }
 .todo-list li {
   border-bottom: 1px solid hsl(233, 14%, 35%);
@@ -542,11 +544,43 @@ ul {
   max-width: 30rem;
   width: 100%;
 }
+.user-todos .todo-list-wrapper .todo-list-control {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+.user-todos .todo-list-wrapper .todo-list-control p,
+.user-todos .todo-list-wrapper .todo-list-control button {
+  color: hsl(234, 11%, 52%);
+}
+.user-todos .todo-list-wrapper .todo-list-control button:hover {
+  color: hsl(0, 0%, 100%);
+}
 .user-todos .todo-list-wrapper .todo-list-control .todo-counter-wrapper {
   background-color: hsl(235, 21%, 21%);
+  border-radius: 0 0 0.5rem 0.5rem;
   display: flex;
   justify-content: space-between;
   padding: 1rem;
+}
+.user-todos .todo-list-wrapper .todo-list-control .todo-counter-wrapper p,
+.user-todos .todo-list-wrapper .todo-list-control .todo-counter-wrapper button {
+  font-size: 0.8rem;
+}
+.user-todos .todo-list-wrapper .todo-list-control .mobile-control {
+  background-color: hsl(235, 21%, 21%);
+  border-radius: 0.5rem;
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  line-height: 1.6;
+  padding: 1rem;
+}
+.user-todos .todo-list-wrapper .todo-list-control .mobile-control button {
+  font-size: 0.95rem;
+}
+.user-todos .todo-list-wrapper .todo-list-control .mobile-control button:focus {
+  color: hsl(220, 98%, 61%);
 }
 
 .navbar {

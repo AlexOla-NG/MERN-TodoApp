@@ -11,11 +11,50 @@
     width: 100%;
 
     .todo-list-control {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+
+      p,
+      button {
+        color: $dark-grayish-blue;
+      }
+
+      button:hover {
+        color: $white;
+      }
+
       .todo-counter-wrapper {
         background-color: $light-dark-blue;
+        border-radius: 0 0 0.5rem 0.5rem;
         display: flex;
         justify-content: space-between;
         padding: 1rem;
+
+        p,
+        button {
+          font-size: 0.8rem;
+        }
+
+      }
+
+      .mobile-control {
+        background-color: $light-dark-blue;
+        border-radius: 0.5rem;
+        display: flex;
+        justify-content: center;
+        gap: 1.5rem;
+        line-height: 1.6;
+        padding: 1rem;
+
+        button {
+          font-size: 0.95rem;
+
+          &:focus {
+            color: $primary-color;
+          }
+        }
+
       }
     }
   }
