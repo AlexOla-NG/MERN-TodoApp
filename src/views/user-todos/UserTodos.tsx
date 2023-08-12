@@ -12,12 +12,11 @@ import {
 } from "../../hooks/user-todos";
 
 // TODO: stopped here
-// a: setup layout for showing all, active & completed todos controls
-// b: complete styling for todo-list-control
-// c: add selected class to mobile, desktop control btns
+// update function for showing all, active and completed todos
 
 const UserTodos = () => {
 	const [userTodos, setUserTodos] = useState([]);
+	const [selectedButton, setSelectedButton] = useState(0);
 	const { data, isSuccess, isLoading } = useGetUserTodos();
 	const { mutate: deleteDBTodo, isLoading: deleteLoading } = useDeleteTodo();
 	const { mutate: updateDBTodo, isLoading: updateLoading } = useUpdateodo();
@@ -37,6 +36,21 @@ const UserTodos = () => {
 		deleteDBTodo(todoId);
 	};
 
+	// STUB: show all todos
+	const showAllTodos = (buttonID: number) => {
+		setSelectedButton(buttonID);
+	};
+	
+	// STUB: show active todos
+	const showActiveTodos = (buttonID: number) => {
+		setSelectedButton(buttonID);
+	};
+
+	// STUB: show completed todos
+	const showCompletedTodos = (buttonID: number) => {
+		setSelectedButton(buttonID);
+	};
+
 	return (
 		<AnimatedWrapper className="user-todos">
 			<h2>My Todos</h2>
@@ -53,14 +67,48 @@ const UserTodos = () => {
 				<div className="todo-list-control">
 					<div className="todo-counter-wrapper">
 						<p>{`5 items left ` || <Skeleton />}</p>
-						<div className="desktop-control"></div>
+						<div className="desktop-control control">
+							<TextButton
+								id={0}
+								title="All"
+								handleClick={() => showAllTodos(0)}
+								selected={selectedButton === 0}
+							/>
+							<TextButton
+								id={1}
+								title="Active"
+								handleClick={() => showActiveTodos(1)}
+								selected={selectedButton === 1}
+							/>
+							<TextButton
+								id={2}
+								title="Completed"
+								handleClick={() => showCompletedTodos(2)}
+								selected={selectedButton === 2}
+							/>
+						</div>
 						<TextButton title="Clear Completed" />
 					</div>
 
-					<div className="mobile-control">
-						<TextButton title="All" />
-						<TextButton title="Active" />
-						<TextButton title="Completed" />
+					<div className="mobile-control control">
+						<TextButton
+							id={0}
+							title="All"
+							handleClick={() => showAllTodos(0)}
+							selected={selectedButton === 0}
+						/>
+						<TextButton
+							id={1}
+							title="Active"
+							handleClick={() => showActiveTodos(1)}
+							selected={selectedButton === 1}
+						/>
+						<TextButton
+							id={2}
+							title="Completed"
+							handleClick={() => showCompletedTodos(2)}
+							selected={selectedButton === 2}
+						/>
 					</div>
 				</div>
 			</section>

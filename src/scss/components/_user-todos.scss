@@ -29,6 +29,7 @@
         border-radius: 0 0 0.5rem 0.5rem;
         display: flex;
         justify-content: space-between;
+        align-items: center;
         padding: 1rem;
 
         p,
@@ -36,25 +37,47 @@
           font-size: 0.8rem;
         }
 
+        .desktop-control {
+          display: none;
+        }
+
+        @include media-md {
+          .desktop-control {
+            display: flex;
+            gap: 1rem;
+          }
+
+        }
+
       }
 
-      .mobile-control {
+      .control {
         background-color: $light-dark-blue;
         border-radius: 0.5rem;
         display: flex;
         justify-content: center;
         gap: 1.5rem;
         line-height: 1.6;
-        padding: 1rem;
+
 
         button {
           font-size: 0.95rem;
-
-          &:focus {
-            color: $primary-color;
-          }
         }
 
+        button.text-btn-selected {
+          color: $primary-color;
+        }
+
+      }
+
+      .mobile-control {
+        padding: 1rem;
+      }
+
+      @include media-md {
+        .mobile-control {
+          display: none;
+        }
       }
     }
   }

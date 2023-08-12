@@ -561,26 +561,43 @@ ul {
   border-radius: 0 0 0.5rem 0.5rem;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   padding: 1rem;
 }
 .user-todos .todo-list-wrapper .todo-list-control .todo-counter-wrapper p,
 .user-todos .todo-list-wrapper .todo-list-control .todo-counter-wrapper button {
   font-size: 0.8rem;
 }
-.user-todos .todo-list-wrapper .todo-list-control .mobile-control {
+.user-todos .todo-list-wrapper .todo-list-control .todo-counter-wrapper .desktop-control {
+  display: none;
+}
+@media screen and (min-width: 768px) {
+  .user-todos .todo-list-wrapper .todo-list-control .todo-counter-wrapper .desktop-control {
+    display: flex;
+    gap: 1rem;
+  }
+}
+.user-todos .todo-list-wrapper .todo-list-control .control {
   background-color: hsl(235, 21%, 21%);
   border-radius: 0.5rem;
   display: flex;
   justify-content: center;
   gap: 1.5rem;
   line-height: 1.6;
-  padding: 1rem;
 }
-.user-todos .todo-list-wrapper .todo-list-control .mobile-control button {
+.user-todos .todo-list-wrapper .todo-list-control .control button {
   font-size: 0.95rem;
 }
-.user-todos .todo-list-wrapper .todo-list-control .mobile-control button:focus {
+.user-todos .todo-list-wrapper .todo-list-control .control button.text-btn-selected {
   color: hsl(220, 98%, 61%);
+}
+.user-todos .todo-list-wrapper .todo-list-control .mobile-control {
+  padding: 1rem;
+}
+@media screen and (min-width: 768px) {
+  .user-todos .todo-list-wrapper .todo-list-control .mobile-control {
+    display: none;
+  }
 }
 
 .navbar {

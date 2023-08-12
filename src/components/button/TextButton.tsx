@@ -2,7 +2,7 @@ import React from "react";
 import { IButton } from "./Button";
 
 const TextButton = (props: IButton) => {
-	const { title, type, disabled, handleClick } = props;
+	const { title, type, disabled, handleClick, selected } = props;
 
 	const handleClickButton = () => {
 		if (handleClick) {
@@ -12,7 +12,7 @@ const TextButton = (props: IButton) => {
 
 	return (
 		<button
-			className="text-btn"
+			className={`text-btn ${selected ? "text-btn-selected" : ""}`}
 			type={type}
 			disabled={disabled}
 			onClick={handleClickButton}
