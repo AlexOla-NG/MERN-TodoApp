@@ -15,6 +15,32 @@ const getUserTodos = async () => {
 	return res?.data?.data;
 };
 
+const getUserActiveTodos = async () => {
+	const res = await axiosInstance.get(
+		`/users/${getStoredUser()}/todos?status=active`,
+		{
+			headers: {
+				"Content-Type": "application/json",
+			},
+		}
+	);
+
+	return res?.data?.data;
+};
+
+const getUserCompletedTodos = async () => {
+	const res = await axiosInstance.get(
+		`/users/${getStoredUser()}/todos?status=completed`,
+		{
+			headers: {
+				"Content-Type": "application/json",
+			},
+		}
+	);
+
+	return res?.data?.data;
+};
+
 const deleteTodo = async (todoID: string) => {
 	const res = await axiosInstance.delete(`/todos/${todoID}`, {
 		headers: {
@@ -49,6 +75,31 @@ export const useGetUserTodos = () => {
 	const { isSuccess, data, isLoading } = useQuery({
 		queryKey: [queryKeys.userTodos],
 		queryFn: () => getUserTodos(),
+		onError: (error) => {
+			errorAlert(error);
+		},
+	});
+
+	return { isSuccess, data, isLoading };
+};
+
+export const useGetUserActiveTodos = () => {
+	const { isSuccess, data, isLoading } = useQuery({
+		queryKey: [queryKeys.userActiveTodos],
+		queryFn: () => getUserActiveTodos(),
+		onError: (error) => {
+			errorAlert(error);
+		},
+	});
+
+	return { isSuccess, data, isLoading };
+};
+
+
+export const useGetUserCompletedTodos = () => {
+	const { isSuccess, data, isLoading } = useQuery({
+		queryKey: [queryKeys.userCompletedTodos],
+		queryFn: () => getUserCompletedTodos(),
 		onError: (error) => {
 			errorAlert(error);
 		},

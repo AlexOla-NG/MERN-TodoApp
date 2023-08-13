@@ -3,4 +3,6 @@ export const queryKeys = {
 	authentication: "authentication",
 	statusOptions: "statusOptions",
 	userTodos: "userTodos",
+	userActiveTodos: "userActiveTodos",
+	userCompletedTodos: "userCompletedTodos",
 };

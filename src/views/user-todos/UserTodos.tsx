@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Skeleton from "react-loading-skeleton";
 
 import AnimatedWrapper from "../../routes/AnimatedWrapper";
 import TodoList from "./components/TodoList";
@@ -7,17 +6,26 @@ import TextButton from "../../components/button/TextButton";
 import {
 	updateTodoType,
 	useDeleteTodo,
+	useGetUserActiveTodos,
+	useGetUserCompletedTodos,
 	useGetUserTodos,
 	useUpdateodo,
 } from "../../hooks/user-todos";
-
-// TODO: stopped here
-// update function for showing all, active and completed todos
 
 const UserTodos = () => {
 	const [userTodos, setUserTodos] = useState([]);
 	const [selectedButton, setSelectedButton] = useState(0);
 	const { data, isSuccess, isLoading } = useGetUserTodos();
+	const {
+		data: userActiveTodos,
+		isSuccess: activeSuccess,
+		isLoading: activeLoading,
+	} = useGetUserActiveTodos();
+	const {
+		data: userCompletedTodos,
+		isSuccess: completedSuccess,
+		isLoading: completedLoading,
+	} = useGetUserCompletedTodos();
 	const { mutate: deleteDBTodo, isLoading: deleteLoading } = useDeleteTodo();
 	const { mutate: updateDBTodo, isLoading: updateLoading } = useUpdateodo();
 
@@ -38,17 +46,26 @@ const UserTodos = () => {
 
 	// STUB: show all todos
 	const showAllTodos = (buttonID: number) => {
-		setSelectedButton(buttonID);
+		if (isSuccess) {
+			setSelectedButton(buttonID);
+			setUserTodos(data);
+		}
 	};
-	
+
 	// STUB: show active todos
 	const showActiveTodos = (buttonID: number) => {
-		setSelectedButton(buttonID);
+		if (activeSuccess) {
+			setSelectedButton(buttonID);
+			setUserTodos(userActiveTodos);
+		}
 	};
 
 	// STUB: show completed todos
 	const showCompletedTodos = (buttonID: number) => {
-		setSelectedButton(buttonID);
+		if (completedSuccess) {
+			setSelectedButton(buttonID);
+			setUserTodos(userCompletedTodos);
+		}
 	};
 
 	return (
@@ -59,14 +76,18 @@ const UserTodos = () => {
 					todos={userTodos}
 					deleteTodo={deleteTodo}
 					updateTodo={updateTodo}
-					isLoading={isLoading}
+					isLoading={isLoading || activeLoading || completedLoading}
 					deleteLoading={deleteLoading}
 					updateLoading={updateLoading}
 				/>
 
 				<div className="todo-list-control">
 					<div className="todo-counter-wrapper">
-						<p>{`5 items left ` || <Skeleton />}</p>
+						<p>
+							{userTodos.length > 1
+								? `${userTodos.length} items left `
+								: `${userTodos.length} item left `}
+						</p>
 						<div className="desktop-control control">
 							<TextButton
 								id={0}
