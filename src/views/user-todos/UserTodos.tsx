@@ -6,11 +6,15 @@ import TextButton from "../../components/button/TextButton";
 import {
 	updateTodoType,
 	useDeleteTodo,
+	useDeleteUserCompletedTodos,
 	useGetUserActiveTodos,
 	useGetUserCompletedTodos,
 	useGetUserTodos,
-	useUpdateodo,
+	useUpdateTodo,
 } from "../../hooks/user-todos";
+
+// TODO: stopped here
+// active & completed todos should have updated values when todo is updated
 
 const UserTodos = () => {
 	const [userTodos, setUserTodos] = useState([]);
@@ -27,7 +31,8 @@ const UserTodos = () => {
 		isLoading: completedLoading,
 	} = useGetUserCompletedTodos();
 	const { mutate: deleteDBTodo, isLoading: deleteLoading } = useDeleteTodo();
-	const { mutate: updateDBTodo, isLoading: updateLoading } = useUpdateodo();
+	const { mutate: deleteCompletedDBTodo } = useDeleteUserCompletedTodos();
+	const { mutate: updateDBTodo, isLoading: updateLoading } = useUpdateTodo();
 
 	// STUB: fetch user todos
 	useEffect(() => {
@@ -66,6 +71,11 @@ const UserTodos = () => {
 			setSelectedButton(buttonID);
 			setUserTodos(userCompletedTodos);
 		}
+	};
+
+	// STUB: delete user completed todos
+	const deleteCompletedTodos = () => {
+		deleteCompletedDBTodo();
 	};
 
 	return (
@@ -108,7 +118,10 @@ const UserTodos = () => {
 								selected={selectedButton === 2}
 							/>
 						</div>
-						<TextButton title="Clear Completed" />
+						<TextButton
+							title="Clear Completed"
+							handleClick={deleteCompletedTodos}
+						/>
 					</div>
 
 					<div className="mobile-control control">

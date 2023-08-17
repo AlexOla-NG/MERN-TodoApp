@@ -51,6 +51,16 @@ const deleteTodo = async (todoID: string) => {
 	return res?.data?.data;
 };
 
+const deleteUserCompletedTodos = async () => {
+	const res = await axiosInstance.delete(`/users/${getStoredUser()}/todos`, {
+		headers: {
+			"Content-Type": "application/json",
+		},
+	});
+
+	return res?.data?.data;
+};
+
 export type updateTodoType = {
 	_id?: string;
 	title?: string;
@@ -108,12 +118,16 @@ export const useGetUserCompletedTodos = () => {
 	return { isSuccess, data, isLoading };
 };
 
-export const useUpdateodo = () => {
+export const useUpdateTodo = () => {
 	const queryClient = useQueryClient();
 	const { data, isSuccess, mutate, isLoading } = useMutation({
 		mutationFn: (formData: updateTodoType) => updateTodo(formData),
 		onSuccess: () => {
-			queryClient.invalidateQueries([queryKeys.userTodos]);
+			Promise.all([
+				queryClient.invalidateQueries([queryKeys.userTodos]),
+				queryClient.invalidateQueries([queryKeys.userCompletedTodos]),
+				queryClient.invalidateQueries([queryKeys.userActiveTodos]),
+			]);
 			successAlert(`Todo updated!`);
 		},
 		onError: (error) => {
@@ -129,8 +143,32 @@ export const useDeleteTodo = () => {
 	const { data, isSuccess, mutate, isLoading } = useMutation({
 		mutationFn: (todoID: string) => deleteTodo(todoID),
 		onSuccess: () => {
-			queryClient.invalidateQueries([queryKeys.userTodos]);
+			Promise.all([
+				queryClient.invalidateQueries([queryKeys.userTodos]),
+				queryClient.invalidateQueries([queryKeys.userCompletedTodos]),
+				queryClient.invalidateQueries([queryKeys.userActiveTodos]),
+			]);
 			successAlert(`Todo deleted!`);
+		},
+		onError: (error) => {
+			errorAlert(error);
+		},
+	});
+
+	return { data, isLoading, isSuccess, mutate };
+};
+
+export const useDeleteUserCompletedTodos = () => {
+	const queryClient = useQueryClient();
+	const { data, isSuccess, mutate, isLoading } = useMutation({
+		mutationFn: () => deleteUserCompletedTodos(),
+		onSuccess: () => {
+			Promise.all([
+				queryClient.invalidateQueries([queryKeys.userTodos]),
+				queryClient.invalidateQueries([queryKeys.userCompletedTodos]),
+				queryClient.invalidateQueries([queryKeys.userActiveTodos]),
+			]);
+			successAlert(`Completed todos cleared!`);
 		},
 		onError: (error) => {
 			errorAlert(error);

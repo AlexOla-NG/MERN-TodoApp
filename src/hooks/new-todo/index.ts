@@ -43,15 +43,11 @@ export const useGetStatusOptions = () => {
 
 export const useAddTodo = () => {
 	const queryClient = useQueryClient();
-	// const navigate = useNavigate();
 	const { data, isSuccess, mutate, isLoading } = useMutation({
 		mutationFn: (formData: unknown) => addTodo(formData),
 		onSuccess: () => {
-			queryClient.invalidateQueries([queryKeys.authentication]);
+			queryClient.invalidateQueries([queryKeys.userTodos]);
 			successAlert(`Todo added!`);
-			// setTimeout(() => {
-			// 	navigate("/");
-			// }, 2000);
 		},
 		onError: (error) => {
 			errorAlert(error);
