@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import AnimatedWrapper from "../../routes/AnimatedWrapper";
 import TodoList from "./components/TodoList";
@@ -13,11 +13,12 @@ import {
 	useUpdateTodo,
 } from "../../hooks/user-todos";
 
-// TODO: stopped here
-// active & completed todos should have updated values when todo is updated
-
 const UserTodos = () => {
+	const isFirstRender = useRef(true);
 	const [userTodos, setUserTodos] = useState([]);
+	const [allTodos, setAllTodos] = useState([]);
+	const [activeTodos, setActiveTodos] = useState([]);
+	const [completedTodos, setCompletedTodos] = useState([]);
 	const [selectedButton, setSelectedButton] = useState(0);
 	const { data, isSuccess, isLoading } = useGetUserTodos();
 	const {
@@ -34,10 +35,34 @@ const UserTodos = () => {
 	const { mutate: deleteCompletedDBTodo } = useDeleteUserCompletedTodos();
 	const { mutate: updateDBTodo, isLoading: updateLoading } = useUpdateTodo();
 
-	// STUB: fetch user todos
+	// STUB: update user todos on initial render
 	useEffect(() => {
-		if (isSuccess) setUserTodos(data);
+		// STUB: do something after state has updated
+		if (isFirstRender.current) {
+			isFirstRender.current = false; // toggle flag after first render/mounting
+			return;
+		}
+
+		// STUB: update user todos depending selected button value
+		if (selectedButton === 0) setUserTodos(allTodos);
+		if (selectedButton === 1) setUserTodos(activeTodos);
+		if (selectedButton === 2) setUserTodos(completedTodos);
+	}, [allTodos, activeTodos, completedTodos, selectedButton]);
+
+	// STUB: fetch all todos
+	useEffect(() => {
+		if (isSuccess) setAllTodos(data);
 	}, [data, isSuccess]);
+
+	// STUB: fetch active todos
+	useEffect(() => {
+		if (activeSuccess) setActiveTodos(userActiveTodos);
+	}, [userActiveTodos, activeSuccess]);
+
+	// STUB: fetch completed todos
+	useEffect(() => {
+		if (completedSuccess) setCompletedTodos(userCompletedTodos);
+	}, [userCompletedTodos, completedSuccess]);
 
 	// STUB: update todo status
 	const updateTodo = (todoData: updateTodoType) => {
@@ -53,7 +78,7 @@ const UserTodos = () => {
 	const showAllTodos = (buttonID: number) => {
 		if (isSuccess) {
 			setSelectedButton(buttonID);
-			setUserTodos(data);
+			setUserTodos(allTodos);
 		}
 	};
 
@@ -61,7 +86,7 @@ const UserTodos = () => {
 	const showActiveTodos = (buttonID: number) => {
 		if (activeSuccess) {
 			setSelectedButton(buttonID);
-			setUserTodos(userActiveTodos);
+			setUserTodos(activeTodos);
 		}
 	};
 
@@ -69,7 +94,7 @@ const UserTodos = () => {
 	const showCompletedTodos = (buttonID: number) => {
 		if (completedSuccess) {
 			setSelectedButton(buttonID);
-			setUserTodos(userCompletedTodos);
+			setUserTodos(completedTodos);
 		}
 	};
 
