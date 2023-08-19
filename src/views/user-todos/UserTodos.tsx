@@ -12,6 +12,7 @@ import {
 	useGetUserTodos,
 	useUpdateTodo,
 } from "../../hooks/user-todos";
+import { infoAlert } from "../../utils";
 
 const UserTodos = () => {
 	const isFirstRender = useRef(true);
@@ -100,7 +101,11 @@ const UserTodos = () => {
 
 	// STUB: delete user completed todos
 	const deleteCompletedTodos = () => {
-		deleteCompletedDBTodo();
+		if (completedTodos.length > 0) {
+			deleteCompletedDBTodo();
+		} else {
+			infoAlert("No completed todos to delete");
+		}
 	};
 
 	return (
