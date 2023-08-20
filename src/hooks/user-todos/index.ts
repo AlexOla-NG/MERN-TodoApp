@@ -124,6 +124,7 @@ export const useUpdateTodo = () => {
 		mutationFn: (formData: updateTodoType) => updateTodo(formData),
 		onSuccess: () => {
 			Promise.all([
+				queryClient.invalidateQueries([queryKeys.dbTodos]),
 				queryClient.invalidateQueries([queryKeys.userTodos]),
 				queryClient.invalidateQueries([queryKeys.userCompletedTodos]),
 				queryClient.invalidateQueries([queryKeys.userActiveTodos]),
@@ -144,6 +145,7 @@ export const useDeleteTodo = () => {
 		mutationFn: (todoID: string) => deleteTodo(todoID),
 		onSuccess: () => {
 			Promise.all([
+				queryClient.invalidateQueries([queryKeys.dbTodos]),
 				queryClient.invalidateQueries([queryKeys.userTodos]),
 				queryClient.invalidateQueries([queryKeys.userCompletedTodos]),
 				queryClient.invalidateQueries([queryKeys.userActiveTodos]),
@@ -164,6 +166,7 @@ export const useDeleteUserCompletedTodos = () => {
 		mutationFn: () => deleteUserCompletedTodos(),
 		onSuccess: () => {
 			Promise.all([
+				queryClient.invalidateQueries([queryKeys.dbTodos]),
 				queryClient.invalidateQueries([queryKeys.userTodos]),
 				queryClient.invalidateQueries([queryKeys.userCompletedTodos]),
 				queryClient.invalidateQueries([queryKeys.userActiveTodos]),

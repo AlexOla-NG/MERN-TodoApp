@@ -1,6 +1,8 @@
 /* eslint-disable no-mixed-spaces-and-tabs */
 // import jwtDecode from "jwt-decode";
 import { toast } from "react-toastify";
+import { dbTodoProps } from "../views/home/Home";
+import { UserTitleCount } from "../views/home/components/Dashboard";
 // import { getLoginToken } from "../storage";
 // import { AxiosError } from "axios";
 
@@ -35,3 +37,25 @@ export const errorAlert = (error: any) => {
 export const infoAlert = (msg: string) => {
 	toast.info(msg || "Info Notification !", toastOptions);
 };
+
+// STUB: get user title count
+// @returns an object containing user fullname and title count
+export function getUserTitleCount(data: dbTodoProps[]): UserTitleCount[] {
+	const userTitleCount: { [userId: string]: UserTitleCount } = {};
+
+	data.forEach((task) => {
+		const userId = task.user.id;
+		const fullname = task.user.fullname;
+
+		if (!userTitleCount[userId]) {
+			userTitleCount[userId] = {
+				fullname: fullname,
+				count: 0,
+			};
+		}
+
+		userTitleCount[userId].count++;
+	});
+
+	return Object.values(userTitleCount);
+}

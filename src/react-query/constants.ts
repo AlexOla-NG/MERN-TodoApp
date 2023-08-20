@@ -5,4 +5,5 @@ export const queryKeys = {
 	userTodos: "userTodos",
 	userActiveTodos: "userActiveTodos",
 	userCompletedTodos: "userCompletedTodos",
+	dbTodos: "dbTodos",
 };
