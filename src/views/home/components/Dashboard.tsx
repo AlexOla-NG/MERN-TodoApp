@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import StatCard from "./StatCard";
 import { dbTodoProps } from "../Home";
-import { getUserTitleCount } from "../../../utils";
+import { filterByStatus, getUserTitleCount } from "../../../utils";
+
+// TODO: stopped here
+// style dashboard
 
 type dashboardProps = {
 	dbTodos: dbTodoProps[];
@@ -9,17 +12,23 @@ type dashboardProps = {
 };
 
 export type UserTitleCount = {
-	fullname: string;
-	count: number;
+	value: number;
+	name: string;
 };
 
 const Dashboard = ({ dbTodos }: dashboardProps) => {
-  const [totalTodos, setTotalTodos] =
-		useState<UserTitleCount[]>(getUserTitleCount(dbTodos));
 
 	return (
-		<div>
-			<StatCard totalTodos={totalTodos} title='total todos' />;
+		<div className="dashboard">
+			<StatCard todos={getUserTitleCount(dbTodos)} title="total todos" />
+			<StatCard
+				todos={getUserTitleCount(filterByStatus(dbTodos, 'active'))}
+				title="active todos"
+			/>
+			<StatCard
+				todos={getUserTitleCount(filterByStatus(dbTodos, 'completed'))}
+				title="completed todos"
+			/>
 		</div>
 	);
 };

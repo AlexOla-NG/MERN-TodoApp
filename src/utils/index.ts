@@ -49,13 +49,19 @@ export function getUserTitleCount(data: dbTodoProps[]): UserTitleCount[] {
 
 		if (!userTitleCount[userId]) {
 			userTitleCount[userId] = {
-				fullname: fullname,
-				count: 0,
+				value: 0,
+				name: fullname,
 			};
 		}
 
-		userTitleCount[userId].count++;
+		userTitleCount[userId].value++;
 	});
 
 	return Object.values(userTitleCount);
+}
+
+// STUB: filter array by status
+// @returns an array of filtered todos
+export function filterByStatus(array: dbTodoProps[], status: string): dbTodoProps[] {
+	return array.filter((item) => item.status === status);
 }

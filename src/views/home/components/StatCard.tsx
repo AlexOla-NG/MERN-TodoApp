@@ -11,22 +11,18 @@ import { LabelLayout } from "echarts/features";
 import { CanvasRenderer } from "echarts/renderers";
 import ReactECharts from "echarts-for-react";
 
-import { dbTodoProps } from "../Home";
 import { UserTitleCount } from "./Dashboard";
 
-// TODO: stopped here
-// parse totalTodos into a format that echarts can use
-
 type statCardProps = {
-	totalTodos: UserTitleCount[];
-  title: string;
+	todos: UserTitleCount[];
+	title: string;
 };
 
 type EChartsOption = echarts.ComposeOption<
 	TooltipComponentOption | LegendComponentOption | PieSeriesOption
 >;
 
-const StatCard = ({ totalTodos, title }: statCardProps) => {
+const StatCard = ({ todos, title }: statCardProps) => {
 	echarts.use([
 		TooltipComponent,
 		LegendComponent,
@@ -39,13 +35,9 @@ const StatCard = ({ totalTodos, title }: statCardProps) => {
 		tooltip: {
 			trigger: "item",
 		},
-		legend: {
-			top: "5%",
-			left: "center",
-		},
 		series: [
 			{
-				name: "Access From",
+				name: title,
 				type: "pie",
 				radius: ["40%", "70%"],
 				avoidLabelOverlap: false,
@@ -68,13 +60,7 @@ const StatCard = ({ totalTodos, title }: statCardProps) => {
 				labelLine: {
 					show: false,
 				},
-				data: [
-					{ value: 1048, name: "Search Engine" },
-					{ value: 735, name: "Direct" },
-					{ value: 580, name: "Email" },
-					{ value: 484, name: "Union Ads" },
-					{ value: 300, name: "Video Ads" },
-				],
+				data: [...todos],
 			},
 		],
 	};
@@ -84,9 +70,9 @@ const StatCard = ({ totalTodos, title }: statCardProps) => {
 			<ReactECharts
 				echarts={echarts}
 				option={option}
-				style={{ height: 400 }}
+				style={{ height: 200, width: 200 }}
 			/>
-      <h2 className="stat-card__title">{title}</h2>
+			<h2 className="stat-card__title">{title}</h2>
 		</div>
 	);
 };
