@@ -533,6 +533,11 @@ ul {
   color: hsl(220, 98%, 61%);
 }
 
+.todo-card-list ul {
+  list-style-type: none;
+  list-style-position: outside;
+}
+
 .todo-list {
   background-color: hsl(235, 21%, 21%);
   border-radius: 0.5rem 0.5rem 0 0;
@@ -609,7 +614,7 @@ ul {
 }
 
 .stat-card {
-  background: hsl(0, 0%, 100%);
+  background: hsl(235, 21%, 21%);
   border: 1px solid transparent;
   border-radius: 0.5rem;
   display: flex;
@@ -620,7 +625,8 @@ ul {
   width: min-content;
 }
 .stat-card h2 {
-  font-size: 1.3rem;
+  color: hsl(0, 0%, 100%);
+  font-size: 1.1rem;
 }
 
 .navbar {

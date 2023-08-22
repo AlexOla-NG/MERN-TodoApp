@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import AnimatedWrapper from "../../routes/AnimatedWrapper";
 import Dashboard from "./components/Dashboard";
+import TodoCardList from "./components/TodoCardList";
+
 import { useGetDBTodos } from "../../hooks/home";
 
 type user = {
@@ -30,6 +32,7 @@ const Home = () => {
 	return (
 		<AnimatedWrapper>
 			<Dashboard dbTodos={dbTodos} isLoading={isLoading} />
+			<TodoCardList />
 		</AnimatedWrapper>
 	);
 };
