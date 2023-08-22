@@ -45,7 +45,7 @@ const StatCard = ({ todos, title }: statCardProps) => {
 				avoidLabelOverlap: false,
 				itemStyle: {
 					borderRadius: 10,
-					borderColor: "#fff",
+					borderColor: "transparent",
 					borderWidth: 2,
 				},
 				label: {
