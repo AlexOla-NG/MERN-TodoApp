@@ -39,6 +39,7 @@ export const infoAlert = (msg: string) => {
 };
 
 // STUB: get user title count
+// @param: array of todos
 // @returns an object containing user fullname and title count
 export function getUserTitleCount(data: dbTodoProps[]): UserTitleCount[] {
 	const userTitleCount: { [userId: string]: UserTitleCount } = {};
@@ -61,7 +62,21 @@ export function getUserTitleCount(data: dbTodoProps[]): UserTitleCount[] {
 }
 
 // STUB: filter array by status
+// @param: array of todos, status
 // @returns an array of filtered todos
 export function filterByStatus(array: dbTodoProps[], status: string): dbTodoProps[] {
 	return array.filter((item) => item.status === status);
 }
+
+// STUB: sum up values in array object
+// @param: array of objects
+// @returns: sum of values
+type ArrayItem = {
+	value: number;
+	name: string;
+};
+
+export function sumArrayValues(arr: ArrayItem[]): number {
+	return arr.reduce((sum, currentItem) => sum + currentItem.value, 0);
+}
+

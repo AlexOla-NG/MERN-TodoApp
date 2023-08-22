@@ -12,6 +12,7 @@ import { CanvasRenderer } from "echarts/renderers";
 import ReactECharts from "echarts-for-react";
 
 import { UserTitleCount } from "./Dashboard";
+import { sumArrayValues } from "../../../utils";
 
 type statCardProps = {
 	todos: UserTitleCount[];
@@ -23,6 +24,7 @@ type EChartsOption = echarts.ComposeOption<
 >;
 
 const StatCard = ({ todos, title }: statCardProps) => {
+	
 	echarts.use([
 		TooltipComponent,
 		LegendComponent,
@@ -53,7 +55,7 @@ const StatCard = ({ todos, title }: statCardProps) => {
 				emphasis: {
 					label: {
 						show: true,
-						fontSize: 40,
+						fontSize: 20,
 						fontWeight: "bold",
 					},
 				},
@@ -72,7 +74,9 @@ const StatCard = ({ todos, title }: statCardProps) => {
 				option={option}
 				style={{ height: 200, width: 200 }}
 			/>
-			<h2 className="stat-card__title">{title}</h2>
+			<h2 className="stat-card__title">
+				{title}: {sumArrayValues(todos)}
+			</h2>
 		</div>
 	);
 };
