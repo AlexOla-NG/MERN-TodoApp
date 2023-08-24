@@ -5,7 +5,7 @@ import StatCard from "./StatCard";
 import { dbTodoProps } from "../Home";
 import { filterByStatus, getUserTitleCount } from "../../../utils";
 
-type dashboardProps = {
+export type dashboardProps = {
 	dbTodos: dbTodoProps[];
 	isLoading: boolean;
 };

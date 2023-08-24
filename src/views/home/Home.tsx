@@ -30,9 +30,9 @@ const Home = () => {
 	}, [isSuccess, data]);
 	
 	return (
-		<AnimatedWrapper>
+		<AnimatedWrapper className="home">
 			<Dashboard dbTodos={dbTodos} isLoading={isLoading} />
-			<TodoCardList />
+			<TodoCardList dbTodos={dbTodos} isLoading={isLoading}  />
 		</AnimatedWrapper>
 	);
 };
