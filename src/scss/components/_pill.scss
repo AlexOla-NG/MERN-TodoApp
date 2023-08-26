@@ -4,13 +4,14 @@
   border: 1px solid;
   border-radius: 0.4rem;
   color: $pill-text;
-  padding: 0.5rem 0.8rem;
+  @include resize(fs-pill);
+  padding: 0.4rem 0.7rem;
   text-transform: capitalize;
 
   &Active {
     background-color: $pill-bg-active;
   }
-  
+
   &Completed {
     background-color: $pill-bg-completed;
   }

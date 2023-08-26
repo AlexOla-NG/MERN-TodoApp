@@ -80,3 +80,31 @@ export function sumArrayValues(arr: ArrayItem[]): number {
 	return arr.reduce((sum, currentItem) => sum + currentItem.value, 0);
 }
 
+// STUB: convert datetime into usable format
+// eg, 2023-07-15T08:59:01.558Z into 15 July 2023
+// @param: datetime string
+// @returns: formatted date string
+export function formatDate(inputDate: string): string {
+	const months: string[] = [
+		"January",
+		"February",
+		"March",
+		"April",
+		"May",
+		"June",
+		"July",
+		"August",
+		"September",
+		"October",
+		"November",
+		"December",
+	];
+
+	const date = new Date(inputDate);
+	const day: number = date.getUTCDate();
+	const month: string = months[date.getUTCMonth()];
+	const year: number = date.getUTCFullYear();
+
+	return `${day} ${month} ${year}`;
+}
+

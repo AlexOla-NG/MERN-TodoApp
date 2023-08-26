@@ -1,6 +1,11 @@
 .todo-card-list {
+  max-width: 750px;
+  width: 100%;
 
   ul {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1rem;
     list-style-type: none;
     list-style-position: outside;
   }

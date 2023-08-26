@@ -2,6 +2,9 @@ import React from 'react'
 import TodoCard from './TodoCard'
 import { dashboardProps } from './Dashboard'
 
+// TODO: stopped here
+// add pagination component
+
 const TodoCardList = ({dbTodos, isLoading}: dashboardProps) => {
   return (
 		<section className="todo-card-list">

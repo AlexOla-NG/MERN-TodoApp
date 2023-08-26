@@ -12,5 +12,34 @@
   align-items: flex-start;
   flex-direction: column;
   gap: 1rem;
-  padding: 1rem
+  padding: 1rem;
+
+  h4 {
+    color: $white;
+    @include resize(fs-h4);
+  }
+
+  &-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    width: 100%;
+
+    div {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+
+      svg {
+        width: 16px;
+        height: 16px;
+      }
+    }
+
+    p {
+      text-transform: capitalize;
+    }
+  }
 }

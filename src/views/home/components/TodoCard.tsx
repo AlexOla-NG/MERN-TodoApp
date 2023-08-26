@@ -1,31 +1,29 @@
-import React from 'react'
-import { dbTodoProps } from '../Home';
-import Pill from './Pill';
-
-// TODO: stopped here
-// destructure todo props
+import React from "react";
+import { dbTodoProps } from "../Home";
+import Pill from "./Pill";
+import { ReactComponent as Clock } from "../../../assets/svg/clock.svg";
+import { formatDate } from "../../../utils";
 
 type TodoCardProps = {
 	todo: dbTodoProps;
 	isLoading: boolean;
 };
 
-const TodoCard = ({todo, isLoading}: TodoCardProps) => {
-	const {status, createdAt, user, title} = todo
-  return (
+const TodoCard = ({ todo, isLoading }: TodoCardProps) => {
+	const { status, createdAt, user, title } = todo;
+	return (
 		<li className="todo-card">
-			<div className={`tag`}>
-				<Pill status={status} />
-			</div>
+			<Pill status={status} />
 			<h4>{title}</h4>
-			<div>
-				<div>{createdAt}</div>
+			<div className="todo-card-footer">
 				<div>
-					<p>{user?.fullname}</p>
+					<Clock />
+					{formatDate(createdAt)}
 				</div>
+				<p>{user?.fullname}</p>
 			</div>
 		</li>
-  );
-}
+	);
+};
 
-export default TodoCard
+export default TodoCard;
