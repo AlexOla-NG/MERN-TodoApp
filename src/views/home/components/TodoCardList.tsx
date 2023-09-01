@@ -9,7 +9,7 @@ const TodoCardList = ({dbTodos, isLoading}: dashboardProps) => {
   return (
 		<section className="todo-card-list">
 			<ul>
-				{dbTodos.map((todo) => (
+				{dbTodos?.map((todo) => (
 					<TodoCard
 						key={todo._id}
 						todo={todo}

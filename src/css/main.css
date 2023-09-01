@@ -795,7 +795,7 @@ ul {
 
 .layout-container {
   background-image: url("src/assets/bg-mobile-dark.jpg"), linear-gradient(45deg, hsl(235, 21%, 11%) 0%, hsl(235, 21%, 11%) 13%, hsl(235, 21%, 11%) 25%, hsl(235, 21%, 11%) 37%, hsl(235, 21%, 11%) 50%, hsl(235, 21%, 11%) 63%, hsl(235, 21%, 11%) 75%, hsl(235, 21%, 11%) 87%, hsl(235, 21%, 11%) 100%);
-  background-size: 100% 30%, auto;
+  background-size: contain;
   background-repeat: no-repeat;
   height: 100%;
 }

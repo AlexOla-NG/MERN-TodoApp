@@ -1,5 +1,6 @@
 @use "../abstracts" as *;
 
+// STUB: Mobile bg image configuration
 .layout-container {
 	// border: 1px solid red;
 	background-image: url("src/assets/bg-mobile-dark.jpg"),
@@ -13,11 +14,12 @@
 			hsl(235deg 21% 11%) 75%,
 			hsl(235deg 21% 11%) 87%,
 			hsl(235deg 21% 11%) 100%);
-	background-size: 100% 30%, auto;
+	background-size: contain;
 	background-repeat: no-repeat;
 	height: 100%;
 }
 
+// STUB: Desktop bg image configuration
 @media screen and (min-width: 768px) {
 	.layout-container {
 		background-image: url("src/assets/bg-desktop-dark.jpg"),
