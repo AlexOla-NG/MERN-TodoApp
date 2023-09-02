@@ -24,29 +24,33 @@ const TodoList = ({
 }: TodoListProps) => {
 	return (
 		<ul className="todo-list">
-			{isLoading &&
-				Array.from({ length: 5 }).map((_, index) => (
-					<li key={index}>
-						<Skeleton baseColor="#202020" highlightColor="#444" />
-					</li>
-				))}
-			{todos.map((todo) => {
-				const { _id, title, description, status } = todo;
-				return (
-					<li key={_id}>
-						<SingleTodo
-							_id={_id}
-							title={title}
-							status={status}
-							description={description}
-							deleteTodo={deleteTodo}
-							updateTodo={updateTodo}
-							deleteLoading={deleteLoading}
-							updateLoading={updateLoading}
-						/>
-					</li>
-				);
-			})}
+			{isLoading
+				? Array.from({ length: 5 }).map((_, index) => (
+						<li key={index}>
+							<Skeleton
+								baseColor="#202020"
+								highlightColor="#444"
+							/>
+						</li>
+				))
+				: todos.map((todo) => {
+						const { _id, title, description, status } = todo;
+						return (
+							<li key={_id}>
+								<SingleTodo
+									_id={_id}
+									title={title}
+									status={status}
+									description={description}
+									deleteTodo={deleteTodo}
+									updateTodo={updateTodo}
+									deleteLoading={deleteLoading}
+									updateLoading={updateLoading}
+								/>
+							</li>
+						);
+				})
+			}
 		</ul>
 	);
 };
