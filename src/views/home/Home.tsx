@@ -4,13 +4,13 @@ import AnimatedWrapper from "../../routes/AnimatedWrapper";
 import Dashboard from "./components/Dashboard";
 import TodoCardList from "./components/TodoCardList";
 
-import { useGetDBTodos, useGetDBTodosStats } from "../../hooks/home";
+import { useGetDBTodos } from "../../hooks/home";
 
 type user = {
 	_id: string;
 	id: string;
 	fullname: string;
-}
+};
 
 export type dbTodoProps = {
 	createdAt: string;
@@ -20,29 +20,33 @@ export type dbTodoProps = {
 	user: user;
 	_id: string;
 	_v: number;
-}
-
-// TODO: stopped here
-// implement react paginate
+};
 
 const Home = () => {
 	const [dbTodos, setDBTodos] = useState<dbTodoProps[]>([]);
-	const [page, setPage] = useState(1);
-	const [limit, setLimit] = useState(10);
-	const [dbTodoStats, setDBTodoStats] = useState<dbTodoProps[]>([]);
-	const {
-		data: todoCardListTodos,
-		isSuccess,
-		isLoading,
-		mutate,
-	} = useGetDBTodos();
-	const {
-		data: stats,
-		isSuccess: isSuccessStats,
-		isLoading: isLoadingStats,
-	} = useGetDBTodosStats();
+	const [currentItems, setCurrentItems] = useState<dbTodoProps[]>([]);
+	const [itemOffset, setItemOffset] = useState(0);
+	const { data, isSuccess, isLoading } = useGetDBTodos();
 	const [sortType, setSortType] = useState<"asc" | "desc">("asc"); // 'asc' or 'desc'
 	const [filterValue, setFilterValue] = useState("");
+
+	// STUB: pagination
+	const limit = 10; // How many items to display per page.
+	const pageCount = Math.ceil(dbTodos?.length / limit);
+
+	// STUB: set todos on page render
+	useEffect(() => {
+		if (isSuccess) setDBTodos(data);
+	}, [isSuccess, data]);
+
+
+	// STUB: set current items on page render
+	useEffect(() => {
+		if (isSuccess) {
+			const endOffset = itemOffset + limit;
+			setCurrentItems(dbTodos?.slice(itemOffset, endOffset));
+		}
+	}, [dbTodos, isSuccess, itemOffset]);
 
 	// Apply sorting logic to your data array
 	// const sortedData = [...dbTodos].sort((a, b) => {
@@ -58,41 +62,16 @@ const Home = () => {
 	// 	// Implement your filtering logic here
 	// });
 
-	useEffect(() => {
-		if (isSuccessStats) setDBTodoStats(stats);
-	}, [isSuccessStats, stats]);
-
-	useEffect(() => {
-		mutate({ page, limit });
-	}, [limit, mutate, page]);
-
-	useEffect(() => {
-		if (isSuccess) setDBTodos(todoCardListTodos?.data);
-	}, [isSuccess, todoCardListTodos, page, limit]);
-
-
-	const [itemOffset, setItemOffset] = useState(0);
-
-	// Simulate fetching items from another resources.
-	// (This could be items from props; or items loaded in a local state
-	// from an API endpoint with useEffect and useState)
-	const endOffset = itemOffset + limit;
-	console.log(`Loading items from ${itemOffset} to ${endOffset}`);
-	const currentItems = dbTodos?.slice(itemOffset, endOffset);
-	const pageCount = Math.ceil(dbTodos?.length / limit);
-
-	// Invoke when user click to request another page.
-	const handlePageClick = (event: any) => {
-		const newOffset = (event.selected * limit) % dbTodos?.length;
-		console.log(
-			`User requested page number ${event.selected}, which is offset ${newOffset}`
-		);
+	
+	// STUB: Invoke when user click to request another page.
+	const handlePageClick = (selectedItem: { selected: number }) => {
+		const newOffset = (selectedItem.selected * limit) % dbTodos?.length;
 		setItemOffset(newOffset);
 	};
 
 	return (
 		<AnimatedWrapper className="home">
-			<Dashboard dbTodos={dbTodoStats} isLoading={isLoadingStats} />
+			<Dashboard dbTodos={dbTodos} isLoading={isLoading} />
 			<TodoCardList dbTodos={currentItems} isLoading={isLoading} />
 			<ReactPaginate
 				breakLabel="..."

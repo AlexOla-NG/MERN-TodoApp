@@ -3,7 +3,7 @@ import { axiosInstance } from "../../axios-Instance";
 import { queryKeys } from "../../react-query/constants";
 import { errorAlert } from "../../utils";
 
-const getDBTodosStats = async () => {
+const getDBTodos = async () => {
 	const res = await axiosInstance.get(`/todos`, {
 		headers: {
 			"Content-Type": "application/json",
@@ -13,20 +13,20 @@ const getDBTodosStats = async () => {
 	return res?.data?.data;
 };
 
-const getDBTodos = async (page: number, limit: number) => {
-	const res = await axiosInstance.get(`/todos?page=${page}&limit=${limit}`, {
-		headers: {
-			"Content-Type": "application/json",
-		},
-	});
+// const getDBTodos = async (page: number, limit: number) => {
+// 	const res = await axiosInstance.get(`/todos?page=${page}&limit=${limit}`, {
+// 		headers: {
+// 			"Content-Type": "application/json",
+// 		},
+// 	});
 
-	return res?.data?.data;
-};
+// 	return res?.data;
+// };
 
-export const useGetDBTodosStats = () => {
+export const useGetDBTodos = () => {
 	const { isSuccess, data, isLoading } = useQuery({
 		queryKey: [queryKeys.dbTodos],
-		queryFn: () => getDBTodosStats(),
+		queryFn: () => getDBTodos(),
 		onError: (error) => {
 			errorAlert(error);
 		},
@@ -40,14 +40,14 @@ export type mutationFnProps = {
 	limit: number;
 };
 
-export const useGetDBTodos = () => {
-	const { mutate, isSuccess, data, isLoading } = useMutation({
-		mutationFn: ({ page, limit }: mutationFnProps) =>
-			getDBTodos(page, limit),
-		onError: (error) => {
-			errorAlert(error);
-		},
-	});
+// export const useGetDBTodos = () => {
+// 	const { mutate, isSuccess, data, isLoading } = useMutation({
+// 		mutationFn: ({ page, limit }: mutationFnProps) =>
+// 			getDBTodos(page, limit),
+// 		onError: (error) => {
+// 			errorAlert(error);
+// 		},
+// 	});
 
-	return { mutate, isSuccess, data, isLoading };
-};
+// 	return { mutate, isSuccess, data, isLoading };
+// };
