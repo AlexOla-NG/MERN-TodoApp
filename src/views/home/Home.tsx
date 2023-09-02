@@ -3,8 +3,9 @@ import ReactPaginate from "react-paginate";
 import AnimatedWrapper from "../../routes/AnimatedWrapper";
 import Dashboard from "./components/Dashboard";
 import TodoCardList from "./components/TodoCardList";
-
 import { useGetDBTodos } from "../../hooks/home";
+
+// TODO: add controls for filter, sort
 
 type user = {
 	_id: string;
@@ -74,6 +75,8 @@ const Home = () => {
 			<Dashboard dbTodos={dbTodos} isLoading={isLoading} />
 			<TodoCardList dbTodos={currentItems} isLoading={isLoading} />
 			<ReactPaginate
+				containerClassName={"pagination"}
+				activeClassName={"active"}
 				breakLabel="..."
 				nextLabel="next >"
 				onPageChange={handlePageClick}

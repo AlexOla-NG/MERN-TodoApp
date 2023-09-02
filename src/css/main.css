@@ -319,6 +319,30 @@ ul {
   justify-content: center;
 }
 
+.pagination {
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  list-style: none;
+  text-transform: capitalize;
+}
+.pagination a {
+  color: hsl(0, 0%, 100%);
+}
+.pagination li {
+  list-style: none;
+  padding: 0.5rem 0.75rem;
+}
+.pagination li:hover {
+  background-color: hsl(220, 68%, 71%);
+}
+.pagination .active {
+  background-color: hsl(220, 78%, 61%);
+  border-radius: 50%;
+}
+
 .password-input {
   border: 1px transparent;
   border-radius: 0.3rem;
@@ -798,6 +822,7 @@ ul {
   background-size: contain;
   background-repeat: no-repeat;
   height: 100%;
+  overflow-y: scroll;
 }
 
 @media screen and (min-width: 768px) {

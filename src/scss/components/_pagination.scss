@@ -1,0 +1,29 @@
+@use "../abstracts" as *;
+
+.pagination {
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  list-style: none;
+  text-transform: capitalize;
+
+  a {
+    color: $white;
+  }
+
+  li {
+    list-style: none;
+    padding: 0.5rem 0.75rem;
+
+    &:hover {
+      background-color: $btn-color-hover;
+    }
+  }
+
+  .active {
+    background-color: $btn-color;
+    border-radius: 50%;
+  }
+}
