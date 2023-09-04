@@ -6,7 +6,7 @@ import { dashboardProps } from "./Dashboard";
 
 const TodoCardList = ({ dbTodos, isLoading }: dashboardProps) => {
 	return (
-		<section className="todo-card-list">
+		<div className="todo-card-list">
 			<ul>
 				{isLoading
 					? Array.from({ length: 5 }).map((_, index) => (
@@ -28,7 +28,7 @@ const TodoCardList = ({ dbTodos, isLoading }: dashboardProps) => {
 						))
 				}
 			</ul>
-		</section>
+		</div>
 	);
 };
 

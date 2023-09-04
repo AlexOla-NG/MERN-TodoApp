@@ -3,6 +3,7 @@ import ReactPaginate from "react-paginate";
 import AnimatedWrapper from "../../routes/AnimatedWrapper";
 import Dashboard from "./components/Dashboard";
 import TodoCardList from "./components/TodoCardList";
+import TodoCardListControls from "./components/TodoCardListControls";
 import { useGetDBTodos } from "../../hooks/home";
 
 // TODO: add controls for filter, sort
@@ -40,7 +41,6 @@ const Home = () => {
 		if (isSuccess) setDBTodos(data);
 	}, [isSuccess, data]);
 
-
 	// STUB: set current items on page render
 	useEffect(() => {
 		if (isSuccess) {
@@ -63,7 +63,6 @@ const Home = () => {
 	// 	// Implement your filtering logic here
 	// });
 
-	
 	// STUB: Invoke when user click to request another page.
 	const handlePageClick = (selectedItem: { selected: number }) => {
 		const newOffset = (selectedItem.selected * limit) % dbTodos?.length;
@@ -73,18 +72,21 @@ const Home = () => {
 	return (
 		<AnimatedWrapper className="home">
 			<Dashboard dbTodos={dbTodos} isLoading={isLoading} />
-			<TodoCardList dbTodos={currentItems} isLoading={isLoading} />
-			<ReactPaginate
-				containerClassName={"pagination"}
-				activeClassName={"active"}
-				breakLabel="..."
-				nextLabel="next >"
-				onPageChange={handlePageClick}
-				pageRangeDisplayed={5}
-				pageCount={pageCount}
-				previousLabel="< previous"
-				renderOnZeroPageCount={null}
-			/>
+			<section className="todo-list-card-wrapper">
+				<TodoCardListControls />
+				<TodoCardList dbTodos={currentItems} isLoading={isLoading} />
+				<ReactPaginate
+					containerClassName={"pagination"}
+					activeClassName={"active"}
+					breakLabel="..."
+					nextLabel="next >"
+					onPageChange={handlePageClick}
+					pageRangeDisplayed={5}
+					pageCount={pageCount}
+					previousLabel="< previous"
+					renderOnZeroPageCount={null}
+				/>
+			</section>
 		</AnimatedWrapper>
 	);
 };
