@@ -4,7 +4,9 @@ import AnimatedWrapper from "../../routes/AnimatedWrapper";
 import Dashboard from "./components/Dashboard";
 import TodoCardList from "./components/TodoCardList";
 import TodoCardListControls from "./components/TodoCardListControls";
+
 import { useGetDBTodos } from "../../hooks/home";
+import { extractFullNames } from "../../utils";
 
 // TODO: add controls for filter, sort
 
@@ -73,7 +75,7 @@ const Home = () => {
 		<AnimatedWrapper className="home">
 			<Dashboard dbTodos={dbTodos} isLoading={isLoading} />
 			<section className="todo-list-card-wrapper">
-				<TodoCardListControls />
+				<TodoCardListControls users={extractFullNames(dbTodos)} />
 				<TodoCardList dbTodos={currentItems} isLoading={isLoading} />
 				<ReactPaginate
 					containerClassName={"pagination"}

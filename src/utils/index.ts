@@ -108,3 +108,16 @@ export function formatDate(inputDate: string): string {
 	return `${day} ${month} ${year}`;
 }
 
+// STUB: extract user fullname
+// @param: array of todos
+// @returns: user fullname
+export function extractFullNames(data: dbTodoProps[]): string[] {
+	const uniqueFullNamesSet = new Set<string>();
+
+	data.forEach((item) => {
+		uniqueFullNamesSet.add(item?.user?.fullname);
+	});
+
+	const uniqueFullNames: string[] = Array.from(uniqueFullNamesSet);
+	return uniqueFullNames;
+}
