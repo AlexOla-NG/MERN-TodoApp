@@ -8,7 +8,7 @@ import TodoCardListControls from "./components/TodoCardListControls";
 import { useGetDBTodos } from "../../hooks/home";
 import { extractFullNames } from "../../utils";
 
-// TODO: add controls for filter, sort
+// TODO: setup logic for sorting and filtering
 
 type user = {
 	_id: string;
@@ -50,6 +50,13 @@ const Home = () => {
 			setCurrentItems(dbTodos?.slice(itemOffset, endOffset));
 		}
 	}, [dbTodos, isSuccess, itemOffset]);
+
+	// STUB: set current items on sort change
+	const sortDBTodos = (sortType: "asc-title" | "desc-title" | "asc-time" | "desc-time") => {
+		if(sortType === "asc-title" || sortType ==="desc-title") {
+
+		}
+	}
 
 	// Apply sorting logic to your data array
 	// const sortedData = [...dbTodos].sort((a, b) => {

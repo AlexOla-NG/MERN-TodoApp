@@ -2,6 +2,7 @@ import React from 'react'
 
 // TODO: stopped here
 // setup custom select for filter and sort
+// setup logic for filter, sort
 
 type TodoCardListControlsProps = {
   users: string[]
@@ -19,9 +20,11 @@ const TodoCardListControls = ({ users }: TodoCardListControlsProps) => {
 						<option value="completed">completed</option>
 					</optgroup>
 					<optgroup label="user">
-            {users?.map((user, index) => (
-              <option key={index} value={user}>{user}</option>
-            ))}
+						{users?.map((user, index) => (
+							<option key={index} value={user}>
+								{user}
+							</option>
+						))}
 					</optgroup>
 				</select>
 			</label>
@@ -30,12 +33,12 @@ const TodoCardListControls = ({ users }: TodoCardListControlsProps) => {
 				sort:
 				<select name="sort" id="sort">
 					<optgroup label="title">
-						<option value="asc">ascending</option>
-						<option value="desc">descending</option>
+						<option value="asc-title">ascending</option>
+						<option value="desc-title">descending</option>
 					</optgroup>
 					<optgroup label="time created">
-						<option value="asc">oldest first</option>
-						<option value="desc">newest first</option>
+						<option value="asc-time">oldest first</option>
+						<option value="desc-time">newest first</option>
 					</optgroup>
 				</select>
 			</label>
