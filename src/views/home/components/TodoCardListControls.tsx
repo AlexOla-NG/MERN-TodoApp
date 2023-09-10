@@ -1,32 +1,54 @@
-import React from 'react'
+import React, { ChangeEvent, useState } from 'react'
 
 // TODO: stopped here
 // setup custom select for filter and sort
 // setup logic for filter, sort
 
 type TodoCardListControlsProps = {
-  users: string[]
-}
+	users: string[];
+	filterData: (option: string) => void;
+};
 
-const TodoCardListControls = ({ users }: TodoCardListControlsProps) => {
+const TodoCardListControls = ({
+	users,
+	filterData,
+}: TodoCardListControlsProps) => {
+	const [selectedOption, setSelectedOption] = useState("");
+
+	const handleSelectChange = (event: ChangeEvent<HTMLSelectElement>) => {
+		console.log("selected option here:", event.target.value);
+		setSelectedOption(event.target.value);
+		filterData(event.target.value);
+	};
+
 	return (
 		<div className="todo-card-list-controls">
 			<label htmlFor="filter">
 				filter:
-				<select name="filter" id="filter">
-					<optgroup label="status">
-						<option value="all">all</option>
-						<option value="active">active</option>
-						<option value="completed">completed</option>
-					</optgroup>
-					<optgroup label="user">
-						{users?.map((user, index) => (
-							<option key={index} value={user}>
-								{user}
-							</option>
-						))}
-					</optgroup>
-				</select>
+				<div className="styled-select-container">
+					<select
+						name="filter"
+						id="filter"
+						onChange={handleSelectChange}
+						value={selectedOption}
+					>
+						<option value="" disabled hidden>
+							Select an option
+						</option>
+						<optgroup label="status">
+							<option value="all">all</option>
+							<option value="active">active</option>
+							<option value="completed">completed</option>
+						</optgroup>
+						<optgroup label="user">
+							{users?.map((user, index) => (
+								<option key={index} value={user}>
+									{user}
+								</option>
+							))}
+						</optgroup>
+					</select>
+				</div>
 			</label>
 
 			<label htmlFor="sort">

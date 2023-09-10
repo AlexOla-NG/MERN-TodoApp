@@ -8,7 +8,8 @@ import TodoCardListControls from "./components/TodoCardListControls";
 import { useGetDBTodos } from "../../hooks/home";
 import { extractFullNames } from "../../utils";
 
-// TODO: setup logic for sorting and filtering
+// TODO: fix filtering bug
+// filtered data not showing on first render
 
 type user = {
 	_id: string;
@@ -26,8 +27,11 @@ export type dbTodoProps = {
 	_v: number;
 };
 
+const statusOptions = ['all', 'completed', 'active']
+
 const Home = () => {
 	const [dbTodos, setDBTodos] = useState<dbTodoProps[]>([]);
+	const [fileteredTodos, setFilteredTodos] = useState<dbTodoProps[]>([]);
 	const [currentItems, setCurrentItems] = useState<dbTodoProps[]>([]);
 	const [itemOffset, setItemOffset] = useState(0);
 	const { data, isSuccess, isLoading } = useGetDBTodos();
@@ -36,20 +40,28 @@ const Home = () => {
 
 	// STUB: pagination
 	const limit = 10; // How many items to display per page.
-	const pageCount = Math.ceil(dbTodos?.length / limit);
+	const pageCount = Math.ceil(fileteredTodos?.length / limit);
 
 	// STUB: set todos on page render
 	useEffect(() => {
 		if (isSuccess) setDBTodos(data);
 	}, [isSuccess, data]);
 
+	// STUB: set filtered on page render
+	useEffect(() => {
+		if (isSuccess && data.length > 0) filterData("all");
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [data, isSuccess]);
+
 	// STUB: set current items on page render
+	// TODO: do we need to memoize currentItems value?
 	useEffect(() => {
 		if (isSuccess) {
 			const endOffset = itemOffset + limit;
-			setCurrentItems(dbTodos?.slice(itemOffset, endOffset));
+			setCurrentItems(fileteredTodos?.slice(itemOffset, endOffset));
 		}
-	}, [dbTodos, isSuccess, itemOffset]);
+	}, [fileteredTodos, isSuccess, itemOffset]);
 
 	// STUB: set current items on sort change
 	// const sortDBTodos = (sortType: "asc-title" | "desc-title" | "asc-time" | "desc-time") => {
@@ -67,14 +79,32 @@ const Home = () => {
 	// 	}
 	// });
 
-	// Apply filtering logic to your data array
-	// const filteredData = sortedData.filter((item) => {
-	// 	// Implement your filtering logic here
-	// });
+	/**
+	 * filtering logic
+	 * @param option string
+	 * @returns void
+	 */
+	const filterData = (option: string) => {
+		// STUB: filter by status
+		if(statusOptions.includes(option)) {
+			if(option === 'all') {
+				setFilteredTodos(dbTodos);
+			}
+			const filteredStatus = dbTodos.filter((elem) => elem.status === option)
+			setFilteredTodos(filteredStatus);
+		}
+		
+		// STUB: filter by user
+		if(extractFullNames(dbTodos).includes(option)) {
+			const filteredUser = dbTodos.filter((elem) => elem.user.fullname === option)
+			setFilteredTodos(filteredUser);
+		}
+	};
 
 	// STUB: Invoke when user click to request another page.
 	const handlePageClick = (selectedItem: { selected: number }) => {
-		const newOffset = (selectedItem.selected * limit) % dbTodos?.length;
+		const newOffset =
+			(selectedItem.selected * limit) % fileteredTodos?.length;
 		setItemOffset(newOffset);
 	};
 
@@ -82,7 +112,10 @@ const Home = () => {
 		<AnimatedWrapper className="home">
 			<Dashboard dbTodos={dbTodos} isLoading={isLoading} />
 			<section className="todo-list-card-wrapper">
-				<TodoCardListControls users={extractFullNames(dbTodos)} />
+				<TodoCardListControls
+					users={extractFullNames(dbTodos)}
+					filterData={filterData}
+				/>
 				<TodoCardList dbTodos={currentItems} isLoading={isLoading} />
 				<ReactPaginate
 					containerClassName={"pagination"}
