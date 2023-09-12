@@ -32,11 +32,8 @@ const TodoCardListControls = ({
 						onChange={handleSelectChange}
 						value={selectedOption}
 					>
-						<option value="" disabled hidden>
-							Select an option
-						</option>
 						<optgroup label="status">
-							<option value="all">all</option>
+							<option value="all" defaultValue='all'>all</option>
 							<option value="active">active</option>
 							<option value="completed">completed</option>
 						</optgroup>

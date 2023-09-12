@@ -8,8 +8,7 @@ import TodoCardListControls from "./components/TodoCardListControls";
 import { useGetDBTodos } from "../../hooks/home";
 import { extractFullNames } from "../../utils";
 
-// TODO: fix filtering bug
-// filtered data not showing on first render
+// TODO: setup sorting logic
 
 type user = {
 	_id: string;
@@ -27,7 +26,7 @@ export type dbTodoProps = {
 	_v: number;
 };
 
-const statusOptions = ['all', 'completed', 'active']
+const statusOptions = ["all", "completed", "active"];
 
 const Home = () => {
 	const [dbTodos, setDBTodos] = useState<dbTodoProps[]>([]);
@@ -49,15 +48,14 @@ const Home = () => {
 
 	// STUB: set filtered on page render
 	useEffect(() => {
-		if (isSuccess && data.length > 0) filterData("all");
+		if (dbTodos.length > 0) setFilteredTodos(dbTodos);
 
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [data, isSuccess]);
+	}, [dbTodos]);
 
 	// STUB: set current items on page render
 	// TODO: do we need to memoize currentItems value?
 	useEffect(() => {
-		if (isSuccess) {
+		if (fileteredTodos.length > 0) {
 			const endOffset = itemOffset + limit;
 			setCurrentItems(fileteredTodos?.slice(itemOffset, endOffset));
 		}
@@ -85,19 +83,26 @@ const Home = () => {
 	 * @returns void
 	 */
 	const filterData = (option: string) => {
-		// STUB: filter by status
-		if(statusOptions.includes(option)) {
-			if(option === 'all') {
-				setFilteredTodos(dbTodos);
-			}
-			const filteredStatus = dbTodos.filter((elem) => elem.status === option)
-			setFilteredTodos(filteredStatus);
+		setItemOffset(0);
+		// STUB: filter by all
+		if (option === "all") {
+			return setFilteredTodos(dbTodos);
 		}
-		
+
+		// STUB: filter by status
+		if (statusOptions.includes(option)) {
+			const filteredStatus = dbTodos.filter(
+				(elem) => elem.status === option
+			);
+			return setFilteredTodos(filteredStatus);
+		}
+
 		// STUB: filter by user
-		if(extractFullNames(dbTodos).includes(option)) {
-			const filteredUser = dbTodos.filter((elem) => elem.user.fullname === option)
-			setFilteredTodos(filteredUser);
+		if (extractFullNames(dbTodos).includes(option)) {
+			const filteredUser = dbTodos.filter(
+				(elem) => elem.user.fullname === option
+			);
+			return setFilteredTodos(filteredUser);
 		}
 	};
 
