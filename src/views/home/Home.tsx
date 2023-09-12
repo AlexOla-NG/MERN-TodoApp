@@ -9,6 +9,11 @@ import { useGetDBTodos } from "../../hooks/home";
 import { extractFullNames } from "../../utils";
 
 // TODO: setup sorting logic
+// how can we pass the sortedTodos state to the TodoCardList?
+
+// TODO: refactor code
+// utilize useReducer to manage state, dispatch actions
+// useState manages individual items, useReducer manages entire state
 
 type user = {
 	_id: string;
@@ -31,6 +36,7 @@ const statusOptions = ["all", "completed", "active"];
 const Home = () => {
 	const [dbTodos, setDBTodos] = useState<dbTodoProps[]>([]);
 	const [fileteredTodos, setFilteredTodos] = useState<dbTodoProps[]>([]);
+	 const [sortedTodos, setSortedTodos] = useState<dbTodoProps[]>([]);
 	const [currentItems, setCurrentItems] = useState<dbTodoProps[]>([]);
 	const [itemOffset, setItemOffset] = useState(0);
 	const { data, isSuccess, isLoading } = useGetDBTodos();
@@ -49,7 +55,6 @@ const Home = () => {
 	// STUB: set filtered on page render
 	useEffect(() => {
 		if (dbTodos.length > 0) setFilteredTodos(dbTodos);
-
 	}, [dbTodos]);
 
 	// STUB: set current items on page render
@@ -83,6 +88,7 @@ const Home = () => {
 	 * @returns void
 	 */
 	const filterData = (option: string) => {
+		// STUB: reset itemOffset
 		setItemOffset(0);
 		// STUB: filter by all
 		if (option === "all") {
@@ -106,6 +112,29 @@ const Home = () => {
 		}
 	};
 
+	// /**
+	//  * sorting logic
+	//  * @param option string
+	//  * @returns void
+	//  */
+	// const sortData = (option: string) => {
+	// 	// STUB: filter by all
+	// 	if (option === "asc-title") {
+	// 		return setFilteredTodos(dbTodos);
+	// 	}
+	// };
+
+	// Function to sort the array by a specific property
+	const sortByProperty = (property: keyof dbTodoProps) => {
+		const sortedData = [...data];
+
+		// STUB: filter by all
+		if (property === "title") {
+			sortedData.sort((a, b) => a[property] - b[property]);
+		}
+		setSortedTodos(sortedData);
+	};
+
 	// STUB: Invoke when user click to request another page.
 	const handlePageClick = (selectedItem: { selected: number }) => {
 		const newOffset =
@@ -120,6 +149,7 @@ const Home = () => {
 				<TodoCardListControls
 					users={extractFullNames(dbTodos)}
 					filterData={filterData}
+					sortData={sortData} //TODO: fix this
 				/>
 				<TodoCardList dbTodos={currentItems} isLoading={isLoading} />
 				<ReactPaginate
