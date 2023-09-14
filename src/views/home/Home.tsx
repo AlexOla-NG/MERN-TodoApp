@@ -8,9 +8,6 @@ import TodoCardListControls from "./components/TodoCardListControls";
 import { useGetDBTodos } from "../../hooks/home";
 import { extractFullNames } from "../../utils";
 
-// TODO: setup sorting logic
-// how can we pass the sortedTodos state to the TodoCardList?
-
 // TODO: refactor code
 // utilize useReducer to manage state, dispatch actions
 // useState manages individual items, useReducer manages entire state
@@ -36,12 +33,10 @@ const statusOptions = ["all", "completed", "active"];
 const Home = () => {
 	const [dbTodos, setDBTodos] = useState<dbTodoProps[]>([]);
 	const [fileteredTodos, setFilteredTodos] = useState<dbTodoProps[]>([]);
-	 const [sortedTodos, setSortedTodos] = useState<dbTodoProps[]>([]);
+	const [sortedTodos, setSortedTodos] = useState<dbTodoProps[]>([]);
 	const [currentItems, setCurrentItems] = useState<dbTodoProps[]>([]);
 	const [itemOffset, setItemOffset] = useState(0);
 	const { data, isSuccess, isLoading } = useGetDBTodos();
-	const [sortType, setSortType] = useState<"asc" | "desc">("asc"); // 'asc' or 'desc'
-	const [filterValue, setFilterValue] = useState("");
 
 	// STUB: pagination
 	const limit = 10; // How many items to display per page.
@@ -52,10 +47,17 @@ const Home = () => {
 		if (isSuccess) setDBTodos(data);
 	}, [isSuccess, data]);
 
+	// STUB: set sorted on page render
+	useEffect(() => {
+		if (dbTodos.length > 0) sortData("asc-title");
+
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [dbTodos]);
+
 	// STUB: set filtered on page render
 	useEffect(() => {
-		if (dbTodos.length > 0) setFilteredTodos(dbTodos);
-	}, [dbTodos]);
+		if (sortedTodos.length > 0) setFilteredTodos(sortedTodos);
+	}, [sortedTodos]);
 
 	// STUB: set current items on page render
 	// TODO: do we need to memoize currentItems value?
@@ -66,45 +68,28 @@ const Home = () => {
 		}
 	}, [fileteredTodos, isSuccess, itemOffset]);
 
-	// STUB: set current items on sort change
-	// const sortDBTodos = (sortType: "asc-title" | "desc-title" | "asc-time" | "desc-time") => {
-	// 	if(sortType === "asc-title" || sortType ==="desc-title") {
-
-	// 	}
-	// }
-
-	// Apply sorting logic to your data array
-	// const sortedData = [...dbTodos].sort((a, b) => {
-	// 	if (sortType === "asc") {
-	// 		// Implement your sorting logic here
-	// 	} else if (sortType === "desc") {
-	// 		// Implement your sorting logic here
-	// 	}
-	// });
-
 	/**
 	 * filtering logic
 	 * @param option string
-	 * @returns void
 	 */
 	const filterData = (option: string) => {
 		// STUB: reset itemOffset
 		setItemOffset(0);
 		// STUB: filter by all
 		if (option === "all") {
-			return setFilteredTodos(dbTodos);
+			return setFilteredTodos(sortedTodos);
 		}
 
 		// STUB: filter by status
 		if (statusOptions.includes(option)) {
-			const filteredStatus = dbTodos.filter(
+			const filteredStatus = sortedTodos.filter(
 				(elem) => elem.status === option
 			);
 			return setFilteredTodos(filteredStatus);
 		}
 
 		// STUB: filter by user
-		if (extractFullNames(dbTodos).includes(option)) {
+		if (extractFullNames(sortedTodos).includes(option)) {
 			const filteredUser = dbTodos.filter(
 				(elem) => elem.user.fullname === option
 			);
@@ -112,27 +97,43 @@ const Home = () => {
 		}
 	};
 
-	// /**
-	//  * sorting logic
-	//  * @param option string
-	//  * @returns void
-	//  */
-	// const sortData = (option: string) => {
-	// 	// STUB: filter by all
-	// 	if (option === "asc-title") {
-	// 		return setFilteredTodos(dbTodos);
-	// 	}
-	// };
+	/**
+	 * sorting logic
+	 * @param option string
+	 */
+	// STUB: Function to sort the array by a specific property
+	const sortData = (option: string) => {
+		const sortedData = [...dbTodos];
 
-	// Function to sort the array by a specific property
-	const sortByProperty = (property: keyof dbTodoProps) => {
-		const sortedData = [...data];
-
-		// STUB: filter by all
-		if (property === "title") {
-			sortedData.sort((a, b) => a[property] - b[property]);
+		// STUB: sort by title
+		if (option === "asc-title") {
+			sortedData.sort(
+				(a, b) => a.title.localeCompare(b.title)
+			)
+			setSortedTodos(sortedData);
 		}
-		setSortedTodos(sortedData);
+		
+		if (option === "desc-title") {
+			sortedData.sort(
+				(a, b) => b.title.localeCompare(a.title)
+			)
+			setSortedTodos(sortedData);
+		}
+
+		// STUB: sort by time created
+		if (option === "asc-time") {
+			sortedData.sort(
+				(a, b) => a.createdAt.localeCompare(b.createdAt)
+			)
+			setSortedTodos(sortedData);
+		}
+		
+		if (option === "desc-time") {
+			sortedData.sort(
+				(a, b) => b.createdAt.localeCompare(a.createdAt)
+			)
+			setSortedTodos(sortedData);
+		}
 	};
 
 	// STUB: Invoke when user click to request another page.

@@ -1,8 +1,7 @@
 import React, { ChangeEvent, useState } from 'react'
 
 // TODO: stopped here
-// setup custom select for filter and sort
-// setup logic for filter, sort
+// style todo-card-list-controls
 
 // TODO: create custom select component for filter & sort
 // @params onChange handler, value, optionsList(array of object, eg [{label = {[items, items, ...]}}, {label = {[items, items, ...]}},...]) props
@@ -78,21 +77,23 @@ const TodoCardListControls = ({
 
 			<label htmlFor="sort">
 				sort:
-				<select
-					name="sort"
-					id="sort"
-					onChange={handleSortOptionChange}
-					value={sortOption}
-				>
-					<optgroup label="title">
-						<option value="asc-title">ascending</option>
-						<option value="desc-title">descending</option>
-					</optgroup>
-					<optgroup label="time created">
-						<option value="asc-time">oldest first</option>
-						<option value="desc-time">newest first</option>
-					</optgroup>
-				</select>
+				<div className="styled-select-container">
+					<select
+						name="sort"
+						id="sort"
+						onChange={handleSortOptionChange}
+						value={sortOption}
+					>
+						<optgroup label="title">
+							<option value="asc-title">ascending</option>
+							<option value="desc-title">descending</option>
+						</optgroup>
+						<optgroup label="time created">
+							<option value="asc-time">oldest first</option>
+							<option value="desc-time">newest first</option>
+						</optgroup>
+					</select>
+				</div>
 			</label>
 		</div>
 	);
