@@ -1,24 +1,23 @@
-import React, { ChangeEvent, useState } from 'react'
-
-// TODO: stopped here
-// style todo-card-list-controls
+import React, { ChangeEvent } from 'react'
 
 // TODO: create custom select component for filter & sort
 // @params onChange handler, value, optionsList(array of object, eg [{label = {[items, items, ...]}}, {label = {[items, items, ...]}},...]) props
 
 type TodoCardListControlsProps = {
 	users: string[];
-	filterData: (option: string) => void;
-	sortData: (option: string) => void;
+	handleFilterChange: (event: ChangeEvent<HTMLSelectElement>) => void;
+	handleSortChange: (event: ChangeEvent<HTMLSelectElement>) => void;
+	filterOption: string;
+	sortOption: string;
 };
 
 const TodoCardListControls = ({
 	users,
-	filterData,
-	sortData
+	handleFilterChange,
+	handleSortChange,
+	filterOption,
+	sortOption
 }: TodoCardListControlsProps) => {
-	const [filterOption, setFilterOption] = useState("");
-	const [sortOption, setsSortOption] = useState("");
 
 	/**
 	 * handler for filter control
@@ -30,8 +29,7 @@ const TodoCardListControls = ({
 		event: ChangeEvent<HTMLSelectElement>
 	) => {
 		console.log("selected option here:", event.target.value);
-		setFilterOption(event.target.value);
-		filterData(event.target.value);
+		handleFilterChange(event);
 	};
 
 	/**
@@ -42,8 +40,7 @@ const TodoCardListControls = ({
 	 */
 	const handleSortOptionChange = (event: ChangeEvent<HTMLSelectElement>) => {
 		console.log("selected option here:", event.target.value);
-		setsSortOption(event.target.value);
-		sortData(event.target.value);
+		handleSortChange(event);
 	};
 
 	return (
@@ -58,7 +55,7 @@ const TodoCardListControls = ({
 						value={filterOption}
 					>
 						<optgroup label="status">
-							<option value="all" defaultValue="all">
+							<option value="all">
 								all
 							</option>
 							<option value="active">active</option>

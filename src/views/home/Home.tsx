@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import ReactPaginate from "react-paginate";
 import AnimatedWrapper from "../../routes/AnimatedWrapper";
 import Dashboard from "./components/Dashboard";
@@ -49,10 +49,10 @@ type UpdatePage = {
 	payload: { selected: number; limit: number };
 };
 type SetTodosAscTitle = { type: "SET_TODOS_ASC_TITLE" };
-type SetTodosDescTitle = { type: "SET_TODOS_DESC_TITLE"};
-type SetTodosAscTime = { type: "SET_TODOS_ASC_TIME"};
-type SetTodosDescTime = { type: "SET_TODOS_DESC_TIME"};
-type SetFilterAllTodos = { type: "SET_FILTER_ALL_TODOS"};
+type SetTodosDescTitle = { type: "SET_TODOS_DESC_TITLE" };
+type SetTodosAscTime = { type: "SET_TODOS_ASC_TIME" };
+type SetTodosDescTime = { type: "SET_TODOS_DESC_TIME" };
+type SetFilterAllTodos = { type: "SET_FILTER_ALL_TODOS" };
 type SetFilterByStatus = { type: "SET_FILTER_BY_STATUS"; payload: string };
 type SetFilterByUser = { type: "SET_FILTER_BY_USER"; payload: string };
 
@@ -83,7 +83,9 @@ function appReducer(state: AppState, action: AppActions) {
 		case "UPDATE_PAGE":
 			return {
 				...state,
-				itemOffset: (action.payload.selected * action.payload.limit) % state.fileteredTodos?.length
+				itemOffset:
+					(action.payload.selected * action.payload.limit) %
+					state.fileteredTodos?.length,
 			};
 		case "SET_TODOS_ASC_TITLE":
 			return {
@@ -144,6 +146,8 @@ const Home = () => {
 	const [currentItems, setCurrentItems] = useState<dbTodoProps[]>([]);
 	const [itemOffset, setItemOffset] = useState(0);
 	const { data, isSuccess, isLoading } = useGetDBTodos();
+	const [filterOption, setFilterOption] = useState("all");
+	const [sortOption, setSortOption] = useState("asc-title");
 
 	// STUB: pagination
 	const limit = 10; // How many items to display per page.
@@ -154,28 +158,28 @@ const Home = () => {
 		if (isSuccess) setDBTodos(data); //dispatch type: SET_DB_TODOS
 	}, [isSuccess, data]);
 
-	// STUB: set sorted on page render
-	useEffect(() => {
-		if (dbTodos.length > 0) sortData("asc-title");
-
-	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [dbTodos]);
-
 	// STUB: set filtered on page render
 	useEffect(() => {
-		if (sortedTodos.length > 0) setFilteredTodos(sortedTodos); //dispatch type: SET_FILTER_ALL_TODOS
-	}, [sortedTodos]);
+		if (dbTodos.length > 0) setFilteredTodos(dbTodos);
+	}, [dbTodos]);
+
+	// STUB: set sorted on page render
+	useEffect(() => {
+		if (fileteredTodos.length > 0) sortData(sortOption); //dispatch type: SET_FILTER_ALL_TODOS
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [fileteredTodos]);
 
 	// STUB: set current items on page render
 	// TODO: do we need to memoize currentItems value?
 	useEffect(() => {
-		if (fileteredTodos.length > 0) {
+		if (sortedTodos.length > 0) {
 			// dispatch type: SET_CURRENT_PAGE_ITEMS, payload: { itemOffset, endOffset }
 
 			const endOffset = itemOffset + limit;
-			setCurrentItems(fileteredTodos?.slice(itemOffset, endOffset));
+			setCurrentItems(sortedTodos?.slice(itemOffset, endOffset));
 		}
-	}, [fileteredTodos, isSuccess, itemOffset]);
+	}, [sortedTodos, isSuccess, itemOffset]);
 
 	/**
 	 * filtering logic
@@ -188,14 +192,14 @@ const Home = () => {
 		// dispatch type: SET_FILTER_ALL_TODOS
 
 		if (option === "all") {
-			return setFilteredTodos(sortedTodos);
+			return setFilteredTodos(dbTodos);
 		}
 
 		// STUB: filter by status
 		// dispatch type: SET_FILTER_BY_STATUS, payload: option
 
 		if (statusOptions.includes(option)) {
-			const filteredStatus = sortedTodos.filter(
+			const filteredStatus = dbTodos.filter(
 				(elem) => elem.status === option
 			);
 			return setFilteredTodos(filteredStatus);
@@ -204,7 +208,7 @@ const Home = () => {
 		// STUB: filter by user
 		// dispatch type: SET_FILTER_BY_USER, payload: option
 
-		if (extractFullNames(sortedTodos).includes(option)) {
+		if (extractFullNames(dbTodos).includes(option)) {
 			const filteredUser = dbTodos.filter(
 				(elem) => elem.user.fullname === option
 			);
@@ -218,7 +222,7 @@ const Home = () => {
 	 */
 	// STUB: Function to sort the array by a specific property
 	const sortData = (option: string) => {
-		const sortedData = [...dbTodos];
+		const sortedData = [...fileteredTodos];
 
 		// STUB: sort by title
 		if (option === "asc-title") {
@@ -227,7 +231,7 @@ const Home = () => {
 			sortedData.sort((a, b) => a.title.localeCompare(b.title));
 			setSortedTodos(sortedData);
 		}
-		
+
 		if (option === "desc-title") {
 			// dispatch type: SET_TODOS_DESC_TITLE
 
@@ -242,7 +246,7 @@ const Home = () => {
 			sortedData.sort((a, b) => a.createdAt.localeCompare(b.createdAt));
 			setSortedTodos(sortedData);
 		}
-		
+
 		if (option === "desc-time") {
 			// dispatch type: SET_TODOS_DESC_TIME
 
@@ -260,14 +264,29 @@ const Home = () => {
 		setItemOffset(newOffset);
 	};
 
+	// STUB: handle filter onchange
+	const handleFilterChange = (event: ChangeEvent<HTMLSelectElement>) => {
+		setFilterOption(event.target.value);
+		filterData(event.target.value);
+	};
+
+	// STUB: handle sort onchange
+	const handleSortChange = (event: ChangeEvent<HTMLSelectElement>) => {
+		setSortOption(event.target.value);
+		sortData(event.target.value);
+	};
+	
+
 	return (
 		<AnimatedWrapper className="home">
 			<Dashboard dbTodos={dbTodos} isLoading={isLoading} />
 			<section className="todo-list-card-wrapper">
 				<TodoCardListControls
 					users={extractFullNames(dbTodos)}
-					filterData={filterData}
-					sortData={sortData}
+					handleFilterChange={handleFilterChange}
+					handleSortChange={handleSortChange}
+					filterOption={filterOption}
+					sortOption={sortOption}
 				/>
 				<TodoCardList dbTodos={currentItems} isLoading={isLoading} />
 				<ReactPaginate
