@@ -28,7 +28,6 @@ const TodoCardListControls = ({
 	const handleFilterOptionChange = (
 		event: ChangeEvent<HTMLSelectElement>
 	) => {
-		console.log("selected option here:", event.target.value);
 		handleFilterChange(event);
 	};
 

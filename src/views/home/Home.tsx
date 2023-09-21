@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useState } from "react";
+import React, { ChangeEvent, useEffect, useReducer, useState } from "react";
 import ReactPaginate from "react-paginate";
 import AnimatedWrapper from "../../routes/AnimatedWrapper";
 import Dashboard from "./components/Dashboard";
@@ -7,9 +7,6 @@ import TodoCardListControls from "./components/TodoCardListControls";
 
 import { useGetDBTodos } from "../../hooks/home";
 import { extractFullNames } from "../../utils";
-
-// TODO: refactor code
-// replace usestate with usereducer
 
 type user = {
 	_id: string;
@@ -31,6 +28,8 @@ const statusOptions = ["all", "completed", "active"];
 
 // STUB: custom type for state
 interface AppState {
+	filterOption: string;
+	sortOption: string;
 	dbTodos: dbTodoProps[];
 	sortedTodos: dbTodoProps[];
 	fileteredTodos: dbTodoProps[];
@@ -39,99 +38,121 @@ interface AppState {
 }
 
 // STUB: interface for dispatch actions
+type SetFilterOption = {type: 'SET_FILTER_OPTION', payload: string}
+type SetSortOption = {type: 'SET_SORT_OPTION', payload: string}
 type SetDBTodos = { type: "SET_DB_TODOS"; payload: dbTodoProps[] };
 type SetCurrentPageItems = {
 	type: "SET_CURRENT_PAGE_ITEMS";
-	payload: { itemOffset: number; endOffset: number };
+	payload: { limit: number };
 };
-type UpdatePage = {
-	type: "UPDATE_PAGE";
+type UpdatePagination = {
+	type: "UPDATE_PAGINATION";
 	payload: { selected: number; limit: number };
 };
-type SetTodosAscTitle = { type: "SET_TODOS_ASC_TITLE" };
-type SetTodosDescTitle = { type: "SET_TODOS_DESC_TITLE" };
-type SetTodosAscTime = { type: "SET_TODOS_ASC_TIME" };
-type SetTodosDescTime = { type: "SET_TODOS_DESC_TIME" };
-type SetFilterAllTodos = { type: "SET_FILTER_ALL_TODOS" };
-type SetFilterByStatus = { type: "SET_FILTER_BY_STATUS"; payload: string };
-type SetFilterByUser = { type: "SET_FILTER_BY_USER"; payload: string };
+type SortTodosByAscTitle = { type: "SORT_TODOS_BY_ASC_TITLE" };
+type SortTodosByDescTitle = { type: "SORT_TODOS_BY_DESC_TITLE" };
+type SortTodosByAscTime = { type: "SORT_TODOS_BY_ASC_TIME" };
+type SortTodosByDescTime = { type: "SORT_TODOS_BY_DESC_TIME" };
+type FilterAllTodos = { type: "FILTER_ALL_TODOS" };
+type FilterByStatus = { type: "FILTER_BY_STATUS"; payload: string };
+type FilterByUser = { type: "FILTER_BY_USER"; payload: string };
 
 type AppActions =
+	| SetFilterOption
+	| SetSortOption
 	| SetDBTodos
 	| SetCurrentPageItems
-	| UpdatePage
-	| SetTodosAscTitle
-	| SetTodosDescTitle
-	| SetTodosAscTime
-	| SetTodosDescTime
-	| SetFilterAllTodos
-	| SetFilterByStatus
-	| SetFilterByUser;
+	| UpdatePagination
+	| SortTodosByAscTitle
+	| SortTodosByDescTitle
+	| SortTodosByAscTime
+	| SortTodosByDescTime
+	| FilterAllTodos
+	| FilterByStatus
+	| FilterByUser;
+
+const initialstate: AppState = {
+	filterOption: "all",
+	sortOption: "asc-title",
+	itemOffset: 0,
+	dbTodos: [],
+	sortedTodos: [],
+	fileteredTodos: [],
+	currentItems: [],
+}
+
 
 function appReducer(state: AppState, action: AppActions) {
 	switch (action.type) {
+		case "SET_FILTER_OPTION":
+			return { ...state, filterOption: action.payload };
+		case "SET_SORT_OPTION":
+			return { ...state, sortOption: action.payload };
 		case "SET_DB_TODOS":
 			return { ...state, dbTodos: action.payload };
 		case "SET_CURRENT_PAGE_ITEMS":
 			return {
 				...state,
-				currentItems: state.fileteredTodos.slice(
-					action.payload.itemOffset,
-					action.payload.endOffset
+				currentItems: state.sortedTodos.slice(
+					state.itemOffset,
+					(state.itemOffset + action.payload.limit)
 				),
 			};
-		case "UPDATE_PAGE":
+		case "UPDATE_PAGINATION":
 			return {
 				...state,
 				itemOffset:
 					(action.payload.selected * action.payload.limit) %
 					state.fileteredTodos?.length,
 			};
-		case "SET_TODOS_ASC_TITLE":
+		case "FILTER_ALL_TODOS":
 			return {
 				...state,
-				sortedTodos: state.sortedTodos.sort((a, b) =>
-					a.title.localeCompare(b.title)
-				),
+				itemOffset: 0, // reset pagination
+				fileteredTodos: state.dbTodos,
 			};
-		case "SET_TODOS_DESC_TITLE":
+		case "FILTER_BY_STATUS":
 			return {
 				...state,
-				sortedTodos: state.sortedTodos.sort((a, b) =>
-					b.title.localeCompare(a.title)
-				),
-			};
-		case "SET_TODOS_ASC_TIME":
-			return {
-				...state,
-				sortedTodos: state.sortedTodos.sort((a, b) =>
-					a.createdAt.localeCompare(b.createdAt)
-				),
-			};
-		case "SET_TODOS_DESC_TIME":
-			return {
-				...state,
-				sortedTodos: state.sortedTodos.sort((a, b) =>
-					b.createdAt.localeCompare(a.createdAt)
-				),
-			};
-		case "SET_FILTER_ALL_TODOS":
-			return {
-				...state,
-				fileteredTodos: state.sortedTodos,
-			};
-		case "SET_FILTER_BY_STATUS":
-			return {
-				...state,
-				fileteredTodos: state.sortedTodos.filter(
+				itemOffset: 0, // reset pagination
+				fileteredTodos: state.dbTodos.filter(
 					(elem) => elem.status === action.payload
 				),
 			};
-		case "SET_FILTER_BY_USER":
+		case "FILTER_BY_USER":
 			return {
 				...state,
-				fileteredTodos: state.sortedTodos.filter(
+				itemOffset: 0, // reset pagination
+				fileteredTodos: state.dbTodos.filter(
 					(elem) => elem.user.fullname === action.payload
+				),
+			};
+		case "SORT_TODOS_BY_ASC_TITLE":
+			return {
+				...state,
+				sortedTodos: state.fileteredTodos.sort((a, b) =>
+					a.title.localeCompare(b.title)
+				),
+			};
+		case "SORT_TODOS_BY_DESC_TITLE":
+			return {
+				...state,
+				sortedTodos: state.fileteredTodos.sort((a, b) =>
+					b.title.localeCompare(a.title)
+				),
+			};
+		case "SORT_TODOS_BY_ASC_TIME":
+			return {
+				...state,
+				sortedTodos: state.fileteredTodos.sort((a, b) =>
+					a.createdAt.localeCompare(b.createdAt)
+				),
+			};
+		case "SORT_TODOS_BY_DESC_TIME":
+			return {
+				...state,
+				sortedTodos: state.fileteredTodos.sort((a, b) =>
+					b.createdAt.localeCompare(a.createdAt)
 				),
 			};
 		default:
@@ -140,14 +161,9 @@ function appReducer(state: AppState, action: AppActions) {
 }
 
 const Home = () => {
-	const [dbTodos, setDBTodos] = useState<dbTodoProps[]>([]);
-	const [fileteredTodos, setFilteredTodos] = useState<dbTodoProps[]>([]);
-	const [sortedTodos, setSortedTodos] = useState<dbTodoProps[]>([]);
-	const [currentItems, setCurrentItems] = useState<dbTodoProps[]>([]);
-	const [itemOffset, setItemOffset] = useState(0);
+	const [state, dispatch] = useReducer(appReducer, initialstate);
+	const {currentItems, dbTodos, fileteredTodos, sortedTodos, itemOffset, filterOption, sortOption} = state
 	const { data, isSuccess, isLoading } = useGetDBTodos();
-	const [filterOption, setFilterOption] = useState("all");
-	const [sortOption, setSortOption] = useState("asc-title");
 
 	// STUB: pagination
 	const limit = 10; // How many items to display per page.
@@ -155,17 +171,24 @@ const Home = () => {
 
 	// STUB: set todos on page render
 	useEffect(() => {
-		if (isSuccess) setDBTodos(data); //dispatch type: SET_DB_TODOS
+		if (isSuccess) {
+			dispatch({type: "SET_DB_TODOS", payload: data})
+		}
+		
 	}, [isSuccess, data]);
 
 	// STUB: set filtered on page render
 	useEffect(() => {
-		if (dbTodos.length > 0) setFilteredTodos(dbTodos);
+		if (dbTodos.length > 0) {
+			dispatch({type: "FILTER_ALL_TODOS"})
+		}
 	}, [dbTodos]);
 
 	// STUB: set sorted on page render
 	useEffect(() => {
-		if (fileteredTodos.length > 0) sortData(sortOption); //dispatch type: SET_FILTER_ALL_TODOS
+		if (fileteredTodos.length > 0) {
+			sortData(sortOption)
+		}
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [fileteredTodos]);
@@ -174,45 +197,33 @@ const Home = () => {
 	// TODO: do we need to memoize currentItems value?
 	useEffect(() => {
 		if (sortedTodos.length > 0) {
-			// dispatch type: SET_CURRENT_PAGE_ITEMS, payload: { itemOffset, endOffset }
-
-			const endOffset = itemOffset + limit;
-			setCurrentItems(sortedTodos?.slice(itemOffset, endOffset));
+			dispatch({
+				type: "SET_CURRENT_PAGE_ITEMS",
+				payload: { limit },
+			});
 		}
-	}, [sortedTodos, isSuccess, itemOffset]);
+
+	}, [sortedTodos, sortOption, itemOffset]);
 
 	/**
 	 * filtering logic
 	 * @param option string
 	 */
 	const filterData = (option: string) => {
-		// STUB: reset itemOffset
-		setItemOffset(0);
-		// STUB: filter by all
-		// dispatch type: SET_FILTER_ALL_TODOS
 
+		// STUB: filter by all
 		if (option === "all") {
-			return setFilteredTodos(dbTodos);
+			dispatch({type: "FILTER_ALL_TODOS"});
 		}
 
 		// STUB: filter by status
-		// dispatch type: SET_FILTER_BY_STATUS, payload: option
-
 		if (statusOptions.includes(option)) {
-			const filteredStatus = dbTodos.filter(
-				(elem) => elem.status === option
-			);
-			return setFilteredTodos(filteredStatus);
+			dispatch({type: "FILTER_BY_STATUS", payload: option});
 		}
 
 		// STUB: filter by user
-		// dispatch type: SET_FILTER_BY_USER, payload: option
-
 		if (extractFullNames(dbTodos).includes(option)) {
-			const filteredUser = dbTodos.filter(
-				(elem) => elem.user.fullname === option
-			);
-			return setFilteredTodos(filteredUser);
+			dispatch({type: "FILTER_BY_USER", payload: option});
 		}
 	};
 
@@ -222,57 +233,40 @@ const Home = () => {
 	 */
 	// STUB: Function to sort the array by a specific property
 	const sortData = (option: string) => {
-		const sortedData = [...fileteredTodos];
 
 		// STUB: sort by title
 		if (option === "asc-title") {
-			// dispatch type: SET_TODOS_ASC_TITLE
-
-			sortedData.sort((a, b) => a.title.localeCompare(b.title));
-			setSortedTodos(sortedData);
+			dispatch({type: 'SORT_TODOS_BY_ASC_TITLE'});
 		}
 
 		if (option === "desc-title") {
-			// dispatch type: SET_TODOS_DESC_TITLE
-
-			sortedData.sort((a, b) => b.title.localeCompare(a.title));
-			setSortedTodos(sortedData);
+			dispatch({type: 'SORT_TODOS_BY_DESC_TITLE'});
 		}
 
 		// STUB: sort by time created
 		if (option === "asc-time") {
-			// dispatch type: SET_TODOS_ASC_TIME
-
-			sortedData.sort((a, b) => a.createdAt.localeCompare(b.createdAt));
-			setSortedTodos(sortedData);
+			dispatch({type: 'SORT_TODOS_BY_ASC_TIME'});
 		}
 
 		if (option === "desc-time") {
-			// dispatch type: SET_TODOS_DESC_TIME
-
-			sortedData.sort((a, b) => b.createdAt.localeCompare(a.createdAt));
-			setSortedTodos(sortedData);
+			dispatch({type: 'SORT_TODOS_BY_DESC_TIME'});
 		}
 	};
 
 	// STUB: Invoke when user click to request another page.
 	const handlePageClick = (selectedItem: { selected: number }) => {
-		// dispatch type: UPDATE_PAGE, payload: { selected, limit }
-
-		const newOffset =
-			(selectedItem.selected * limit) % fileteredTodos?.length;
-		setItemOffset(newOffset);
+		dispatch({type: 'UPDATE_PAGINATION', payload: {selected:selectedItem.selected, limit}})
 	};
 
 	// STUB: handle filter onchange
 	const handleFilterChange = (event: ChangeEvent<HTMLSelectElement>) => {
-		setFilterOption(event.target.value);
+		dispatch({type: 'SET_FILTER_OPTION', payload: event.target.value})
 		filterData(event.target.value);
 	};
 
 	// STUB: handle sort onchange
 	const handleSortChange = (event: ChangeEvent<HTMLSelectElement>) => {
-		setSortOption(event.target.value);
+		dispatch({ type: "SET_SORT_OPTION", payload: event.target.value });
 		sortData(event.target.value);
 	};
 	
