@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useReducer, useState } from "react";
+import React, { ChangeEvent, useEffect, useReducer } from "react";
 import ReactPaginate from "react-paginate";
 import AnimatedWrapper from "../../routes/AnimatedWrapper";
 import Dashboard from "./components/Dashboard";
@@ -7,6 +7,11 @@ import TodoCardListControls from "./components/TodoCardListControls";
 
 import { useGetDBTodos } from "../../hooks/home";
 import { extractFullNames } from "../../utils";
+
+// TODO: bug fix
+// 1. whenever we change something and save, dbTodos is displayed on TodoCardList instead of currentItems
+// I think it might be a bug with the useReducer/useEffect hook. Plz investigate
+// 2. pagination does not reset whenever we filter todos
 
 type user = {
 	_id: string;
@@ -108,25 +113,25 @@ function appReducer(state: AppState, action: AppActions) {
 		case "FILTER_ALL_TODOS":
 			return {
 				...state,
-				itemOffset: 0, // reset pagination
 				fileteredTodos: state.dbTodos,
+				itemOffset: 0, // reset pagination
 			};
 		case "FILTER_BY_STATUS":
 			return {
 				...state,
-				itemOffset: 0, // reset pagination
 				fileteredTodos: state.dbTodos.filter(
 					(elem) => elem.status === action.payload
-				),
+					),
+				itemOffset: 0, // reset pagination
 			};
 		case "FILTER_BY_USER":
 			return {
 				...state,
-				itemOffset: 0, // reset pagination
 				fileteredTodos: state.dbTodos.filter(
 					(elem) => elem.user.fullname === action.payload
-				),
-			};
+					),
+				itemOffset: 0, // reset pagination
+				};
 		case "SORT_TODOS_BY_ASC_TITLE":
 			return {
 				...state,
@@ -194,7 +199,6 @@ const Home = () => {
 	}, [fileteredTodos]);
 
 	// STUB: set current items on page render
-	// TODO: do we need to memoize currentItems value?
 	useEffect(() => {
 		if (sortedTodos.length > 0) {
 			dispatch({
@@ -213,7 +217,7 @@ const Home = () => {
 
 		// STUB: filter by all
 		if (option === "all") {
-			dispatch({type: "FILTER_ALL_TODOS"});
+			return dispatch({type: "FILTER_ALL_TODOS"});
 		}
 
 		// STUB: filter by status
