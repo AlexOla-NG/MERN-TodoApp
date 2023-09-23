@@ -360,10 +360,12 @@ ul {
   padding: 0.7rem 1rem;
 }
 .password-input div svg {
-  bottom: 0.8rem;
+  bottom: 0.4rem;
   color: #000;
   position: absolute;
-  right: 1rem;
+  right: 0.4rem;
+  width: 30px;
+  height: 30px;
 }
 
 .pill {
