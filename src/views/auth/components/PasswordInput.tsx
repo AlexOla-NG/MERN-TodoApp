@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { FaEye } from "react-icons/fa";
-import { FaEyeSlash } from "react-icons/fa";
+import { ReactComponent as Eye } from "../../../assets/svg/eye.svg";
+import { ReactComponent as EyeSlash } from "../../../assets/svg/eye-slashed.svg";
 
 interface PasswordInputProps {
 	name: string;
@@ -42,9 +42,9 @@ const PasswordInput = ({
 						onChange={handleInputChange}
 					/>
 					{showPassword ? (
-						<FaEye onClick={handleToggleVisibility} />
+						<Eye onClick={handleToggleVisibility} />
 					) : (
-						<FaEyeSlash onClick={handleToggleVisibility} />
+						<EyeSlash onClick={handleToggleVisibility} />
 					)}
 				</div>
 			</label>
