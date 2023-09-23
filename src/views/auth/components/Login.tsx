@@ -8,6 +8,9 @@ import { ILogin, ILoginFormData } from "../interface";
 import { useLogin } from "../../../hooks/auth";
 import { setStoredUser } from "../../../storage";
 
+// TODO: stopped here
+// replace TextButton with native button element
+
 const Login = ({ toggleView, handleTokenUpdate }: ILogin) => {
 	const defaultFormData: ILoginFormData = {
 		email: "",
@@ -70,6 +73,9 @@ const Login = ({ toggleView, handleTokenUpdate }: ILogin) => {
 						title="Don't have an account? Register"
 						handleClick={toggleView}
 					/>
+					<button onClick={toggleView}>
+						Don't have an account? <span>Register</span>
+					</button>
 				</div>
 			</form>
 		</div>

@@ -190,6 +190,9 @@ ul {
   flex-direction: column;
   gap: 0.8rem;
 }
+.form-wrapper .form .form-footer button span {
+  color: hsl(220, 78%, 61%);
+}
 .form-wrapper p {
   text-align: center;
 }
