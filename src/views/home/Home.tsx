@@ -29,7 +29,7 @@ export type dbTodoProps = {
 	_v: number;
 };
 
-const statusOptions = ["all", "completed", "active"];
+const status = ["all", "completed", "active"];
 
 // STUB: custom type for state
 interface AppState {
@@ -78,7 +78,7 @@ type AppActions =
 
 const initialstate: AppState = {
 	filterOption: "all",
-	sortOption: "asc-title",
+	sortOption: "ascending",
 	itemOffset: 0,
 	dbTodos: [],
 	sortedTodos: [],
@@ -221,7 +221,7 @@ const Home = () => {
 		}
 
 		// STUB: filter by status
-		if (statusOptions.includes(option)) {
+		if (status.includes(option)) {
 			dispatch({type: "FILTER_BY_STATUS", payload: option});
 		}
 
@@ -239,21 +239,21 @@ const Home = () => {
 	const sortData = (option: string) => {
 
 		// STUB: sort by title
-		if (option === "asc-title") {
+		if (option === "ascending") {
 			dispatch({type: 'SORT_TODOS_BY_ASC_TITLE'});
 		}
 
-		if (option === "desc-title") {
-			dispatch({type: 'SORT_TODOS_BY_DESC_TITLE'});
+		if (option === "descending") {
+			dispatch({ type: "SORT_TODOS_BY_DESC_TITLE" });
 		}
 
 		// STUB: sort by time created
-		if (option === "asc-time") {
-			dispatch({type: 'SORT_TODOS_BY_ASC_TIME'});
+		if (option === "oldest first") {
+			dispatch({ type: "SORT_TODOS_BY_ASC_TIME" });
 		}
 
-		if (option === "desc-time") {
-			dispatch({type: 'SORT_TODOS_BY_DESC_TIME'});
+		if (option === "newest first") {
+			dispatch({ type: "SORT_TODOS_BY_DESC_TIME" });
 		}
 	};
 
@@ -281,6 +281,7 @@ const Home = () => {
 			<section className="todo-list-card-wrapper">
 				<TodoCardListControls
 					users={extractFullNames(dbTodos)}
+					status={status}
 					handleFilterChange={handleFilterChange}
 					handleSortChange={handleSortChange}
 					filterOption={filterOption}
