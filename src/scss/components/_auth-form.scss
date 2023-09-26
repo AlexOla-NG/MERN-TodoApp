@@ -49,8 +49,13 @@
 			flex-direction: column;
 			gap: 0.8rem;
 
-			button span {
-				color: $btn-color;
+			p {
+				align-self: flex-start;
+				color: $white;
+
+				.text-btn {
+					font-size: unset;
+				}
 			}
 		}
 	}

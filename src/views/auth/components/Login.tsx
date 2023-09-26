@@ -69,13 +69,10 @@ const Login = ({ toggleView, handleTokenUpdate }: ILogin) => {
 				</fieldset>
 				<div className="form-footer">
 					<Button type="submit" title="login" disabled={isLoading} />
-					<TextButton
-						title="Don't have an account? Register"
-						handleClick={toggleView}
-					/>
-					<button onClick={toggleView}>
-						Don't have an account? <span>Register</span>
-					</button>
+					<p>
+						Don't have an account?{" "}
+						<TextButton title="Register" handleClick={toggleView} />
+					</p>
 				</div>
 			</form>
 		</div>

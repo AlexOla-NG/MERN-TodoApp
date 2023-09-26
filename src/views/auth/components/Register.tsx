@@ -89,10 +89,10 @@ const Register = ({ toggleView }: IRegister) => {
 						title="register"
 						disabled={isLoading}
 					/>
-					<TextButton
-						title="Already have an account? Login"
-						handleClick={toggleView}
-					/>
+					<p>
+						Already have an account?{" "}
+						<TextButton title="Login" handleClick={toggleView} />
+					</p>
 				</div>
 			</form>
 		</div>

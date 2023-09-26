@@ -1,7 +1,11 @@
 import React from "react";
 import { IButton } from "./Button";
 
-const TextButton = (props: IButton) => {
+type TextButtonProps = IButton &{
+	selected?: boolean;
+}
+
+const TextButton = (props: TextButtonProps) => {
 	const { title, type, disabled, handleClick, selected } = props;
 
 	const handleClickButton = () => {

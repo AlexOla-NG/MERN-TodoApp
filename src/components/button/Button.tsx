@@ -14,7 +14,6 @@ export type IButton = {
 	title: string;
 	type: "submit" | "button";
 	disabled?: boolean;
-	selected?: boolean;
 	handleClick?: (buttonID?: number) => void;
 }
 

@@ -79,7 +79,7 @@ button {
 
 button:hover,
 button:focus-visible {
-  background: hsl(220, 68%, 71%);
+  background: hsl(220, 78%, 61%);
 }
 
 button:disabled {
@@ -190,8 +190,12 @@ ul {
   flex-direction: column;
   gap: 0.8rem;
 }
-.form-wrapper .form .form-footer button span {
-  color: hsl(220, 78%, 61%);
+.form-wrapper .form .form-footer p {
+  align-self: flex-start;
+  color: hsl(0, 0%, 100%);
+}
+.form-wrapper .form .form-footer p .text-btn {
+  font-size: unset;
 }
 .form-wrapper p {
   text-align: center;
@@ -217,7 +221,7 @@ ul {
   }
 }
 .btn {
-  background: hsl(220, 78%, 61%);
+  background: hsl(220, 68%, 71%);
   border: 0.1em solid hsl(220, 68%, 71%);
   border-radius: 0.5rem;
   outline: 1rem hsl(220, 78%, 61%);
@@ -773,6 +777,9 @@ ul {
 }
 .navbar .navbar-container .menu .menu-item a:hover, .navbar .navbar-container .menu .menu-item a.active {
   color: hsl(220, 98%, 61%);
+}
+.navbar .navbar-container .menu .menu-item .text-btn {
+  font-size: unset;
 }
 .navbar .navbar-container .menu-icon {
   display: none;
