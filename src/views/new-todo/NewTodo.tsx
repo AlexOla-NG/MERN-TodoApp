@@ -83,7 +83,7 @@ const NewTodo = () => {
 						cols={50}
 					/>
 				</label>
-				<label htmlFor="status">
+				<label>
 					status
 					<Select
 						options={statusOptions}

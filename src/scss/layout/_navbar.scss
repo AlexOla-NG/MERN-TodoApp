@@ -88,6 +88,7 @@
 
 				.menu-item {
 					margin-left: unset;
+
 					a {
 						color: $white;
 						text-align: center;
@@ -121,4 +122,13 @@
 			}
 		}
 	}
+
+	@include media-xxl {
+		.navbar-container {
+			max-width: 750px;
+			margin: 0 auto;
+		}
+	}
+
+
 }

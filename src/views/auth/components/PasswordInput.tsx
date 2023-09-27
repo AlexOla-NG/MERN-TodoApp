@@ -9,9 +9,6 @@ interface PasswordInputProps {
 	handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-// TODO: stopped here
-// finish styling passwordinput
-
 const PasswordInput = ({
 	name,
 	placeholder,

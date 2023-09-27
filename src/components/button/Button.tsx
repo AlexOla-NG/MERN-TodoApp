@@ -1,14 +1,3 @@
-import { z } from "zod";
-
-// const buttonSchema = z.object({
-// 	title: z.string(),
-// 	type: z.enum(["submit", "button"]),
-// 	isSelected: z.boolean().optional(),
-// 	disabled: z.boolean().optional(),
-// 	handleClick: z.function().args().optional(),
-// });
-// export type IButton = z.infer<typeof buttonSchema>;
-
 export type IButton = {
 	id?: number
 	title: string;
@@ -16,10 +5,6 @@ export type IButton = {
 	disabled?: boolean;
 	handleClick?: (buttonID?: number) => void;
 }
-
-// TODO: stopped here
-// finish styling btn
-// add disabled styles
 
 const Button = (props: IButton) => {
 	const { title, type, disabled, handleClick } = props;

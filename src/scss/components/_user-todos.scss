@@ -5,6 +5,11 @@
   flex-direction: column;
   gap: 2rem;
 
+  h2 {
+    align-self: center;
+    color: $white;
+  }
+
   .todo-list-wrapper {
     align-self: center;
     max-width: 30rem;

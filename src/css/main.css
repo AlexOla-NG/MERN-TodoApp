@@ -496,9 +496,10 @@ ul {
   justify-content: space-between;
 }
 .single-todo .todo-wrapper {
-  display: flex;
-  align-items: center;
+  display: grid;
+  grid-template-columns: auto 1fr;
   gap: 1rem;
+  align-items: center;
 }
 .single-todo .todo-wrapper .circular-checkbox {
   background: transparent;
@@ -508,6 +509,7 @@ ul {
   position: relative;
   width: 24px;
   height: 24px;
+  transition: border-image 0.3s;
   /* Style the checkmark */
   /* Show the checkmark when the checkbox is checked */
 }
@@ -538,25 +540,8 @@ ul {
   left: 50%;
   transform: translate(-50%, -50%);
 }
-.single-todo .todo-wrapper .circular-checkbox .checkmark:before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  padding: 10px;
-  background: linear-gradient(45deg, red, blue);
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  -webkit-mask-composite: exclude;
-  opacity: 0;
-  transition: background 1500ms ease-in-out;
-}
-.single-todo .todo-wrapper .circular-checkbox:hover input:not(:checked) ~ .checkmark::before {
-  opacity: 1;
-}
 .single-todo .todo-wrapper .circular-checkbox input:checked ~ .checkmark {
   background: linear-gradient(to bottom, hsl(192, 100%, 67%), hsl(280, 87%, 65%));
-  /* Customize the gradient colors */
 }
 .single-todo .todo-wrapper .circular-checkbox input:checked + .checkmark:after {
   display: block;
@@ -566,8 +551,14 @@ ul {
   font-size: 0.9rem;
   line-height: unset;
 }
-.single-todo .edit-todo button {
-  color: hsl(233, 14%, 35%);
+.single-todo .delete-todo {
+  display: none;
+}
+.single-todo .delete-todo button {
+  color: hsl(234, 39%, 85%);
+}
+.single-todo:hover .delete-todo {
+  display: unset;
 }
 
 .text-btn {
@@ -669,6 +660,10 @@ ul {
   display: flex;
   flex-direction: column;
   gap: 2rem;
+}
+.user-todos h2 {
+  align-self: center;
+  color: hsl(0, 0%, 100%);
 }
 .user-todos .todo-list-wrapper {
   align-self: center;
@@ -840,6 +835,12 @@ ul {
   }
   .navbar .navbar-container .menu-icon {
     display: none;
+  }
+}
+@media screen and (min-width: 2560px) {
+  .navbar .navbar-container {
+    max-width: 750px;
+    margin: 0 auto;
   }
 }
 

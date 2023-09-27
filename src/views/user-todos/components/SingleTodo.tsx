@@ -2,11 +2,6 @@ import React, { useState } from "react";
 import { updateTodoType } from "../../../hooks/user-todos";
 import TextButton from "../../../components/button/TextButton";
 
-// TODO: stopped here
-// finish setting up singleTodo
-// b: style checkbox: fix border radius of checkbox on hover
-// c: refactor SingleTodoProps
-
 enum TodoStatus {
 	active = "active",
 	completed = "completed",
@@ -26,7 +21,6 @@ export type SingleTodoProps = {
 const SingleTodo = ({
 	title,
 	_id,
-	description,
 	status,
 	deleteTodo,
 	updateTodo,
@@ -64,9 +58,9 @@ const SingleTodo = ({
 				<p>{title}</p>
 			</div>
 
-			<div className="edit-todo">
+			<div className="delete-todo">
 				<TextButton
-					title="X"
+					title="Delete"
 					handleClick={handleDelete}
 					disabled={updateLoading || deleteLoading}
 				/>

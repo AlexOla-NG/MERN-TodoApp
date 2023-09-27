@@ -44,7 +44,7 @@ const UserTodos = () => {
 			return;
 		}
 
-		// STUB: update user todos depending selected button value
+		// STUB: update user todos depending on selected button value
 		if (selectedButton === 0) setUserTodos(allTodos);
 		if (selectedButton === 1) setUserTodos(activeTodos);
 		if (selectedButton === 2) setUserTodos(completedTodos);

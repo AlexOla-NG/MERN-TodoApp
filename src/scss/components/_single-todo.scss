@@ -1,15 +1,15 @@
 @use "../abstracts" as *;
 
 .single-todo {
-  // padding: 1rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
 
   .todo-wrapper {
-    display: flex;
-    align-items: center;
+    display: grid;
+    grid-template-columns: auto 1fr;
     gap: 1rem;
+    align-items: center;
 
     .circular-checkbox {
       background: transparent;
@@ -19,6 +19,7 @@
       position: relative;
       width: 24px;
       height: 24px;
+      transition: border-image 0.3s;
 
       input {
         opacity: 0;
@@ -51,32 +52,9 @@
         transform: translate(-50%, -50%);
       }
 
-      // apply gradient border radius
-      .checkmark:before {
-        content: "";
-        position: absolute;
-        inset: 0;
-        border-radius: 50%;
-        padding: 10px;
-        background: linear-gradient(45deg, red, blue);
-        -webkit-mask:
-          linear-gradient(#fff 0 0) content-box,
-          linear-gradient(#fff 0 0);
-        -webkit-mask-composite: xor;
-        -webkit-mask-composite: exclude;
-        opacity: 0;
-        transition: background 1500ms ease-in-out;
-      }
-
-      // apply gradient border radius on hover
-      &:hover input:not(:checked)~.checkmark::before {
-        opacity: 1;
-      }
-
       // apply gradient to checkbox bg
       input:checked~.checkmark {
         background: $check-bg;
-        /* Customize the gradient colors */
       }
 
       /* Show the checkmark when the checkbox is checked */
@@ -92,9 +70,15 @@
     }
   }
 
-  .edit-todo {
+  .delete-todo {
+    display: none;
+
     button {
-      color: $very-dark-grayish-blue;
+      color: $light-grayish-blue;
     }
+  }
+
+  &:hover .delete-todo {
+    display: unset;
   }
 }

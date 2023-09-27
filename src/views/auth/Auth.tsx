@@ -4,9 +4,6 @@ import Register from "./components/Register";
 import Login from "./components/Login";
 import { Token } from "../../storage";
 
-// TODO: stopped here
-// setup register & login components
-
 type Auth = {
 	handleTokenUpdate(token: Token): void;
 };
